@@ -30,7 +30,7 @@
 // t_envlist *envp_head;
 
 //lexer
-int lexcer(char *argv, t_token *head, t_envlist *envp);
+int lexer(char *argv, t_token *head, t_envlist *envp);
 
 
 //parcer

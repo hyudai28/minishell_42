@@ -1,7 +1,7 @@
 
 #include "./include/minishell.h"
 
-int lexcer(char *argv, t_token *head, t_envlist *env)
+int lexer(char *argv, t_token *head, t_envlist *env)
 {
 	t_token *cur;
 	t_flag flag;

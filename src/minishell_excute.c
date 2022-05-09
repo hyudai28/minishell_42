@@ -222,15 +222,27 @@ char	*ft_pathjoin(char *bin_path, char *cmd, t_envlist *env)
 	return (ret_path);
 }
 
+//char	*slash_path(char *cmd)
+//{
+//	int	access_ret;
+
+//	access_ret = access(cmd, X_OK);
+//	if (access_ret == 0)
+//		return (cmd);
+//	return (NULL);
+//}
+
 char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 {
 	int		path_i;
 	int		access_ret;
-	char	*path;
+	char *path;
 
 	path_i = 0;
 	while (bin_path[path_i])
 	{
+		//if (cmd[0] == '/')
+		//	return (slash_path(cmd));
 		path = ft_pathjoin(bin_path[path_i], cmd, env);
 		access_ret = access(path, X_OK);
 		if (access_ret == 0)
