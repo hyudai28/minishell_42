@@ -179,11 +179,11 @@ void	do_parent()
 	wait(NULL);
 }
 
-int	excute_error(char *msg)
+int	command_not_found_error(char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(msg ,2);
-	ft_putendl_fd("No such file or directory", 2);
+	ft_putendl_fd(": command not found", 2);
 	return (1);
 }
 
@@ -239,6 +239,9 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 	char *path;
 
 	path_i = 0;
+	access_ret = access(cmd, X_OK);
+	if (access_ret == 0)
+		return (ft_strdup(cmd));
 	while (bin_path[path_i])
 	{
 		//if (cmd[0] == '/')
@@ -251,7 +254,6 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 		path = NULL;
 		path_i++;
 	}
-	excute_error("set command error ");
 	return (NULL);
 }
 
@@ -276,8 +278,9 @@ int	command_excute(char **cmds, t_envlist *env)
 
 	path = make_env_path(cmds, env);
 	if (!path)
-		excute_error(cmds[0]);
-	pipex(cmds, env, path);
+		command_not_found_error(cmds[0]);
+	else
+		pipex(cmds, env, path);
 	free(path);
 	path = NULL;
 	return (0);
