@@ -2,15 +2,15 @@ NAME := minishell
 
 CC := gcc
 #CFLAGS := -Wall -Werror -Wextra -lreadline
-CFLAGS := -Wall -Werror -Wextra  -L $(shell brew --prefix readline)/lib -lreadline -lhistory
+CFLAGS := -Wall -Werror -Wextra  -L $(shell brew --prefix readline)/lib -lreadline -lhistory 
 INCLUDE                :=        -I $(shell brew --prefix readline)/include
-# -g -fsanitize=address
+ -g -fsanitize=address
 SOURCE_DIR := src
 BUILTIN_DIR := src/builtins
 
 SRCS := $(SOURCE_DIR)/main.c
 SRCS += $(SOURCE_DIR)/doller_ret.c
-SRCS += $(SOURCE_DIR)/minishell_lexcer.c
+SRCS += $(SOURCE_DIR)/minishell_lexer.c
 SRCS += $(SOURCE_DIR)/minishell_parcer.c
 SRCS += $(SOURCE_DIR)/minishell_excute.c
 SRCS += $(SOURCE_DIR)/minishell_expansion.c
@@ -23,7 +23,7 @@ SRCS += $(SOURCE_DIR)/t_token.c
 SRCS += $(SOURCE_DIR)/t_envlist.c
 SRCS += $(SOURCE_DIR)/list_show.c
 SRCS += $(SOURCE_DIR)/token_strlen.c
-SRCS += $(SOURCE_DIR)/read_lexcer.c
+SRCS += $(SOURCE_DIR)/read_lexer.c
 
 SRCS += $(BUILTIN_DIR)/builtin_cd.c
 SRCS += $(BUILTIN_DIR)/builtin_echo.c

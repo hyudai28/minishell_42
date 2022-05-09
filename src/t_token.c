@@ -21,7 +21,6 @@ void	token_destructor(t_token *token)
 
 	while (token->type != TAIL)
 	{
-		printf("dest \n");
 		if (token->word)
 		{
 			free(token->word);
