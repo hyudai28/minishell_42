@@ -33,7 +33,7 @@ int	set_variable(char **word, ,t_token *token ,t_flag *flag)
 	{
 		// 次の$が出てくるまたは\0までを変数名として認識する
 		//変数名を環境変数から探す
-		//あればその文字列をlexcerにかけてtokenに分割した後間に入れる
+		//あればその文字列をlexerにかけてtokenに分割した後間に入れる
 		//該当する変数が環境変数になければnullの文字列が入った構造体を追加
 	}
 	//隣のtokenとの間にスペースが入っているかのフラグの管理に気をつける!!!
@@ -44,6 +44,6 @@ int	set_variable(char **word, ,t_token *token ,t_flag *flag)
 
 
 
-// lexcer
+// lexer
 
 

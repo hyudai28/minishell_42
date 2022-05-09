@@ -11,7 +11,7 @@ int minishell(char *command, t_envlist *envp)
 	int		ret_value;
 
 	head = token_constructor();
-	ret_value = lexcer(command, head, envp);
+	ret_value = lexer(command, head, envp);
 	debug_all(head);
 	if (!ret_value)
 		ret_value = minishell_excute(head, envp);
