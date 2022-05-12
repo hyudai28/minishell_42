@@ -124,26 +124,55 @@ t_cmds_out_fd	cmds_setinfd(t_token_type type)
 	return (C_STDOUT);
 }
 
+size_t	count_token(t_token *token)
+{
+	size_t	size;
+
+	size = 0;
+	while (!token_finish(token->type))
+	{
+		size++;
+		token = token->next;
+	}
+	return (size);
+}
+
+char	**separate_token(t_token *token)
+{
+	char	**cmd;
+	size_t	size;
+	size_t	index;
+
+	size = count_token(token);
+	cmd = (char **)malloc(sizeof(char *) * size);
+	if (cmd == NULL)
+		return (NULL);
+	index = 0;
+	while (!token_finish(token->type))
+	{
+		cmd[index] = ft_strdup(token->word);
+		//malloc失敗時にfree処理したい
+		token = token->next;
+		index++;
+	}
+	return (cmd);
+}
+
 t_cmds	*token_to_cmds(t_token *token)
 {
+	t_cmds	*head;
 	t_cmds	*new;
 	t_cmds	*now;
-	t_cmds	*head;
-	char	*cmd_line;
 
 	head = cmds_constructor(TRUE, NULL);
 	now = head;
 	token = token->next;
-	cmd_line = NULL;
 	while (token->type != TAIL)
 	{
 		new = cmds_constructor(FALSE, head);
+		new->cmd = separate_token(token);
 		while (!token_finish(token->type))
-		{
-			cmd_line = token_strjoin(cmd_line, " ");
-			cmd_line = token_strjoin(cmd_line, token->word);
 			token = token->next;
-		}
 		if (token->type == PIPE || token->type == REDIRECT)
 		{
 			new->outfd_type = cmds_setoutfd(token->type);
@@ -157,10 +186,6 @@ t_cmds	*token_to_cmds(t_token *token)
 				new->outfd_type = cmds_setinfd(token->prev->type);
 			token = token->next;
 		}
-		// token = cmds_set_fd(new, token);
-		new->cmd = ft_split(cmd_line, ' ');
-		free(cmd_line);
-		cmd_line = NULL;
 		new->prev = now;
 		now->next = new;
 		head->prev = now;
