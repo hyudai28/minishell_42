@@ -144,7 +144,7 @@ char	**separate_token(t_token *token)
 	size_t	index;
 
 	size = count_token(token);
-	cmd = (char **)malloc(sizeof(char *) * size);
+	cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	if (cmd == NULL)
 		return (NULL);
 	index = 0;
@@ -155,6 +155,7 @@ char	**separate_token(t_token *token)
 		token = token->next;
 		index++;
 	}
+	cmd[index] = NULL;
 	return (cmd);
 }
 
