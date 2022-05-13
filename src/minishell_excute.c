@@ -68,16 +68,30 @@ void	fd_test()
 	printf("buf = %s\n", buf);
 }
 
+// int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
+// {
+// 	if (cmds->outfd_type == C_PIPE || cmds->prev->outfd_type == C_PIPE)
+// 	{
+// 		pipe_infd = pipe_setfd(cmds, backup_stdfd, pipe_infd, env);
+// 		if (pipe_infd == -1)
+// 			return (1);
+// 	}
+// 	else
+// 	{
+// 		inout_fd_setup(cmds, backup_stdfd);
+// 		if (backup_stdfd[0] == -1)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
-int minishell_excute(t_token *head, t_envlist *env)
+int	minishell_excute(t_token *head, t_envlist *env)
 {
 	t_cmds	*cmds;
-
-	cmds = token_to_cmds(head);
-	int		infile_fd;
 	int		pipe_infd;
 	int		backup_stdfd[2];
 
+	cmds = token_to_cmds(head);
 	cmds = cmds->next;
 	pipe_infd = -2;
 	set_backup_fd(backup_stdfd);
@@ -137,11 +151,11 @@ int	outfd_setup(t_cmds *cmds, int *stdfd)
 	else if (cmds->outfd_type == C_REDIRECT)
 	{
 		close(1);
-		stdout_fd = open(cmds->next->cmd[1], O_WRONLY | O_TRUNC | O_CREAT);
+		stdout_fd = open(cmds->next->cmd[0], O_WRONLY | O_TRUNC | O_CREAT);
 		dup2(stdout_fd, 1);
 		if (stdout_fd != 1)
 		{
-		dprintf(2, "close = [%d]\n", stdout_fd);
+			dprintf(2, "close = [%d]\n", stdout_fd);
 			close(stdout_fd);
 		}
 	}
