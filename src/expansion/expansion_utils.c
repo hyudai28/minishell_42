@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 char *ft_strjoin3(char *a, char *b, char *c, int need_free)
 {

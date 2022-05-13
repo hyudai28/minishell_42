@@ -1,5 +1,5 @@
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	echo_putout(char *line, int space)
 {
@@ -20,10 +20,11 @@ int	dollar_ret(char **cmds, t_envlist *env)
 	return (0);
 }
 
-int builtin_echo(char **cmds, t_envlist *env)
+int builtin_echo(char **cmds, int argc, t_envlist *env)
 {
 	int i;
-	
+
+	(void)argc;
 	if (cmds[1])
 	{
 		if (dollar_ret(cmds, env))

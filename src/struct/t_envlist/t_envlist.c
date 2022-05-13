@@ -1,4 +1,4 @@
-#include "./include/t_token.h"
+#include "t_token.h"
 
 t_envlist	*envlist_constructor(char **envp)
 {

@@ -1,12 +1,11 @@
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 
 
-int	builtin_env(char **cmds, t_envlist *envp)
+int	builtin_env(char **cmds, int argc, t_envlist *envp)
 {
-	//t_envlist *envp;
-
+	(void)argc;
 	if (envp->next->head)
 		return (0);
 	envp = envp->next;

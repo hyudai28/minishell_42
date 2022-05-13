@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int error(char *msg, int error_no, t_envlist *env)
 {

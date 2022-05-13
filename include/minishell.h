@@ -14,7 +14,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-# include "../../libft/libft.h"
+# include "libft.h"
 // # include "t_cmds.h"
 # include "t_token.h"
 
@@ -78,13 +78,13 @@ int	export_error(char *msg, int flag);
 
 //builtins
 int	builtins(char **cmds, t_envlist *env);
-int builtin_echo(char **cmds, t_envlist *env);
-int	builtin_cd(char **cmds, t_envlist *env);
-int builtin_pwd(void);
-int	builtin_export(t_envlist *env, char **cmds);
-int	builtin_unset(t_envlist *env, char **cmds);
-int	builtin_env(char **cmds, t_envlist *env);
-int	builtin_exit(char **exit_num, int argc);
+int builtin_echo(char **cmds, int argc, t_envlist *env);
+int	builtin_cd(char **cmds, int argc, t_envlist *env);
+int builtin_pwd(char **cmds, int argc, t_envlist *env);
+int	builtin_export(char **cmds, int argc, t_envlist *env);
+int	builtin_unset(char **cmds, int argc, t_envlist *env);
+int	builtin_env(char **cmds, int argc, t_envlist *env);
+int	builtin_exit(char **exit_num, int argc, t_envlist *env);
 int	exit_isspace(int c);
 
 void	fd_setup(t_cmds *cmds);

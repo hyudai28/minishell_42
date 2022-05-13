@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int		go_homedir(t_envlist *env)
 {
@@ -81,13 +81,14 @@ bash: cd: -i: invalid option
 cd: usage: cd [-L|-P] [dir]
 */
 
-int	builtin_cd(char **cmds, t_envlist *env)
+int	builtin_cd(char **cmds, int argc, t_envlist *env)
 {
 	char	*oldpwd;
 	t_envlist	*list;
 	id_t	dir_ret;
 
-	if (char_count(cmds) == 1)
+	(void)argc;
+	if (argc == 1)
 		return (go_homedir(env));
 	else if (is_option(cmds[1]))
 		return (cd_errors(NULL, INVALID_OPTION));

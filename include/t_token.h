@@ -2,7 +2,7 @@
 # define T_TOKEN_H
 #include <stdlib.h>
 # include <stdbool.h>
-# include "./../../libft/libft.h"
+# include "libft.h"
 // # include "./minishell.h"
 #define TRUE	1
 #define FALSE	0

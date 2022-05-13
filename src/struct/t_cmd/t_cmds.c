@@ -1,5 +1,5 @@
 
-#include "./include/t_token.h"
+#include "t_token.h"
 
 t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
 {

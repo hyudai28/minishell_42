@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 void	signal_ctrl_c()
 {

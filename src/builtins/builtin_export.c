@@ -1,5 +1,5 @@
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 bool	envpcmp(char *s1, char *s2)
 {
@@ -79,13 +79,11 @@ int	export_is_invalid(char *line)
 	return (0);
 }
 
-int	builtin_export(t_envlist *head, char **cmds)
+int	builtin_export(char **cmds, int argc, t_envlist *head)
 {
 	char	**split;
-	int		argc;
 	int		arg_i;
 
-	argc =  char_count(cmds);
 	if (argc == 1)
 	{
 		split = envlist_to_char(head);

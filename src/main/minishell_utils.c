@@ -1,14 +1,4 @@
-#include "./include/minishell.h"
-
-int	char_count(char **count)
-{
-	int	ret;
-
-	ret = 0;
-	while (count[ret])
-		ret++;
-	return (ret);
-}
+#include "minishell.h"
 
 void	envsplit_free(char **split)
 {

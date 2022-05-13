@@ -88,10 +88,11 @@ int	exit_atoi(const char *str)
 	return ((int)(dest * flag));
 }
 
-int	builtin_exit(char **exit_num, int argc)
+int	builtin_exit(char **exit_num, int argc, t_envlist *envp)
 {
 	unsigned int	ret;
 
+	(void)argc;
 	if (argc > 2)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);

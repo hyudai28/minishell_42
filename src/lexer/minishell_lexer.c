@@ -1,5 +1,4 @@
-
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int lexer(char *argv, t_token *head, t_flag *flag, t_envlist *env)
 {

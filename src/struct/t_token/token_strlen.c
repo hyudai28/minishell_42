@@ -1,4 +1,4 @@
-#include "./include/t_token.h"
+#include "t_token.h"
 
 void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag)
 {

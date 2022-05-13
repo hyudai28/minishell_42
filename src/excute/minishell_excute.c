@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	outfd_setup(t_cmds *cmds, int *stdfd);
 int	infd_setup(t_cmds *cmds, int *stdfd);

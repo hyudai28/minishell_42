@@ -1,5 +1,10 @@
 
-#include "./include/t_token.h"
+#include "t_token.h"
+
+void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag);
+void ft_strlen_others(char *str, t_token *new);
+void ft_strlen_redirect(char *str, t_token *new, t_flag *flag);
+void ft_strlen_pipe(t_token *new, t_flag *flag);
 
 t_token *token_constructor()
 {

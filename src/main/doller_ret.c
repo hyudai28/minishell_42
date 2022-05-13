@@ -1,4 +1,4 @@
-#include "include/minishell.h"
+#include "minishell.h"
 
 int	doller_ret(int ret, t_envlist *env)
 {

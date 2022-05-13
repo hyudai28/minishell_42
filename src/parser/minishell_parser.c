@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 
 int parser(t_token *token, t_flag *flag, t_envlist *env)
