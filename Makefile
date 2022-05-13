@@ -23,7 +23,6 @@ SRCS += $(SOURCE_DIR)/t_token.c
 SRCS += $(SOURCE_DIR)/t_envlist.c
 SRCS += $(SOURCE_DIR)/list_show.c
 SRCS += $(SOURCE_DIR)/token_strlen.c
-SRCS += $(SOURCE_DIR)/read_lexer.c
 
 SRCS += $(BUILTIN_DIR)/builtin_cd.c
 SRCS += $(BUILTIN_DIR)/builtin_echo.c
