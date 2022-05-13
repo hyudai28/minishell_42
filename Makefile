@@ -6,10 +6,13 @@ LIBFT = libft.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS = -L $(shell brew --prefix readline)/lib
-INCLUDE = -I $(shell brew --prefix readline)/include
+CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory #-Wall -Wextra -Werror
+OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include #-Wall -Wextra -Werror
+#CFLAGS = -L $(shell brew --prefix readline)/lib $(INCLUDE)
+#INCLUDE = -I $(shell brew --prefix readline)/include -I include/ -I $(LIB_DIR)
 # DEBUG = -g -fsanitize=address
-LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -ltinfo
+LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -lhistory
+#LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -ltinfo
 # Source files
 # ****************************************************************************
 
@@ -104,14 +107,21 @@ T_TOKEN_OBJS = $(T_TOKEN_FILES:%.c=$(OBJ_DIR)t_token/%.o)
 
 all: $(NAME)
 
+#$(NAME): $(OBJS)
+#	make -C $(LIB_DIR)
+#	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
+
+#$(OBJS): $(OBJ_DIR)
+
+#$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+#	$(CC) $(CFLAGS) -c $< -o $@
 $(NAME): $(OBJS)
 	make -C $(LIB_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
-
 $(OBJS): $(OBJ_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(OBJ_FLAG) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
