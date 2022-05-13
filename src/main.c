@@ -8,18 +8,18 @@ sig_atomic_t signal_handled = 0;
 int minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
-	t_flag	*flag;
+	t_flag	flag;
 	int		ret_value;
 
 	head = token_constructor();
-	ft_memset(flag, 0, sizeof(t_flag));
-	if (lexer(command, head, flag, envp) != 0)
+	flag = (t_flag){0};
+	if (lexer(command, head, &flag, envp) != 0)
 		return (1);
-	if (parser(head, flag, envp) != 0)
+	if (parser(head, &flag, envp) != 0)
 		return (1);
-	if (expansion(head, flag, envp) != 0)
+	if (expansion(head, &flag, envp) != 0)
 		return (1);
-	if (remove_quot(head, flag, envp) != 0)
+	if (remove_quot(head, &flag, envp) != 0)
 		return (1); //malloc error
 	// debug_all(head);
 	ret_value = minishell_excute(head, envp);
