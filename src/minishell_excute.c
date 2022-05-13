@@ -30,8 +30,11 @@ int	pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env)
 
 	if (cmds->outfd_type == C_PIPE)
 	{
-		if (pipe(pipe_fd))
-			return (error(strerror(errno), 1, env));
+		if (pipe(pipe_fd) != 0)
+		{
+			error(strerror(errno), 1, env);
+			return (-1);
+		}
 		close (1);
 		dup2(pipe_fd[1], 1);
 		if (pipe_fd[1] != 1)
@@ -84,13 +87,13 @@ int minishell_excute(t_token *head, t_envlist *env)
 		{
 			pipe_infd = pipe_setfd(cmds, backup_stdfd, pipe_infd, env);
 			if (pipe_infd == -1)
-				return (-1);
+				return (1);
 		}
 		else
 		{
 			inout_fd_setup(cmds, backup_stdfd);
 			if (backup_stdfd[0] == -1)
-				return (-1);
+				return (1);
 		}
 		builtins(cmds->cmd, env);
 		cmds = cmds->next;

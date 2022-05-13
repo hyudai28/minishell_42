@@ -30,7 +30,7 @@
 // t_envlist *envp_head;
 
 //lexer
-int lexer(char *argv, t_token *head, t_envlist *envp);
+int lexer(char *argv, t_token *head, t_flag *flag, t_envlist *env);
 
 
 //parser
@@ -39,7 +39,7 @@ int parser(t_token *token, t_flag *flag, t_envlist *env);
 
 //expansion
 
-int expansion_q(t_token *token, t_flag *flag, t_envlist *env);
+int remove_quot(t_token *token, t_flag *flag, t_envlist *env);
 int expansion(t_token *token, t_flag *flag, t_envlist *env);
 void move_pointer(char **tmp, size_t len);
 void add_string_ex(t_token *token, t_flag *flag, char **tmp);

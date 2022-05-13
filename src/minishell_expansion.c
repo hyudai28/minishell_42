@@ -2,11 +2,6 @@
 
 int expansion(t_token *token, t_flag *flag, t_envlist *env)
 {
-	char *tmp;
-	char *tmp2;
-	int i;
-	int len;
-
 	token = token->next;
 	while (token->type != TAIL)
 	{
@@ -24,7 +19,7 @@ int expansion(t_token *token, t_flag *flag, t_envlist *env)
 		}
 		token = token->next;
 	}
-	return (TRUE);
+	return (0);
 }
 
 int	closed_quot(const char *line)
@@ -52,29 +47,36 @@ int	closed_quot(const char *line)
 }
 
 // クオーテーションをとる関数 word_lenの部分修正。
-int expansion_q(t_token *token, t_flag *flag, t_envlist *env)
+int remove_quot(t_token *token, t_flag *flag, t_envlist *env)
 {
-	char *tmp;
+	char	*tmp;
 
 	while (token->type != TAIL)
 	{
 		if (token->type == NONEXPANDABLE_SQ || token->type == EXPANDABLE_DQ)
 		{
 			tmp = token->word;
-			if (token->word_len == 2)
-			{
-				token->word = malloc(1);
-				token->word[0] = '\0';
-			}
-			else
-			{
-				token->word = malloc(token->word_len - 1);
-				ft_strlcpy(token->word, (tmp + 1), token->word_len - 1);
-			}
+			// if (token->word_len != 2)
+			// 	token->word = malloc()
+			// if (token->word_len == 2)
+			// {
+			// 	token->word = malloc(1);
+			// 	if (token->word == NULL)
+			// 		return (1);
+			// 	token->word[0] = '\0';
+			// }
+			// else
+			// {
+			token->word = malloc(token->word_len - 1);
+			if (token->word == NULL)
+				return (1);
+			token->word[0] = '\0';
+			ft_strlcpy(token->word, (tmp + 1), token->word_len - 1);
+			// }
 			token->word_len -= 2;
 			free(tmp);
 		}
 		token = token->next;
 	}
-	return (TRUE);
+	return (0);
 }

@@ -7,14 +7,22 @@ sig_atomic_t signal_handled = 0;
 
 int minishell(char *command, t_envlist *envp)
 {
-	t_token *head;
+	t_token	*head;
+	t_flag	*flag;
 	int		ret_value;
 
 	head = token_constructor();
-	ret_value = lexer(command, head, envp);
-	debug_all(head);
-	if (!ret_value)
-		ret_value = minishell_excute(head, envp);
+	ft_memset(flag, 0, sizeof(t_flag));
+	if (lexer(command, head, flag, envp) != 0)
+		return (1);
+	if (parser(head, flag, envp) != 0)
+		return (1);
+	if (expansion(head, flag, envp) != 0)
+		return (1);
+	if (remove_quot(head, flag, envp) != 0)
+		return (1); //malloc error
+	// debug_all(head);
+	ret_value = minishell_excute(head, envp);
 	token_destructor(head);
 	return (doller_ret(ret_value, envp));
 }
@@ -38,6 +46,7 @@ int main(int argc, char **argv, char **envp)
 	env_head = envlist_constructor(envp);
 	minishell_signal(command);
 	rl_event_hook = check_state;
+	int i = 0;
 	while (1)
 	{
 		command = readline("minishell > ");

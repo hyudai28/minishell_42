@@ -47,7 +47,7 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	if (**str == '\0')
 	{
 		new->type = TAIL;
-		return new;
+		return (new);
 	}
 	if (flag->dq_flag == TRUE)
 		ft_strlen_sq_dq(*str, '"', new, flag);
@@ -63,12 +63,12 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	new->word = (char *)malloc(new->word_len + 1);
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == ERROR)
-		return new;
+		return (new);
 	len = new->word_len;
 	while (len--)
 		(*str)++;
 	new->head = 0;
-	return new;
+	return (new);
 }
 
 void flag_set(t_flag *flag, char c)
