@@ -28,7 +28,7 @@ int lexer(char *argv, t_token *head, t_envlist *env)
 	}
 	cur = new_token(&flag, cur, &str);
 	//t_token *tmp = head;
-	if (!parcer(head, &flag, env))
+	if (!parser(head, &flag, env))
 		return (0);
 	if (!expansion(head, &flag, env) || !expansion_q(head, &flag, env))
 		return (0);

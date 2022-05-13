@@ -36,8 +36,8 @@ int main(int argc, char **argv, char **envp)
 	t_envlist	*env_head;
 
 	env_head = envlist_constructor(envp);
-	//minishell_signal(command);
-	//rl_event_hook = check_state;
+	minishell_signal(command);
+	rl_event_hook = check_state;
 	while (1)
 	{
 		command = readline("minishell > ");

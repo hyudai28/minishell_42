@@ -71,7 +71,6 @@ int minishell_excute(t_token *head, t_envlist *env)
 	t_cmds	*cmds;
 
 	cmds = token_to_cmds(head);
-
 	int		infile_fd;
 	int		pipe_infd;
 	int		backup_stdfd[2];

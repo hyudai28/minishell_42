@@ -2,16 +2,16 @@ NAME := minishell
 
 CC := gcc
 #CFLAGS := -Wall -Werror -Wextra -lreadline
-CFLAGS := -Wall -Werror -Wextra  -L $(shell brew --prefix readline)/lib -lreadline -lhistory 
+CFLAGS := -Wall -Werror -Wextra  -L $(shell brew --prefix readline)/lib -lreadline -lhistory
 INCLUDE                :=        -I $(shell brew --prefix readline)/include
- -g -fsanitize=address
+# -g -fsanitize=address
 SOURCE_DIR := src
 BUILTIN_DIR := src/builtins
 
 SRCS := $(SOURCE_DIR)/main.c
 SRCS += $(SOURCE_DIR)/doller_ret.c
 SRCS += $(SOURCE_DIR)/minishell_lexer.c
-SRCS += $(SOURCE_DIR)/minishell_parcer.c
+SRCS += $(SOURCE_DIR)/minishell_parser.c
 SRCS += $(SOURCE_DIR)/minishell_excute.c
 SRCS += $(SOURCE_DIR)/minishell_expansion.c
 SRCS += $(SOURCE_DIR)/minishell_error.c
@@ -44,7 +44,7 @@ $(NAME): $(OBJS)
 		$(CC) $(CFLAGS) ./libft/libft.a -o $(NAME) $(OBJS)
 
 .c.o:
-		$(CC) $(CFLAG) $(INCLUDE) -c $< -o $@ 
+		$(CC) $(CFLAG) $(INCLUDE) -c $< -o $@
 
 clean:
 		rm -f $(OBJS) $(BONUSOBJS)

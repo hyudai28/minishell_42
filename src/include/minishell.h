@@ -33,8 +33,8 @@
 int lexer(char *argv, t_token *head, t_envlist *envp);
 
 
-//parcer
-int parcer(t_token *token, t_flag *flag, t_envlist *env);
+//parser
+int parser(t_token *token, t_flag *flag, t_envlist *env);
 
 
 //expansion

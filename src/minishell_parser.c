@@ -1,7 +1,7 @@
 #include "./include/minishell.h"
 
 
-int parcer(t_token *token, t_flag *flag, t_envlist *env)
+int parser(t_token *token, t_flag *flag, t_envlist *env)
 {
 	if (token->type == HEAD && token->next->type == PIPE)
 		return (error("Error \"syntax error around pipe\"", 1, env));
