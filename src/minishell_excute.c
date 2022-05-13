@@ -68,22 +68,22 @@ void	fd_test()
 	printf("buf = %s\n", buf);
 }
 
-// int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
-// {
-// 	if (cmds->outfd_type == C_PIPE || cmds->prev->outfd_type == C_PIPE)
-// 	{
-// 		pipe_infd = pipe_setfd(cmds, backup_stdfd, pipe_infd, env);
-// 		if (pipe_infd == -1)
-// 			return (1);
-// 	}
-// 	else
-// 	{
-// 		inout_fd_setup(cmds, backup_stdfd);
-// 		if (backup_stdfd[0] == -1)
-// 			return (1);
-// 	}
-// 	return (0);
-// }
+int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
+{
+	if (cmds->outfd_type == C_PIPE || cmds->prev->outfd_type == C_PIPE)
+	{
+		*infd = pipe_setfd(cmds, stdfd, *infd, env);
+		if (*infd == -1)
+			return (1);
+	}
+	else
+	{
+		inout_fd_setup(cmds, stdfd);
+		if (stdfd[0] == -1)
+			return (1);
+	}
+	return (0);
+}
 
 int	minishell_excute(t_token *head, t_envlist *env)
 {
@@ -97,18 +97,7 @@ int	minishell_excute(t_token *head, t_envlist *env)
 	set_backup_fd(backup_stdfd);
 	while (!cmds->head)
 	{
-		if (cmds->outfd_type == C_PIPE || cmds->prev->outfd_type == C_PIPE)
-		{
-			pipe_infd = pipe_setfd(cmds, backup_stdfd, pipe_infd, env);
-			if (pipe_infd == -1)
-				return (1);
-		}
-		else
-		{
-			inout_fd_setup(cmds, backup_stdfd);
-			if (backup_stdfd[0] == -1)
-				return (1);
-		}
+		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
 		builtins(cmds->cmd, env);
 		cmds = cmds->next;
 		if (cmds->head)
