@@ -42,13 +42,11 @@ int	cd_errors(char **cmds, int flag)
 	return (1);
 }
 
-int	cd_dir_roop(char **cmds)
+int	cd_dir_access(char **cmds)
 {
-	int		arg_i;
 	int		dir_ret;
 	struct stat stat_buf;
 
-	arg_i = 2;
 	dir_ret = chdir(cmds[1]);
 	if (!dir_ret)
 		return (0);
@@ -56,11 +54,6 @@ int	cd_dir_roop(char **cmds)
 		cd_errors(cmds,  NO_SUCH_DIR);
 	if (S_ISDIR(stat_buf.st_mode))
 		cd_errors(cmds,  NOT_A_DIR);
-	while (dir_ret == -1 && cmds[arg_i])
-	{
-		dir_ret = chdir(cmds[1]);
-		arg_i++;
-	}
 	if (dir_ret == -1)
 		return (-2);
 	return (1);
@@ -91,10 +84,10 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 	if (argc == 1)
 		return (go_homedir(env));
 	else if (is_option(cmds[1]))
-		return (cd_errors(NULL, INVALID_OPTION));
+		return (cd_errors(cmds, INVALID_OPTION));
 	list = envlist_search("PWD", env);
 	oldpwd = ft_strdup(list->value);
-	dir_ret = cd_dir_roop(cmds);
+	dir_ret = cd_dir_access(cmds);
 	if (dir_ret == -2)
 	{
 		free(oldpwd);
