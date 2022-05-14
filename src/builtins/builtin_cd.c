@@ -85,7 +85,7 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 {
 	char	*oldpwd;
 	t_envlist	*list;
-	id_t	dir_ret;
+	int	dir_ret;
 
 	(void)argc;
 	if (argc == 1)

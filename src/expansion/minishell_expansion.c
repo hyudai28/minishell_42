@@ -2,6 +2,9 @@
 
 int expansion(t_token *token, t_flag *flag, t_envlist *env)
 {
+	t_token *head;
+
+	head = token;
 	token = token->next;
 	while (token->type != TAIL)
 	{
@@ -19,6 +22,8 @@ int expansion(t_token *token, t_flag *flag, t_envlist *env)
 		}
 		token = token->next;
 	}
+	if (remove_quot(head, flag, env) != 0)
+		return (1); //malloc error
 	return (0);
 }
 

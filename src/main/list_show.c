@@ -48,6 +48,7 @@ void	debug_cmds(t_cmds *tmp)
 void	debug_read()
 {
 	char *buf;
+	buf = NULL;
 	read(0, buf, 1);
 }
 

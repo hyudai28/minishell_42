@@ -93,6 +93,7 @@ int	builtin_exit(char **exit_num, int argc, t_envlist *envp)
 	unsigned int	ret;
 
 	(void)argc;
+	(void)envp;
 	if (argc > 2)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);

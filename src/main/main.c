@@ -19,8 +19,6 @@ int minishell(char *command, t_envlist *envp)
 		return (1);
 	if (expansion(head, &flag, envp) != 0)
 		return (1);
-	if (remove_quot(head, &flag, envp) != 0)
-		return (1); //malloc error
 	// debug_all(head);
 	ret_value = minishell_excute(head, envp);
 	token_destructor(head);

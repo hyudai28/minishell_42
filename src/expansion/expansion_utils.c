@@ -106,4 +106,5 @@ int	expansion_dq(t_token *token, t_envlist *env)
 		if (tword_i > tword_len)
 			tword_len = ft_strlen(token->word);
 	}
+	return (0);
 }

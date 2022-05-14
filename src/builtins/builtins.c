@@ -24,7 +24,7 @@ int	builtins(char **cmds, t_envlist *env)
 	else if (!ft_strncmp(cmds[0], "cd", 3))
 		return (builtin_cd(cmds, argc, env));
 	else if (!ft_strncmp(cmds[0], "pwd", 4))
-		return (builtin_cd(cmds, argc, env));
+		return (builtin_pwd(cmds, argc, env));
 	else if (!ft_strncmp(cmds[0], "export", 7))
 		return (builtin_export(cmds, argc, env));
 	else if (!ft_strncmp(cmds[0], "unset", 5))

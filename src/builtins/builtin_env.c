@@ -5,6 +5,7 @@
 
 int	builtin_env(char **cmds, int argc, t_envlist *envp)
 {
+	(void)cmds;
 	(void)argc;
 	if (envp->next->head)
 		return (0);

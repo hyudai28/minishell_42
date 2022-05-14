@@ -3,19 +3,20 @@
 void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag)
 {
 	size_t len;
-	int i;
-	int count;
+	size_t i;
+	size_t count;
 
 	count = 0;
 	len = 0;
-	i = -1;
+	i = 0;
 	while (count != 2)
 	{
-		if (str[++i] == quotation)
+		if (str[i++] == quotation)
 			count++;
 		if (str[i] == '\0')
 		{
 			new->word_len = ERROR;
+			break ;
 		}
 		else
 			len++;

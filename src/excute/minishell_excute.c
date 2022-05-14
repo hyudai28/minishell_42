@@ -4,7 +4,7 @@ int	outfd_setup(t_cmds *cmds, int *stdfd);
 int	infd_setup(t_cmds *cmds, int *stdfd);
 void	inout_fd_setup(t_cmds *cmds, int *stdfd);
 
-void	clean_fd(int *backup_fd, int pipe_fd)
+void	clean_fd(int *backup_fd)
 {
 	close(0);
 	dup2(backup_fd[0], 0);
@@ -105,7 +105,7 @@ int	minishell_excute(t_token *head, t_envlist *env)
 		if (cmds->prev->outfd_type == C_REDIRECT || cmds->prev->outfd_type == IN_REDIRECT)
 			cmds = cmds->next;
 	}
-	clean_fd(backup_stdfd, pipe_infd);
+	clean_fd(backup_stdfd);
 	cmds_destructor(cmds);
 	return (doller_ret(0, env));
 }
