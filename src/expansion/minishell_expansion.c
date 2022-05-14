@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int expansion(t_token *token, t_flag *flag, t_envlist *env)
+int expansion(t_token *token, t_envlist *env)
 {
 	t_token *head;
 
@@ -22,7 +22,7 @@ int expansion(t_token *token, t_flag *flag, t_envlist *env)
 		}
 		token = token->next;
 	}
-	if (remove_quot(head, flag, env) != 0)
+	if (remove_quot(head) != 0)
 		return (1); //malloc error
 	return (0);
 }
@@ -52,7 +52,7 @@ int	closed_quot(const char *line)
 }
 
 // クオーテーションをとる関数 word_lenの部分修正。
-int remove_quot(t_token *token, t_flag *flag, t_envlist *env)
+int remove_quot(t_token *token)
 {
 	char	*tmp;
 

@@ -43,7 +43,6 @@ void	token_destructor(t_token *token)
 t_token *new_token(t_flag *flag, t_token *cur, char **str)
 {
 	t_token *new;
-	size_t len;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	ft_memset(new, 0, sizeof(t_token));
@@ -69,9 +68,7 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == ERROR)
 		return (new);
-	len = new->word_len;
-	while (len--)
-		(*str)++;
+	(*str) += new->word_len;
 	new->head = 0;
 	return (new);
 }
