@@ -30,17 +30,17 @@
 // t_envlist *envp_head;
 
 //lexer
-int lexer(char *argv, t_token *head, t_flag *flag, t_envlist *env);
+int lexer(char *argv, t_token *head);
 
 
 //parser
-int parser(t_token *token, t_flag *flag, t_envlist *env);
+int parser(t_token *token, t_envlist *env);
 
 
 //expansion
 
-int remove_quot(t_token *token, t_flag *flag, t_envlist *env);
-int expansion(t_token *token, t_flag *flag, t_envlist *env);
+int remove_quot(t_token *token);
+int expansion(t_token *token, t_envlist *env);
 void move_pointer(char **tmp, size_t len);
 void add_string_ex(t_token *token, t_flag *flag, char **tmp);
 void add_string(t_token *token, t_flag *flag, char **tmp);
@@ -91,6 +91,6 @@ void	fd_setup(t_cmds *cmds);
 int	command_excute(char **cmds, t_envlist *env);
 
 //minishell_signal
-int	minishell_signal(char *command);
+int	minishell_signal();
 
 #endif

@@ -6,7 +6,8 @@
 // # include "./minishell.h"
 #define TRUE	1
 #define FALSE	0
-#define ERROR	-1
+#define WORD_LEN_ERROR	0
+#define ERROR -1
 typedef	enum
 {
 	HEAD,
