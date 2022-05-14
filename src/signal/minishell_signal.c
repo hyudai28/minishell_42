@@ -15,7 +15,7 @@ void	perr_exit(char *err_msg)
 	exit(1);
 }
 
-int	minishell_signal(char *command)
+int	minishell_signal()
 {
 	struct sigaction ctrl_c;
 	struct sigaction ctrl_bs;

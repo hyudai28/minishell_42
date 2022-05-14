@@ -8,14 +8,12 @@ sig_atomic_t signal_handled = 0;
 int minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
-	t_flag	flag;
 	int		ret_value;
 
 	head = token_constructor();
-	flag = (t_flag){0};
-	if (lexer(command, head, &flag, envp) != 0)
+	if (lexer(command, head) != 0)
 		return (1);
-	if (parser(head, &flag, envp) != 0)
+	if (parser(head, envp) != 0)
 		return (1);
 	if (expansion(head, envp) != 0)
 		return (1);
@@ -45,7 +43,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	command = NULL;
 	env_head = envlist_constructor(envp);
-	minishell_signal(command);
+	minishell_signal();
 	rl_event_hook = check_state;
 	while (1)
 	{

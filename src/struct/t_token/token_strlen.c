@@ -15,13 +15,13 @@ void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag)
 			count++;
 		if (str[i] == '\0')
 		{
-			new->word_len = ERROR;
+			new->word_len = WORD_LEN_ERROR;
 			break ;
 		}
 		else
 			len++;
 	}
-	if (new->word_len != ERROR)
+	if (new->word_len != WORD_LEN_ERROR)
 		new->word_len = len;
 	else
 		printf("ERROR  \"quotation has no pair\"\n");
@@ -48,10 +48,6 @@ void ft_strlen_others(char *str, t_token *new)
 
 void ft_strlen_redirect(char *str, t_token *new, t_flag *flag)
 {
-	size_t len;
-	int i;
-
-	len = 0;
 	if (!ft_strncmp(str, ">>", 2))
 	{
 		new->word_len = 2;

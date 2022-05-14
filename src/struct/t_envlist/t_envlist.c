@@ -26,13 +26,11 @@ t_envlist	*envlist_constructor(char **envp)
 
 void	envlist_destructor(t_envlist *envlist)
 {
-	int		i;
 	t_envlist	*tmp;
 
 	envlist = envlist->next;
 	while (envlist->head != 1)
 	{
-		i = 0;
 		free(envlist->key);
 		envlist->key = NULL;
 		free(envlist->value);

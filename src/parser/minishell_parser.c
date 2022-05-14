@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-int parser(t_token *token, t_flag *flag, t_envlist *env)
+int parser(t_token *token, t_envlist *env)
 {
 	if (token->type == HEAD && token->next->type == PIPE)
 	{
