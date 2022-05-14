@@ -43,10 +43,12 @@ int main(int argc, char **argv, char **envp)
 	char *command;
 	t_envlist	*env_head;
 
+	(void)argv;
+	(void)argc;
+	command = NULL;
 	env_head = envlist_constructor(envp);
 	minishell_signal(command);
 	rl_event_hook = check_state;
-	int i = 0;
 	while (1)
 	{
 		command = readline("minishell > ");
