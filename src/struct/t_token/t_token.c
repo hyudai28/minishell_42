@@ -68,7 +68,7 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
-	(*str) += new->word_len;
+	(*str) += (new->word_len);
 	new->head = 0;
 	return (new);
 }

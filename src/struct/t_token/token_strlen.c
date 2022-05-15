@@ -9,6 +9,7 @@ void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag)
 	count = 0;
 	len = 0;
 	i = 0;
+
 	while (count != 2)
 	{
 		if (str[i++] == quotation)

@@ -8,7 +8,7 @@ sig_atomic_t signal_handled = 0;
 int minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
-	int		ret_value;
+	int		result;
 
 	head = token_constructor();
 	if (lexer(command, head) != 0)
@@ -18,9 +18,9 @@ int minishell(char *command, t_envlist *envp)
 	if (expansion(head, envp) != 0)
 		return (1);
 	// debug_all(head);
-	ret_value = minishell_excute(head, envp);
+	result = minishell_excute(head, envp);
 	token_destructor(head);
-	return (doller_ret(ret_value, envp));
+	return (doller_ret(result, envp));
 }
 
 int	check_state()

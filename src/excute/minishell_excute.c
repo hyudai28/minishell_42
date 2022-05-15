@@ -90,6 +90,7 @@ int	minishell_excute(t_token *head, t_envlist *env)
 	t_cmds	*cmds;
 	int		pipe_infd;
 	int		backup_stdfd[2];
+	int		result;
 
 	cmds = token_to_cmds(head);
 	cmds = cmds->next;
@@ -98,7 +99,7 @@ int	minishell_excute(t_token *head, t_envlist *env)
 	while (!cmds->head)
 	{
 		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
-		builtins(cmds->cmd, env);
+		result = builtins(cmds->cmd, env);
 		cmds = cmds->next;
 		if (cmds->head)
 			break ;
@@ -107,7 +108,7 @@ int	minishell_excute(t_token *head, t_envlist *env)
 	}
 	clean_fd(backup_stdfd);
 	cmds_destructor(cmds);
-	return (doller_ret(0, env));
+	return (result);
 }
 
 
@@ -179,9 +180,22 @@ int	infd_setup(t_cmds *cmds, int *stdfd)
 }
 
 
-void	do_parent()
+int	do_parent()
 {
-	wait(NULL);
+	int	status;
+
+	wait(&status);
+	if (status == -1) //waitの失敗
+		return (1);
+	if (WIFEXITED(status) == 1)
+	{
+		return (WEXITSTATUS(status));
+	}
+	if (WIFSIGNALED(status) == 1)
+	{
+		return (128 + WTERMSIG(status));
+	}
+	return (1); //多分異常終了
 }
 
 int	check_directory(char *msg)
@@ -211,7 +225,7 @@ int	command_not_found_error(char *msg)
 	return (1);
 }
 
-void	pipex(char **cmds, t_envlist *env, char *path)
+int	pipex(char **cmds, t_envlist *env, char *path)
 {
 	pid_t	pid;
 	char	**envp;
@@ -223,11 +237,15 @@ void	pipex(char **cmds, t_envlist *env, char *path)
 	{
 		envp = envlist_to_char(env);
 		if (execve(path, cmds, envp))
+		{
 			error(strerror(errno), 1, env);
+			exit (1);
+		}
 		envsplit_free(envp);
+		exit (0);
 	}
 	else
-		do_parent();
+		return (do_parent());
 }
 
 char	*ft_pathjoin(char *bin_path, char *cmd, t_envlist *env)
@@ -299,13 +317,17 @@ char	*make_env_path(char **cmds, t_envlist *env)
 int	command_excute(char **cmds, t_envlist *env)
 {
 	char	*path;
+	int		result;
 
 	path = make_env_path(cmds, env);
 	if (!path)
+	{
 		command_not_found_error(cmds[0]);
+		return (127);
+	}
 	else
-		pipex(cmds, env, path);
+		result = pipex(cmds, env, path);
 	free(path);
 	path = NULL;
-	return (0);
+	return (result);
 }
