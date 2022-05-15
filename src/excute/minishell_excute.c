@@ -184,11 +184,30 @@ void	do_parent()
 	wait(NULL);
 }
 
+int	check_directory(char *msg)
+{
+	size_t	i;
+
+	i = 0;
+	while (msg[i] != '\0')
+	{
+		if (msg[i] == '/')
+		{
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	command_not_found_error(char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(msg ,2);
-	ft_putendl_fd(": command not found", 2);
+	if (check_directory(msg) == 1)
+		ft_putendl_fd(": No such file or directory", 2);
+	else
+		ft_putendl_fd(": command not found", 2);
 	return (1);
 }
 
