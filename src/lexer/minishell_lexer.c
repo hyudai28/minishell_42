@@ -9,6 +9,7 @@ int lexer(char *argv, t_token *head)
 	str = argv;
 	cur = head;
 	flag = (t_flag){0};
+
 	while (*str != '\0')
 	{
 		while (isspace(*str))
