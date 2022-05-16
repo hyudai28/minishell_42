@@ -41,7 +41,7 @@ void ft_strlen_others(char *str, t_token *new)
 
 	len = 0;
 	i = -1;
-	while (!ft_strchr("|>< \'\"\0", str[++i]))
+	while (!ft_strchr("|>< \0", str[++i]))
 		len++;
 	new->word_len = len;
 	new->type = EXPANDABLE;

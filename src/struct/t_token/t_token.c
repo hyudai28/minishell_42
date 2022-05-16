@@ -66,6 +66,9 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	new->space_flag = flag->space;
 	new->word = (char *)malloc(new->word_len + 1);
 	ft_strlcpy(new->word, *str, new->word_len + 1);
+
+
+	printf("new token => [%s]\n", new->word);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
 	(*str) += (new->word_len);
@@ -75,11 +78,18 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 
 void flag_set(t_flag *flag, char c)
 {
-	if (c == '"')
-		flag->dq_flag = TRUE;
-	else if (c == '\'')
-		flag->sq_flag = TRUE;
-	else if (c == '>' || c == '<')
+	//if (c == '"')
+	//	flag->dq_flag = TRUE;
+	//else if (c == '\'')
+	//	flag->sq_flag = TRUE;
+	//else if (c == '>' || c == '<')
+	//	flag->redirect = TRUE;
+	//else if (c == '|')
+	//	flag->pipe = TRUE;
+
+
+
+	if (c == '>' || c == '<')
 		flag->redirect = TRUE;
 	else if (c == '|')
 		flag->pipe = TRUE;
