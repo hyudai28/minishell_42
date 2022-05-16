@@ -34,16 +34,58 @@ void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag)
 	flag->sq_flag = FALSE;
 }
 
+//void ft_strlen_others(char *str, t_token *new)
+//{
+//	size_t len;
+//	int i;
+
+//	len = 0;
+//	i = -1;
+//	while (!ft_strchr("|>< \0", str[++i]))
+//		len++;
+//	new->word_len = len;
+//	new->type = EXPANDABLE;
+//}
+
+size_t	is_separate_char(char c)
+{
+	if (c == '\'')
+		return (1);
+	else if (c == '\"')
+		return (2);
+	else if (c == ' ')
+		return(3);
+	else if (c == '<')
+		return(4);
+	else if (c == '>')
+		return(5);
+	else if (c == '|')
+		return(6);
+	return (0);
+}
+
 void ft_strlen_others(char *str, t_token *new)
 {
-	size_t len;
-	int i;
+	size_t	len;
+	size_t	c_status;
+	size_t	str_len;
 
 	len = 0;
-	i = -1;
-	while (!ft_strchr("|>< \0", str[++i]))
+	c_status = 0;
+	str_len = ft_strlen(str);
+	while (len < str_len && is_separate_char(str[len]) == 0)
 		len++;
-	new->word_len = len;
+	if (len == str_len)
+		new->word_len = str_len;
+	while (len < str_len && !ft_isspace(str[len]))
+	{
+		while (len < str_len && is_separate_char(str[len]) == 0)
+			len++;
+		c_status = is_separate_char(str[len++]);
+		while (len < str_len && is_separate_char(str[len]) != c_status)
+			len++;
+		new->word_len = ++len;
+	}
 	new->type = EXPANDABLE;
 }
 

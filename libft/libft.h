@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 15:33:30 by tarata            #+#    #+#             */
-/*   Updated: 2022/05/16 21:32:38 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/16 23:18:00 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
-int					ft_isspace(const char *str);
+int					ft_isspace(int str);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);

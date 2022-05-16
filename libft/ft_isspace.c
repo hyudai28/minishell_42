@@ -6,20 +6,20 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 21:32:13 by hyudai            #+#    #+#             */
-/*   Updated: 2022/05/16 21:32:15 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/16 23:17:15 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isspace(const char *str)
+int	ft_isspace(int str)
 {
-	if (*str == ' '
-		|| *str == '\t'
-		|| *str == '\r'
-		|| *str == '\f'
-		|| *str == '\v'
-		|| *str == '\n')
+	if (str == ' '
+		|| str == '\t'
+		|| str == '\r'
+		|| str == '\f'
+		|| str == '\v'
+		|| str == '\n')
 		return (1);
 	else
 		return (0);

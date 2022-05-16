@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 22:32:44 by tarata            #+#    #+#             */
-/*   Updated: 2022/05/16 21:32:10 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/16 23:17:39 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_atoi(const char *str)
 
 	nbr = 0;
 	sign = 1;
-	while (ft_isspace(str))
+	while (ft_isspace(*str))
 		str++;
 	if (*str == '-')
 		sign = -1;

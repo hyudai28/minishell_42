@@ -11,7 +11,7 @@ int lexer(char *argv, t_token *head)
 	flag = (t_flag){0};
 	while (*str != '\0')
 	{
-		while (ft_isspace(str))
+		while (ft_isspace(*str))
 		{
 			str++;
 			flag.space = TRUE;
