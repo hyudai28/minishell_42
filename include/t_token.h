@@ -76,7 +76,6 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str);
 void	flag_set(t_flag *flag, char c);
 
 //token_strlen.c
-void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag);
 void ft_strlen_others(char *str, t_token *new);
 void ft_strlen_redirect(char *str, t_token *new, t_flag *flag);
 void ft_strlen_pipe(t_token *new, t_flag *flag);

@@ -53,11 +53,7 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 		new->type = TAIL;
 		return (new);
 	}
-	if (flag->dq_flag == TRUE)
-		ft_strlen_sq_dq(*str, '"', new, flag);
-	else if (flag->sq_flag == TRUE)
-		ft_strlen_sq_dq(*str, '\'', new, flag);
-	else if (flag->pipe == TRUE)
+	if (flag->pipe == TRUE)
 		ft_strlen_pipe(new, flag);
 	else if (flag->redirect == TRUE)
 		ft_strlen_redirect(*str, new, flag);
@@ -67,7 +63,7 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	new->word = (char *)malloc(new->word_len + 1);
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 
-
+	printf("new wordlen => [%zu]\n", new->word_len);
 	printf("new token => [%s]\n", new->word);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
