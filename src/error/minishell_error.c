@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int error(char *msg, int error_no, t_envlist *env)
+int	error(char *msg, int error_no, t_envlist *env)
 {
 	env->doller_ret = error_no;
 	ft_putendl_fd(msg, 2);
@@ -11,7 +11,7 @@ int	export_error(char *msg, int flag)
 {
 	ft_putstr_fd("minishell: export: ", 2);
 	if (flag == EXPORT_IDENTIFIER)
-	write(1, "\'", 1);
+		write(1, "\'", 1);
 	ft_putstr_fd(msg, 2);
 	if (flag == EXPORT_IDENTIFIER || ft_strlen(msg) == 1)
 	{
