@@ -1,4 +1,3 @@
-
 #include "libft.h"
 
 int	ft_strchr_gnl(char *str_stored, char c)
@@ -14,4 +13,3 @@ int	ft_strchr_gnl(char *str_stored, char c)
 	}
 	return (-1);
 }
-
