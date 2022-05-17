@@ -7,6 +7,7 @@ t_envlist	*envlist_constructor(char **envp)
 	int			env_i;
 
 	new = (t_envlist *)malloc(sizeof(t_envlist));
+	//失敗ケア
 	ft_memset(new, 0, sizeof(t_envlist));
 	new->prev = NULL;
 	new->next = NULL;
@@ -46,9 +47,10 @@ void	envlist_destructor(t_envlist *envlist)
 
 void	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 {
-	t_envlist *new;
+	t_envlist	*new;
 
 	new = (t_envlist *)malloc(sizeof(t_envlist));
+	//失敗ケア
 	ft_memset(new, 0, sizeof(t_envlist));
 	new->prev = prev;
 	new->next = head;
@@ -61,12 +63,13 @@ void	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 
 void	envlist_set_keyvalue(t_envlist *target, char *new_line)
 {
-	int chr;
+	int	chr;
 
 	chr = ft_strchr_gnl(new_line, '=');
 	if (chr == -1)
 	{
 		target->key = ft_strdup(new_line);
+		//失敗ケア?
 		target->value = NULL;
 		return ;
 	}
@@ -74,7 +77,7 @@ void	envlist_set_keyvalue(t_envlist *target, char *new_line)
 	target->value = ft_substr(new_line, chr + 1, ft_strlen(new_line) - chr);
 }
 
-t_envlist	*envlist_search(char *tr_line, t_envlist *node)
+t_envlist	*envlist_search(char *tr_line, t_envlist	*node)
 {
 	size_t	tr_len;
 
@@ -92,9 +95,9 @@ t_envlist	*envlist_search(char *tr_line, t_envlist *node)
 
 void	envlist_delete(char *delete_line, t_envlist *head)
 {
-	t_envlist *target;
-	t_envlist *target_prev;
-	t_envlist *target_next;
+	t_envlist	*target;
+	t_envlist	*target_prev;
+	t_envlist	*target_next;
 
 	target = envlist_search(delete_line, head);
 	if (!target)
@@ -131,8 +134,8 @@ int	envlist_node_count(t_envlist *head)
 char	**envlist_to_char(t_envlist *head)
 {
 	t_envlist	*tmp;
-	char	*key;
-	char	**split;
+	char		*key;
+	char		**split;
 
 	tmp = head->next;
 	key = NULL;
@@ -150,7 +153,7 @@ char	**envlist_to_char(t_envlist *head)
 
 void	envlist_show(t_envlist *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (env->head)

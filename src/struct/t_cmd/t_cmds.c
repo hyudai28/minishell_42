@@ -49,7 +49,7 @@ void	cmds_destructor(t_cmds *cmds)
 	cmds = NULL;
 }
 
-bool	token_finish(t_token_type type)
+bool	token_finish(enum e_token_type type)
 {
 	if (type == TAIL)
 		return (2);
@@ -73,6 +73,7 @@ char	*token_strjoin(char *cmd_line, char *s2)
 	else
 		len2 = ft_strlen(s2);
 	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
+	//失敗ケア
 	if (str == NULL)
 		return (NULL);
 	ft_memcpy(str, cmd_line, len1);
@@ -96,7 +97,7 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 		new->outfd_type = 1;
 		token = token->next;
 		if (token->word)
-			new->outfd_line = ft_strdup(token->word);
+			new->outfd_line = ft_strdup(token->word); //失敗
 		else
 		{
 			ft_putendl_fd("redirect error", 2);
@@ -106,7 +107,7 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	return (token);
 }
 
-t_cmds_out_fd	cmds_setoutfd(t_token_type type)
+enum e_cmds_out_fd	cmds_setoutfd(enum e_token_type type)
 {
 	if (type == PIPE)
 		return (C_PIPE);
@@ -115,7 +116,7 @@ t_cmds_out_fd	cmds_setoutfd(t_token_type type)
 	return (C_STDOUT);
 }
 
-t_cmds_out_fd	cmds_setinfd(t_token_type type)
+enum e_cmds_out_fd	cmds_setinfd(enum e_token_type type)
 {
 	if (type == PIPE)
 		return (IN_PIPE);
