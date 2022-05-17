@@ -7,17 +7,17 @@ size_t	is_separate_char(char c)
 	else if (c == '\"')
 		return (2);
 	else if (c == ' ')
-		return(3);
+		return (3);
 	else if (c == '<')
-		return(4);
+		return (4);
 	else if (c == '>')
-		return(5);
+		return (5);
 	else if (c == '|')
-		return(6);
+		return (6);
 	return (0);
 }
 
-void ft_strlen_others(char *str, t_token *new)
+void	ft_strlen_others(char *str, t_token *new)
 {
 	size_t	len;
 	size_t	c_status;
@@ -46,7 +46,7 @@ void ft_strlen_others(char *str, t_token *new)
 	printf("len[%zu]\n", len);
 }
 
-void ft_strlen_redirect(char *str, t_token *new, t_flag *flag)
+void	ft_strlen_redirect(char *str, t_token *new, t_flag *flag)
 {
 	if (!ft_strncmp(str, ">>", 2))
 	{
@@ -71,7 +71,7 @@ void ft_strlen_redirect(char *str, t_token *new, t_flag *flag)
 	flag->redirect = FALSE;
 }
 
-void ft_strlen_pipe(t_token *new, t_flag *flag)
+void	ft_strlen_pipe(t_token *new, t_flag *flag)
 {
 	new->word_len = 1;
 	new->type = PIPE;
