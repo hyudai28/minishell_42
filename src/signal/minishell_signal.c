@@ -1,11 +1,8 @@
 #include "minishell.h"
 
-void	signal_ctrl_c()
+void	signal_ctrl_c(int sig)
 {
-	// write(1, "\n", 1);
-	static int i;
-	if (i == 0)
-		write(1, "\n", 1);
+	write(1, "\n", 1);
 	write(1, "minishell > ", 12);
 }
 
@@ -15,10 +12,10 @@ void	perr_exit(char *err_msg)
 	exit(1);
 }
 
-int	minishell_signal()
+int	minishell_signal(void)
 {
-	struct sigaction ctrl_c;
-	struct sigaction ctrl_bs;
+	struct	sigaction ctrl_c;
+	struct	sigaction ctrl_bs;
 
 	ft_memset(&ctrl_c, 0, sizeof(ctrl_c));
 	ctrl_c.sa_handler = signal_ctrl_c;
