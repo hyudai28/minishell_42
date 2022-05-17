@@ -38,7 +38,7 @@ void	token_destructor(t_token *token)
 	token = NULL;
 }
 
-void	get_token_len(t_token *new, t_flag *flag, t_token *cur, char **str)
+void	get_token_len(t_token *new, t_flag *flag, char **str)
 {
 	if (flag->pipe == TRUE)
 		ft_strlen_pipe(new, flag);
@@ -61,7 +61,7 @@ t_token	*new_token(t_flag *flag, t_token *cur, char **str)
 		new->type = TAIL;
 		return (new);
 	}
-	get_token_len(new, flag, cur, str);
+	get_token_len(new, flag, str);
 	new->space_flag = flag->space;
 	new->word = (char *)malloc(new->word_len + 1);//失敗
 	ft_strlcpy(new->word, *str, new->word_len + 1);
