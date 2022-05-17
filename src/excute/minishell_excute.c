@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-int	outfd_setup(t_cmds *cmds, int *stdfd);
-int	infd_setup(t_cmds *cmds, int *stdfd);
+int		outfd_setup(t_cmds *cmds, int *stdfd);
+int		infd_setup(t_cmds *cmds, int *stdfd);
 void	inout_fd_setup(t_cmds *cmds, int *stdfd);
 
 void	clean_fd(int *backup_fd)
@@ -20,14 +20,10 @@ void	set_backup_fd(int *stdfd)
 	stdfd[1] = dup(1);
 }
 
-
-
 int	pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env)
 {
-//when error happen, ret_pipe_fd[0] == -1
 	int	pipe_fd[2];
-
-
+	//when error happen, ret_pipe_fd[0] == -1
 	if (cmds->outfd_type == C_PIPE)
 	{
 		if (pipe(pipe_fd) != 0)
@@ -58,11 +54,9 @@ int	pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env)
 	return (0);
 }
 
-
-
-void	fd_test()
+void	fd_test(void)
 {
-	char buf[9];
+	char	buf[9];
 
 	read(0, buf, 8);
 	printf("buf = %s\n", buf);
@@ -103,7 +97,8 @@ int	minishell_excute(t_token *head, t_envlist *env)
 		cmds = cmds->next;
 		if (cmds->head)
 			break ;
-		if (cmds->prev->outfd_type == C_REDIRECT || cmds->prev->outfd_type == IN_REDIRECT)
+		if (cmds->prev->outfd_type == C_REDIRECT || \
+		cmds->prev->outfd_type == IN_REDIRECT)
 			cmds = cmds->next;
 	}
 	clean_fd(backup_stdfd);
@@ -111,23 +106,11 @@ int	minishell_excute(t_token *head, t_envlist *env)
 	return (result);
 }
 
-
-
-
-
-
-
-
-
 void	inout_fd_setup(t_cmds *cmds, int *stdfd)
 {
 	infd_setup(cmds, stdfd);
 	outfd_setup(cmds, stdfd);
 }
-
-
-
-
 
 int	outfd_setup(t_cmds *cmds, int *stdfd)
 {
@@ -152,13 +135,6 @@ int	outfd_setup(t_cmds *cmds, int *stdfd)
 	return (0);
 }
 
-
-
-
-
-
-
-
 int	infd_setup(t_cmds *cmds, int *stdfd)
 {
 	int		stdin_fd;
@@ -179,13 +155,12 @@ int	infd_setup(t_cmds *cmds, int *stdfd)
 	return (0);
 }
 
-
-int	do_parent()
+int	do_parent(void)
 {
 	int	status;
 
 	wait(&status);
-	if (status == -1) //waitの失敗
+	if (status == -1)
 		return (1);
 	if (WIFEXITED(status) == 1)
 	{
@@ -195,7 +170,7 @@ int	do_parent()
 	{
 		return (128 + WTERMSIG(status));
 	}
-	return (1); //多分異常終了
+	return (1);
 }
 
 int	check_directory(char *msg)
@@ -217,7 +192,7 @@ int	check_directory(char *msg)
 int	command_not_found_error(char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(msg ,2);
+	ft_putstr_fd(msg, 2);
 	if (check_directory(msg) == 1)
 		ft_putendl_fd(": No such file or directory", 2);
 	else
@@ -278,7 +253,7 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 {
 	int		path_i;
 	int		access_ret;
-	char *path;
+	char	*path;
 
 	path_i = 0;
 	access_ret = access(cmd, X_OK);
