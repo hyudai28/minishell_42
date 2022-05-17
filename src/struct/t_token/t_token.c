@@ -1,16 +1,14 @@
-
 #include "t_token.h"
 
-void ft_strlen_sq_dq(char *str, char quotation, t_token *new, t_flag *flag);
-void ft_strlen_others(char *str, t_token *new);
-void ft_strlen_redirect(char *str, t_token *new, t_flag *flag);
-void ft_strlen_pipe(t_token *new, t_flag *flag);
+void	ft_strlen_others(char *str, t_token *new);
+void	ft_strlen_redirect(char *str, t_token *new, t_flag *flag);
+void	ft_strlen_pipe(t_token *new, t_flag *flag);
 
-t_token *token_constructor()
+t_token	*token_constructor(void)
 {
-	t_token *head;
+	t_token	*head;
 
-	head = (t_token *)malloc(sizeof(t_token));
+	head = (t_token *)malloc(sizeof(t_token));//失敗
 	ft_memset(head, 0, sizeof(t_token));
 	head->next = NULL;
 	head->prev = NULL;
@@ -40,11 +38,21 @@ void	token_destructor(t_token *token)
 	token = NULL;
 }
 
-t_token *new_token(t_flag *flag, t_token *cur, char **str)
+void	get_token_len(t_token *new, t_flag *flag, t_token *cur, char **str)
 {
-	t_token *new;
+	if (flag->pipe == TRUE)
+		ft_strlen_pipe(new, flag);
+	else if (flag->redirect == TRUE)
+		ft_strlen_redirect(*str, new, flag);
+	else
+		ft_strlen_others(*str, new);
+}
 
-	new = (t_token *)malloc(sizeof(t_token));
+t_token	*new_token(t_flag *flag, t_token *cur, char **str)
+{
+	t_token	*new;
+
+	new = (t_token *)malloc(sizeof(t_token));//失敗
 	ft_memset(new, 0, sizeof(t_token));
 	cur->next = new;
 	new->prev = cur;
@@ -53,16 +61,10 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 		new->type = TAIL;
 		return (new);
 	}
-	if (flag->pipe == TRUE)
-		ft_strlen_pipe(new, flag);
-	else if (flag->redirect == TRUE)
-		ft_strlen_redirect(*str, new, flag);
-	else
-		ft_strlen_others(*str, new);
+	get_token_len(new, flag, cur, str);
 	new->space_flag = flag->space;
-	new->word = (char *)malloc(new->word_len + 1);
+	new->word = (char *)malloc(new->word_len + 1);//失敗
 	ft_strlcpy(new->word, *str, new->word_len + 1);
-
 	printf("new wordlen => [%zu]\n", new->word_len);
 	printf("new token => [%s]\n", new->word);
 	if (new->word_len == WORD_LEN_ERROR)
@@ -72,19 +74,8 @@ t_token *new_token(t_flag *flag, t_token *cur, char **str)
 	return (new);
 }
 
-void flag_set(t_flag *flag, char c)
+void	flag_set(t_flag *flag, char c)
 {
-	//if (c == '"')
-	//	flag->dq_flag = TRUE;
-	//else if (c == '\'')
-	//	flag->sq_flag = TRUE;
-	//else if (c == '>' || c == '<')
-	//	flag->redirect = TRUE;
-	//else if (c == '|')
-	//	flag->pipe = TRUE;
-
-
-
 	if (c == '>' || c == '<')
 		flag->redirect = TRUE;
 	else if (c == '|')
