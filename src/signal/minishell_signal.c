@@ -14,8 +14,8 @@ void	perr_exit(char *err_msg)
 
 int	minishell_signal(void)
 {
-	struct	sigaction ctrl_c;
-	struct	sigaction ctrl_bs;
+	struct sigaction	ctrl_c;
+	struct sigaction	ctrl_bs;
 
 	ft_memset(&ctrl_c, 0, sizeof(ctrl_c));
 	ctrl_c.sa_handler = signal_ctrl_c;
