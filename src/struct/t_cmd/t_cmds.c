@@ -1,9 +1,8 @@
-
 #include "t_token.h"
 
 t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
 {
-	t_cmds *new;
+	t_cmds	*new;
 
 	new = (t_cmds *)malloc(sizeof(t_cmds));
 	ft_memset(new, 0, sizeof(t_cmds));
@@ -151,7 +150,7 @@ char	**separate_token(t_token *token)
 	while (!token_finish(token->type))
 	{
 		cmd[index] = ft_strdup(token->word);
-		//malloc失敗時にfree処理したい
+		//malloc失敗時にfree処理
 		token = token->next;
 		index++;
 	}
