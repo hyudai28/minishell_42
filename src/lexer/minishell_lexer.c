@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-int lexer(char *argv, t_token *head)
+int	lexer(char *argv, t_token *head)
 {
-	t_flag flag;
-	t_token *cur;
-	char *str;
+	t_flag	flag;
+	t_token	*cur;
+	char	*str;
 
 	str = argv;
 	cur = head;
@@ -26,8 +26,5 @@ int lexer(char *argv, t_token *head)
 		flag.space = FALSE;
 	}
 	cur = new_token(&flag, cur, &str);
-	//t_token *tmp = head;
-	//debug_all(head);
-	//exit(1);
 	return (0);
 }
