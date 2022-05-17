@@ -5,6 +5,7 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
 	t_cmds	*new;
 
 	new = (t_cmds *)malloc(sizeof(t_cmds));
+	//malloc失敗処理
 	ft_memset(new, 0, sizeof(t_cmds));
 	new->prev = NULL;
 	if (head)
