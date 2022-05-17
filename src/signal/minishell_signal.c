@@ -3,7 +3,7 @@
 void	signal_ctrl_c(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
+	write(1, "\b\b  \b\n", 6);
 	write(1, "minishell > ", 12);
 }
 
