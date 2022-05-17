@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 bool	envpcmp(char *s1, char *s2)
@@ -11,8 +10,8 @@ bool	envpcmp(char *s1, char *s2)
 		if (s1[i] != s2[i])
 			if (((unsigned char)s1[i] - (unsigned char)s2[i]) > 0)
 				return (0);
-			else
-				return (1);
+		else
+			return (1);
 		else
 			i++;
 	}
@@ -21,14 +20,12 @@ bool	envpcmp(char *s1, char *s2)
 		printf("si is null\n");
 		return (1);
 	}
-	return(0);
+	return (0);
 }
-
-
 
 void	export_output(char *line, t_envlist *head)
 {
-	t_envlist *node;
+	t_envlist	*node;
 
 	ft_putstr("declare -x ");
 	ft_putstr(line);
@@ -63,9 +60,6 @@ void	envlist_swap(char **envp, t_envlist *head)
 		env_i++;
 	}
 }
-
-
-
 
 int	export_is_invalid(char *line)
 {

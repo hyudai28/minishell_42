@@ -1,4 +1,3 @@
-
 #include "../include/minishell.h"
 
 int	exit_numeric(const char *num)

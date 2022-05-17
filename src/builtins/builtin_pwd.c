@@ -1,9 +1,8 @@
-
 #include "minishell.h"
 
-int builtin_pwd(char **cmds, int argc, t_envlist *env)
+int	builtin_pwd(char **cmds, int argc, t_envlist *env)
 {
-	char *pwd;
+	char	*pwd;
 
 	(void)cmds;
 	(void)argc;

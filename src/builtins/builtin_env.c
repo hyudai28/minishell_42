@@ -1,7 +1,4 @@
-
 #include "minishell.h"
-
-
 
 int	builtin_env(char **cmds, int argc, t_envlist *envp)
 {
@@ -10,7 +7,7 @@ int	builtin_env(char **cmds, int argc, t_envlist *envp)
 	if (envp->next->head)
 		return (0);
 	envp = envp->next;
-	while(envp->head != 1)
+	while (envp->head != 1)
 	{
 		if (envp->value)
 		{
