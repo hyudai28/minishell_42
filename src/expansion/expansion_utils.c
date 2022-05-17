@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-char *ft_strjoin3(char *a, char *b, char *c, int need_free)
+char	*ft_strjoin3(char *a, char *b, char *c, int need_free)
 {
-	char *ret1;
-	char *ret2;
+	char	*ret1;
+	char	*ret2;
 
 	ret1 = ft_strjoin(a, b);
 	ret2 = ft_strjoin(ret1, c);
@@ -23,7 +23,7 @@ char *ft_strjoin3(char *a, char *b, char *c, int need_free)
 
 size_t	get_envlen(const char *line)
 {
-	size_t envlen;
+	size_t	envlen;
 
 	envlen = 0;
 	while (line[envlen])
@@ -31,14 +31,14 @@ size_t	get_envlen(const char *line)
 		if (ft_isalnum(line[envlen]) || line[envlen] == '_')
 			envlen++;
 		else
-			break;
+			break ;
 	}
 	return (envlen);
 }
 
 char	*get_envline(t_envlist *env, char *line)
 {
-	t_envlist *target;
+	t_envlist	*target;
 
 	target = envlist_search(line, env);
 	if (line)
@@ -61,7 +61,6 @@ size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var)
 		var_len = 2 + tword_i;
 	else
 	{
-
 		var_len = ft_strlen(var) + tword_i + 1;
 		var = get_envline(env, var);
 		if (!var)
@@ -86,20 +85,20 @@ int	expansion_dq(t_token *token, t_envlist *env)
 	size_t	tword_len;
 	size_t	envlen;
 
-	tword_len = ft_strlen(token->word);
 	tword_i = 0;
+	tword_len = ft_strlen(token->word);
 	while (token->word && tword_i < tword_len)
 	{
 		if (token->word[tword_i] == '$')
-		{
 			if (token->word[tword_i + 1] == '?')
-				tword_i = assign_var(token, env, tword_i, ft_itoa(env->doller_ret));
-			else
-			{
+				tword_i = assign_var(token, env, tword_i, \
+				ft_itoa(env->doller_ret));
+		else
+		{
 				envlen = get_envlen(token->word + tword_i + 1);
-				tword_i = assign_var(token, env, tword_i, ft_substr(token->word, tword_i + 1, envlen));
+				tword_i = assign_var(token, env, tword_i, \
+				ft_substr(token->word, tword_i + 1, envlen));
 				tword_i++;
-			}
 		}
 		else
 			tword_i++;

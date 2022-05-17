@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int expansion(t_token *token, t_envlist *env)
+int	expansion(t_token *token, t_envlist *env)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = token;
 	token = token->next;
@@ -10,7 +10,7 @@ int expansion(t_token *token, t_envlist *env)
 	{
 		if (token->type == NONEXPANDABLE_SQ)
 		{
-			;
+			token->type = NONEXPANDABLE_SQ;
 		}
 		else if (token->type == EXPANDABLE_DQ)
 		{
@@ -23,7 +23,7 @@ int expansion(t_token *token, t_envlist *env)
 		token = token->next;
 	}
 	if (remove_quot(head) != 0)
-		return (1); //malloc error
+		return (1);
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int	closed_quot(const char *line)
 }
 
 // クオーテーションをとる関数 word_lenの部分修正。
-int remove_quot(t_token *token)
+int	remove_quot(t_token *token)
 {
 	char	*tmp;
 
@@ -61,23 +61,11 @@ int remove_quot(t_token *token)
 		if (token->type == NONEXPANDABLE_SQ || token->type == EXPANDABLE_DQ)
 		{
 			tmp = token->word;
-			// if (token->word_len != 2)
-			// 	token->word = malloc()
-			// if (token->word_len == 2)
-			// {
-			// 	token->word = malloc(1);
-			// 	if (token->word == NULL)
-			// 		return (1);
-			// 	token->word[0] = '\0';
-			// }
-			// else
-			// {
 			token->word = malloc(token->word_len - 1);
 			if (token->word == NULL)
 				return (1);
 			token->word[0] = '\0';
 			ft_strlcpy(token->word, (tmp + 1), token->word_len - 1);
-			// }
 			token->word_len -= 2;
 			free(tmp);
 		}
