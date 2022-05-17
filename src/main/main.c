@@ -1,11 +1,8 @@
 #include "minishell.h"
-//# include <readline/readline.h>
-//# include <readline/history.h>
-//#include "/opt/homebrew/opt/readline/include/readline/readline.h"
 
-sig_atomic_t signal_handled = 0;
+sig_atomic_t	g_signal_handled = 0;
 
-int minishell(char *command, t_envlist *envp)
+int	minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
 	int		result;
@@ -24,20 +21,20 @@ int minishell(char *command, t_envlist *envp)
 	return (doller_ret(result, envp));
 }
 
-int	check_state()
+int	check_state(void)
 {
-	if (signal_handled)
+	if (g_signal_handled)
 	{
-		signal_handled = 0;
+		g_signal_handled = 0;
 		//rl_delete_text(0, rl_end);
 		//rl_done = 1;
 	}
 	return (0);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char *command;
+	char		*command;
 	t_envlist	*env_head;
 
 	(void)argv;
