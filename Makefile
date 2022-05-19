@@ -73,7 +73,8 @@ T_ENVLIST_SRCS	=	$(addprefix $(T_ENVLIST_DIR), $(T_ENVLIST_FILES))
 
 T_TOKEN_DIR	=	struct/t_token/
 T_TOKEN_FILES	=	t_token.c \
-					token_strlen.c
+					token_strlen.c \
+					t_token_utils.c
 T_TOKEN_SRCS	=	$(addprefix $(T_TOKEN_DIR), $(T_TOKEN_FILES))
 
 SRC_FILES =			$(MAIN_SRCS) \

@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   t_token_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/05/19 23:17:40 by hyudai           ###   ########.fr       */
+/*   Created: 2022/05/19 23:02:12 by hyudai            #+#    #+#             */
+/*   Updated: 2022/05/19 23:17:08 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredocument(t_token *head)
+int	token_delone(t_token *token)
 {
-	t_token	*token;
+	t_token	*before;
+	t_token	*after;
 
-	token = head->next;
-	while (token->type != TAIL)
+	if (token->head != 1)
+		before = token->prev;
+	else
+		return (1);
+	if (token->type != TAIL)
+		after = token->next;
+	else
+		return (1);
+	if (token->word)
 	{
-		if (token->type == HEREDOC)
-		{
-			//heredocを受け取る
-			//<<を上書きする
-			//token->type = NONEXPANDABLE_SQ;
-			//EOFを削除
-			token_delone(token->next);
-		}
-		token = token->next;
+		free(token->word);
+		token->word = NULL;
 	}
+	free(token);
+	token = NULL;
+	before->next = after;
+	after->prev = before;
 	return (0);
 }

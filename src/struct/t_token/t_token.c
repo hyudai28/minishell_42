@@ -65,8 +65,6 @@ t_token	*new_token(t_flag *flag, t_token *cur, char **str)
 	new->space_flag = flag->space;
 	new->word = (char *)malloc(new->word_len + 1);//失敗
 	ft_strlcpy(new->word, *str, new->word_len + 1);
-	printf("new wordlen => [%zu]\n", new->word_len);
-	printf("new token => [%s]\n", new->word);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
 	(*str) += (new->word_len);

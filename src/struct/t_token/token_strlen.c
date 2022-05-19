@@ -43,7 +43,6 @@ void	ft_strlen_others(char *str, t_token *new)
 	}
 	new->word_len = len;
 	new->type = EXPANDABLE;
-	printf("len[%zu]\n", len);
 }
 
 void	ft_strlen_redirect(char *str, t_token *new, t_flag *flag)

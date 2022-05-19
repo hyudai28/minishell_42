@@ -92,6 +92,7 @@ void		flag_set(t_flag *flag, char c);
 t_cmds		*token_to_cmds(t_token *token);
 char		*token_strjoin(char *cmd_line, char *s2);
 bool		token_finish(enum e_token_type type);
+int			token_delone(t_token *token);
 
 //t_envlist
 t_envlist	*envlist_constructor(char **envp);
