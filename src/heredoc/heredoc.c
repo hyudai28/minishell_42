@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/05/19 23:17:40 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/19 23:41:58 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	heredocument(t_token *head)
 			//heredocを受け取る
 			//<<を上書きする
 			//token->type = NONEXPANDABLE_SQ;
+			if (ft_strchr(token->next->word, '\'') ||\
+			ft_strchr(token->next->word, '\"'))
+				token->type = NONEXPANDABLE_SQ;
+			else
+				token->type = EXPANDABLE;
 			//EOFを削除
 			token_delone(token->next);
 		}

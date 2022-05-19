@@ -1,11 +1,13 @@
 #include "minishell.h"
 
-void	signal_ctrl_c(int sig)
+void    signal_ctrl_c(int sig)
 {
-	(void)sig;
-	write(1, "\b", 1);
-	write(1, "\n", 1);
-	write(1, "minishell > ", 12);
+    (void)sig;
+    write(1, "\b\b  \b\n", 6);
+    // write(1, "minishell > ", 12);
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
 }
 
 void	perr_exit(char *err_msg)
