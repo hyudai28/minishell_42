@@ -61,7 +61,7 @@ void	ft_strlen_redirect(char *str, t_token *new, t_flag *flag)
 	else if (!ft_strncmp(str, "<<", 2))
 	{
 		new->word_len = 2;
-		new->type = R_STDIN;
+		new->type = HEREDOC;
 	}
 	else if (!ft_strncmp(str, "<", 1))
 	{

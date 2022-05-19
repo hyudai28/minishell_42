@@ -36,6 +36,9 @@ int		lexer(char *argv, t_token *head);
 //parser
 int		parser(t_token *token, t_envlist *env);
 
+//heredoc
+int		heredocument(t_token *head);
+
 //expansion
 int		remove_quot(t_token *token);
 int		expansion(t_token *token, t_envlist *env);

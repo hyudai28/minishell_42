@@ -55,6 +55,10 @@ PARSER_DIR	=	parser/
 PARSER_FILES	=	minishell_parser.c
 PARSER_SRCS	=	$(addprefix $(PARSER_DIR), $(PARSER_FILES))
 
+HEREDOC_DIR =	heredoc/
+HEREDOC_FILES	=	heredoc.c
+HEREDOC_SRCS	=	$(addprefix $(HEREDOC_DIR), $(HEREDOC_FILES))
+
 SIGNAL_DIR	=	signal/
 SIGNAL_FILES	=	minishell_signal.c
 SIGNAL_SRCS	=	$(addprefix $(SIGNAL_DIR), $(SIGNAL_FILES))
@@ -79,6 +83,7 @@ SRC_FILES =			$(MAIN_SRCS) \
 					$(EXPANSION_SRCS) \
 					$(LEXER_SRCS) \
 					$(PARSER_SRCS) \
+					$(HEREDOC_SRCS) \
 					$(SIGNAL_SRCS) \
 					$(T_CMD_SRCS) \
 					$(T_ENVLIST_SRCS) \
@@ -97,6 +102,7 @@ EXCUTE_OBJS = $(EXCUTE_FILES:%.c=$(OBJ_DIR)excute/%.o)
 EXPANSION_OBJS = $(EXPANSION_FILES:%.c=$(OBJ_DIR)expansion/%.o)
 LEXER_OBJS = $(LEXER_FILES:%.c=$(OBJ_DIR)lexer/%.o)
 PARSER_OBJS = $(PARSER_FILES:%.c=$(OBJ_DIR)parser/%.o)
+HEREDOC_OBJS = $(HEREDOC_FILES:%.c=$(OBJ_DIR)heredoc/%.o)
 SIGNAL_OBJS = $(SIGNAL_FILES:%.c=$(OBJ_DIR)signal/%.o)
 T_CMD_OBJS = $(T_CMD_FILES:%.c=$(OBJ_DIR)t_cmd/%.o)
 T_ENVLIST_OBJS = $(T_ENVLIST_FILES:%.c=$(OBJ_DIR)t_envlist/%.o)
@@ -132,6 +138,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)$(EXPANSION_DIR)
 	mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 	mkdir -p $(OBJ_DIR)$(PARSER_DIR)
+	mkdir -p $(OBJ_DIR)$(HEREDOC_DIR)
 	mkdir -p $(OBJ_DIR)$(SIGNAL_DIR)
 	mkdir -p $(OBJ_DIR)$(T_CMD_DIR)
 	mkdir -p $(OBJ_DIR)$(T_ENVLIST_DIR)

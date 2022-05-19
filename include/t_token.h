@@ -20,6 +20,7 @@ enum	e_token_type
 	PIPE,
 	REDIRECT,
 	R_STDIN,
+	HEREDOC,
 };
 
 typedef struct s_token
