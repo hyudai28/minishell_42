@@ -52,23 +52,31 @@ t_token	*new_token(t_flag *flag, t_token *cur, char **str)
 {
 	t_token	*new;
 
+	if (**str == '\0')
+		return (cur);
 	new = (t_token *)malloc(sizeof(t_token));//失敗
 	ft_memset(new, 0, sizeof(t_token));
 	cur->next = new;
 	new->prev = cur;
-	if (**str == '\0')
-	{
-		new->type = TAIL;
-		return (new);
-	}
 	get_token_len(new, flag, str);
-	new->space_flag = flag->space;
 	new->word = (char *)malloc(new->word_len + 1);//失敗
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
 	(*str) += (new->word_len);
 	new->head = 0;
+	return (new);
+}
+
+t_token	*end_token(t_token *cur)
+{
+	t_token	*new;
+
+	new = (t_token *)malloc(sizeof(t_token));
+	ft_memset(new, 0, sizeof(t_token));
+	new->type = TAIL;
+	cur->next = new;
+	new->prev = cur;
 	return (new);
 }
 
