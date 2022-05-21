@@ -87,6 +87,7 @@ void		cmds_destructor(t_cmds *cmds);
 t_token		*token_constructor(void);
 void		token_destructor(t_token *token);
 t_token		*new_token(t_flag *flag, t_token *cur, char **str);
+t_token		*end_token(t_token *cur);
 void		flag_set(t_flag *flag, char c);
 
 t_cmds		*token_to_cmds(t_token *token);

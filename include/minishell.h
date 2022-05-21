@@ -90,5 +90,6 @@ int		command_excute(char **cmds, t_envlist *env);
 
 //minishell_signal
 int		minishell_signal(void);
+int		excute_signal(void);
 
 #endif
