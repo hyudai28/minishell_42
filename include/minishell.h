@@ -28,6 +28,8 @@
 # define NO_SUCH_DIR	-3
 # define NOT_A_DIR -4
 
+volatile sig_atomic_t	g_signal_handled;
+
 // t_envlist *envp_head;
 
 //lexer
