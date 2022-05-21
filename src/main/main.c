@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-sig_atomic_t	g_signal_handled = 0;
-
 int	minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
@@ -13,7 +11,6 @@ int	minishell(char *command, t_envlist *envp)
 	if (heredocument(head))
 		return (1);
 	debug_all(head);
-	exit(1);
 	if (parser(head, envp) != 0)
 		return (1);
 	if (expansion(head, envp) != 0)
@@ -24,13 +21,11 @@ int	minishell(char *command, t_envlist *envp)
 	return (doller_ret(result, envp));
 }
 
-int	check_state(void)
+int	event_hook(void)
 {
 	if (g_signal_handled)
 	{
-		g_signal_handled = 0;
-		//rl_delete_text(0, rl_end);
-		//rl_done = 1;
+		g_signal_handled = 1;
 	}
 	return (0);
 }
@@ -42,13 +37,16 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)argc;
+	g_signal_handled = 0;
 	command = NULL;
 	env_head = envlist_constructor(envp);
 	minishell_signal();
-	rl_event_hook = check_state;
+	rl_signal_event_hook = event_hook;
 	while (1)
 	{
 		command = readline("minishell > ");
+		env_head->doller_ret = g_signal_handled;
+		g_signal_handled = 0;
 		if (command == NULL)
 			return (!write(2, "exit", 4));
 		else if (ft_strlen(command) > 0)
