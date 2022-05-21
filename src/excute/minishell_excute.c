@@ -210,6 +210,7 @@ int	pipex(char **cmds, t_envlist *env, char *path)
 		error("fork error ", 1, env);
 	if (pid == 0)
 	{
+		excute_signal();
 		envp = envlist_to_char(env);
 		if (execve(path, cmds, envp))
 		{
