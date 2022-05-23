@@ -19,6 +19,26 @@ int	dollar_ret(char **cmds, t_envlist *env)
 	return (0);
 }
 
+int	echo_check_flag(char *flag)
+{
+	size_t	flag_len;
+	size_t	len_index;
+
+	flag_len = ft_strlen(flag);
+	len_index = 2;
+	if (!ft_strncmp(flag, "-n", 2))
+	{
+		while (len_index < flag_len)
+		{
+			if (flag[len_index] == 'n')
+				len_index++;
+			else
+				return (0);
+		}
+	}
+	return (1);
+}
+
 int	builtin_echo(char **cmds, int argc, t_envlist *env)
 {
 	int	i;
@@ -28,7 +48,7 @@ int	builtin_echo(char **cmds, int argc, t_envlist *env)
 	{
 		if (dollar_ret(cmds, env))
 			return (0);
-		if (!ft_strncmp(cmds[1], "-n", ft_strlen(cmds[1]) + 1))
+		if (echo_check_flag(cmds[1]))
 		{
 			i = 1;
 			while (cmds[++i])
