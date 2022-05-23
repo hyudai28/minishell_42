@@ -44,7 +44,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		command = readline("minishell > ");
-		env_head->doller_ret = g_signal_handled;
+		if (g_signal_handled != 0)
+			env_head->doller_ret = g_signal_handled;
 		g_signal_handled = 0;
 		if (command == NULL)
 			return (!write(2, "exit", 4));
