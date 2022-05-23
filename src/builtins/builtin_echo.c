@@ -35,8 +35,9 @@ int	echo_check_flag(char *flag)
 			else
 				return (0);
 		}
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	builtin_echo(char **cmds, int argc, t_envlist *env)
