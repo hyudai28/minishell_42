@@ -5,9 +5,10 @@ void    signal_ctrl_c(int sig)
     (void)sig;
 	g_signal_handled = sig;
     // write(1, "\b\b  \b\n", 6);
-    // rl_on_new_line();
-    // rl_replace_line("", 0);
-    // rl_redisplay();
+     write(1, "\b\b\n", 3);
+     rl_on_new_line();
+     rl_replace_line("", 0);
+     rl_redisplay();
 }
 
 void	perr_exit(char *err_msg)

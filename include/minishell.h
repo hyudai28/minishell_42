@@ -27,6 +27,7 @@
 # define INVALID_OPTION 2
 # define NO_SUCH_DIR	-3
 # define NOT_A_DIR -4
+# define PERMISSION_ERR	-5
 
 volatile sig_atomic_t	g_signal_handled;
 
