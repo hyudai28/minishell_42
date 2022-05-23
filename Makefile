@@ -64,7 +64,8 @@ SIGNAL_FILES	=	minishell_signal.c
 SIGNAL_SRCS	=	$(addprefix $(SIGNAL_DIR), $(SIGNAL_FILES))
 
 T_CMD_DIR	=	struct/t_cmd/
-T_CMD_FILES	=	t_cmds.c
+T_CMD_FILES	=	cmds.c \
+				set_fd_cmds.c
 T_CMD_SRCS	=	$(addprefix $(T_CMD_DIR), $(T_CMD_FILES))
 
 T_ENVLIST_DIR	=	struct/t_envlist/
@@ -72,9 +73,10 @@ T_ENVLIST_FILES	=	t_envlist.c
 T_ENVLIST_SRCS	=	$(addprefix $(T_ENVLIST_DIR), $(T_ENVLIST_FILES))
 
 T_TOKEN_DIR	=	struct/t_token/
-T_TOKEN_FILES	=	t_token.c \
-					token_strlen.c \
-					t_token_utils.c
+T_TOKEN_FILES	=	token.c \
+					token_utils.c \
+					get_token.c \
+					manage_token.c
 T_TOKEN_SRCS	=	$(addprefix $(T_TOKEN_DIR), $(T_TOKEN_FILES))
 
 SRC_FILES =			$(MAIN_SRCS) \
