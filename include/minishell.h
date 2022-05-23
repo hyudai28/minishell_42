@@ -15,9 +15,11 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+
 # include "libft.h"
-// # include "t_cmds.h"
 # include "t_token.h"
+# include "t_cmds.h"
+# include "t_envlist.h"
 
 # define TRUE	1
 # define SUCCESS	1
