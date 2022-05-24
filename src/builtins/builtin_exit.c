@@ -50,7 +50,7 @@ static int	exit_atoi_overflow(unsigned long dest, int flag)
 	return (0);
 }
 
-static unsigned long	exit_atoi_excute(const char *str, unsigned long dest)
+static unsigned long	exit_atoi_execute(const char *str, unsigned long dest)
 {
 	while (ft_isdigit(*str))
 	{
@@ -79,7 +79,7 @@ int	exit_atoi(const char *str)
 		exit_numeric(str);
 	else if (exit_atoi_error(str, flag) == -1)
 		exit_numeric(str);
-	dest = exit_atoi_excute(str, dest);
+	dest = exit_atoi_execute(str, dest);
 	if (exit_atoi_overflow(dest, flag) == -1)
 		exit_numeric(str);
 	else if (exit_atoi_overflow(dest, flag) == 1)

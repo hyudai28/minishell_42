@@ -13,6 +13,7 @@ OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include 
 # DEBUG = -g -fsanitize=address
 LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -lhistory
 #LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -ltinfo
+
 # Source files
 # ****************************************************************************
 
@@ -38,9 +39,13 @@ ERROR_DIR	=	error/
 ERROR_FILES	=	minishell_error.c
 ERROR_SRCS	=	$(addprefix $(ERROR_DIR), $(ERROR_FILES))
 
-EXCUTE_DIR	=	excute/
-EXCUTE_FILES	=	minishell_excute.c
-EXCUTE_SRCS	=	$(addprefix $(EXCUTE_DIR), $(EXCUTE_FILES))
+execute_DIR	=	execute/
+execute_FILES	=	minishell_execute.c \
+					get_command_path.c \
+					pipe_setup.c \
+					pipex.c \
+					setfd.c
+execute_SRCS	=	$(addprefix $(execute_DIR), $(execute_FILES))
 
 EXPANSION_DIR	=	expansion/
 EXPANSION_FILES	=	expansion_utils.c \
@@ -69,7 +74,9 @@ T_CMD_FILES	=	cmds.c \
 T_CMD_SRCS	=	$(addprefix $(T_CMD_DIR), $(T_CMD_FILES))
 
 T_ENVLIST_DIR	=	struct/t_envlist/
-T_ENVLIST_FILES	=	t_envlist.c
+T_ENVLIST_FILES	=	envlist.c \
+					envlist_utils.c \
+					manage_envlist.c
 T_ENVLIST_SRCS	=	$(addprefix $(T_ENVLIST_DIR), $(T_ENVLIST_FILES))
 
 T_TOKEN_DIR	=	struct/t_token/
@@ -82,7 +89,7 @@ T_TOKEN_SRCS	=	$(addprefix $(T_TOKEN_DIR), $(T_TOKEN_FILES))
 SRC_FILES =			$(MAIN_SRCS) \
 					$(BUILTIN_SRCS) \
 					$(ERROR_SRCS) \
-					$(EXCUTE_SRCS) \
+					$(execute_SRCS) \
 					$(EXPANSION_SRCS) \
 					$(LEXER_SRCS) \
 					$(PARSER_SRCS) \
@@ -101,7 +108,7 @@ OBJS = $(SRC_FILES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJS = $(MAIN_FILES:%.c=$(OBJ_DIR)main/%.o)
 BUILTIN_OBJS = $(BUILTIN_FILES:%.c=$(OBJ_DIR)builtin/%.o)
 ERROR_OBJS = $(ERROR_FILES:%.c=$(OBJ_DIR)error/%.o)
-EXCUTE_OBJS = $(EXCUTE_FILES:%.c=$(OBJ_DIR)excute/%.o)
+execute_OBJS = $(execute_FILES:%.c=$(OBJ_DIR)execute/%.o)
 EXPANSION_OBJS = $(EXPANSION_FILES:%.c=$(OBJ_DIR)expansion/%.o)
 LEXER_OBJS = $(LEXER_FILES:%.c=$(OBJ_DIR)lexer/%.o)
 PARSER_OBJS = $(PARSER_FILES:%.c=$(OBJ_DIR)parser/%.o)
@@ -110,6 +117,7 @@ SIGNAL_OBJS = $(SIGNAL_FILES:%.c=$(OBJ_DIR)signal/%.o)
 T_CMD_OBJS = $(T_CMD_FILES:%.c=$(OBJ_DIR)t_cmd/%.o)
 T_ENVLIST_OBJS = $(T_ENVLIST_FILES:%.c=$(OBJ_DIR)t_envlist/%.o)
 T_TOKEN_OBJS = $(T_TOKEN_FILES:%.c=$(OBJ_DIR)t_token/%.o)
+
 
 # Recipe
 # ****************************************************************************

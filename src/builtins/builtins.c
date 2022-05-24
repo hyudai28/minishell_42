@@ -34,5 +34,5 @@ int	builtins(char **cmds, t_envlist *env)
 	else if (!ft_strncmp(cmds[0], "exit", 5))
 		return (builtin_exit(cmds, argc, env));
 	else
-		return (command_excute(cmds, env));
+		return (-1);
 }

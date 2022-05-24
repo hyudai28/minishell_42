@@ -15,7 +15,7 @@ int	minishell(char *command, t_envlist *envp)
 		return (1);
 	if (expansion(head, envp) != 0)
 		return (1);
-	result = minishell_excute(head, envp);
+	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));
 }

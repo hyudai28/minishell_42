@@ -38,7 +38,7 @@ int	minishell_signal(void)
 	return (0);
 }
 
-int	excute_signal(void)
+int	execute_signal(void)
 {
 	struct sigaction	ctrl_c;
 	struct sigaction	ctrl_bs;

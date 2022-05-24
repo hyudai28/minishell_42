@@ -62,8 +62,14 @@ int		char_count(char **count);
 void	envsplit_free(char **split);
 int		doller_ret(int ret, t_envlist *env);
 
-//excute
-int		minishell_excute(t_token *head, t_envlist *envp);
+//execute
+int		minishell_execute(t_token *head, t_envlist *envp);
+char	*get_command_path(char **cmds, t_envlist *env);
+int		pipex(char **cmds, t_envlist *env, char *path);
+int		pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env);
+void	clean_fd(int *backup_fd);
+void	set_backup_fd(int *stdfd);
+int		pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env);
 
 //debug
 void	debug1(t_token *tmp);
@@ -87,12 +93,12 @@ int		builtin_env(char **cmds, int argc, t_envlist *env);
 int		builtin_exit(char **exit_num, int argc, t_envlist *env);
 int		exit_isspace(int c);
 
-//command_excute
+//command_execute
 void	fd_setup(t_cmds *cmds);
-int		command_excute(char **cmds, t_envlist *env);
+int		command_execute(char **cmds, t_envlist *env);
 
 //minishell_signal
 int		minishell_signal(void);
-int		excute_signal(void);
+int		execute_signal(void);
 
 #endif
