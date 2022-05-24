@@ -39,13 +39,13 @@ ERROR_DIR	=	error/
 ERROR_FILES	=	minishell_error.c
 ERROR_SRCS	=	$(addprefix $(ERROR_DIR), $(ERROR_FILES))
 
-execute_DIR	=	execute/
-execute_FILES	=	minishell_execute.c \
+EXECUTE_DIR	=	execute/
+EXECUTE_FILES	=	minishell_execute.c \
 					get_command_path.c \
 					pipe_setup.c \
 					pipex.c \
 					setfd.c
-execute_SRCS	=	$(addprefix $(execute_DIR), $(execute_FILES))
+EXECUTE_SRCS	=	$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES))
 
 EXPANSION_DIR	=	expansion/
 EXPANSION_FILES	=	expansion_utils.c \
@@ -89,7 +89,7 @@ T_TOKEN_SRCS	=	$(addprefix $(T_TOKEN_DIR), $(T_TOKEN_FILES))
 SRC_FILES =			$(MAIN_SRCS) \
 					$(BUILTIN_SRCS) \
 					$(ERROR_SRCS) \
-					$(execute_SRCS) \
+					$(EXECUTE_SRCS) \
 					$(EXPANSION_SRCS) \
 					$(LEXER_SRCS) \
 					$(PARSER_SRCS) \
@@ -108,7 +108,7 @@ OBJS = $(SRC_FILES:%.c=$(OBJ_DIR)%.o)
 MAIN_OBJS = $(MAIN_FILES:%.c=$(OBJ_DIR)main/%.o)
 BUILTIN_OBJS = $(BUILTIN_FILES:%.c=$(OBJ_DIR)builtin/%.o)
 ERROR_OBJS = $(ERROR_FILES:%.c=$(OBJ_DIR)error/%.o)
-execute_OBJS = $(execute_FILES:%.c=$(OBJ_DIR)execute/%.o)
+EXECUTE_OBJS = $(EXECUTE_FILES:%.c=$(OBJ_DIR)execute/%.o)
 EXPANSION_OBJS = $(EXPANSION_FILES:%.c=$(OBJ_DIR)expansion/%.o)
 LEXER_OBJS = $(LEXER_FILES:%.c=$(OBJ_DIR)lexer/%.o)
 PARSER_OBJS = $(PARSER_FILES:%.c=$(OBJ_DIR)parser/%.o)
@@ -145,7 +145,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)$(MAIN_DIR)
 	mkdir -p $(OBJ_DIR)$(BUILTIN_DIR)
 	mkdir -p $(OBJ_DIR)$(ERROR_DIR)
-	mkdir -p $(OBJ_DIR)$(EXCUTE_DIR)
+	mkdir -p $(OBJ_DIR)$(EXECUTE_DIR)
 	mkdir -p $(OBJ_DIR)$(EXPANSION_DIR)
 	mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 	mkdir -p $(OBJ_DIR)$(PARSER_DIR)
