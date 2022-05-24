@@ -7,7 +7,7 @@ int	go_homedir(t_envlist *env)
 	int			dir_ret;
 
 	list = envlist_search("PWD", env);
-	oldpwd = ft_strdup(list->value);
+	oldpwd = ft_strdup(list->value); //malloc
 	list = envlist_search("HOME", env);
 	dir_ret = chdir(list->value);
 	if (dir_ret == -1)
@@ -93,7 +93,7 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 	else if (is_option(cmds[1]))
 		return (cd_errors(cmds, INVALID_OPTION));
 	list = envlist_search("PWD", env);
-	oldpwd = ft_strdup(list->value);
+	oldpwd = ft_strdup(list->value); //malloc
 	dir_ret = cd_dir_access(cmds);
 	if (dir_ret == -2)
 	{
