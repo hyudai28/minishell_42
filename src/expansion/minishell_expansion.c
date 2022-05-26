@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/27 01:38:46 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/27 01:40:38 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ static int	remove_quot(t_token *token)
 	len = get_length(token->word);
 	if (len == 0)
 		return (0);
-	new = malloc(sizeof(char) * len + 1);
+	new = malloc(sizeof(char) * len + 1);//malloc
 	i = 0;
 	len = 0;
 	while (token->word[i + len] != '\0')
 	{
-		printf("%s\n", token->word + i + len);
 		while (token->word[i + len] != '\0' && \
 		token->word[i + len] != '\'' && token->word[i + len] != '\"')
 		{
