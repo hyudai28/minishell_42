@@ -68,6 +68,10 @@ SIGNAL_DIR	=	signal/
 SIGNAL_FILES	=	minishell_signal.c
 SIGNAL_SRCS	=	$(addprefix $(SIGNAL_DIR), $(SIGNAL_FILES))
 
+STRUCT_DIR	=	struct/
+STRUCT_FILES	=	free_structors.c
+STRUCT_SRCS	=	$(addprefix $(STRUCT_DIR), $(STRUCT_FILES))
+
 T_CMD_DIR	=	struct/t_cmd/
 T_CMD_FILES	=	cmds.c \
 				set_fd_cmds.c
@@ -95,6 +99,7 @@ SRC_FILES =			$(MAIN_SRCS) \
 					$(PARSER_SRCS) \
 					$(HEREDOC_SRCS) \
 					$(SIGNAL_SRCS) \
+					$(STRUCT_SRCS) \
 					$(T_CMD_SRCS) \
 					$(T_ENVLIST_SRCS) \
 					$(T_TOKEN_SRCS)
@@ -114,6 +119,7 @@ LEXER_OBJS = $(LEXER_FILES:%.c=$(OBJ_DIR)lexer/%.o)
 PARSER_OBJS = $(PARSER_FILES:%.c=$(OBJ_DIR)parser/%.o)
 HEREDOC_OBJS = $(HEREDOC_FILES:%.c=$(OBJ_DIR)heredoc/%.o)
 SIGNAL_OBJS = $(SIGNAL_FILES:%.c=$(OBJ_DIR)signal/%.o)
+STRUCT_OBJS = $(STRUCT_FILES:%.c=$(OBJ_DIR)struct/%.o)
 T_CMD_OBJS = $(T_CMD_FILES:%.c=$(OBJ_DIR)t_cmd/%.o)
 T_ENVLIST_OBJS = $(T_ENVLIST_FILES:%.c=$(OBJ_DIR)t_envlist/%.o)
 T_TOKEN_OBJS = $(T_TOKEN_FILES:%.c=$(OBJ_DIR)t_token/%.o)
@@ -151,6 +157,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)$(PARSER_DIR)
 	mkdir -p $(OBJ_DIR)$(HEREDOC_DIR)
 	mkdir -p $(OBJ_DIR)$(SIGNAL_DIR)
+	mkdir -p $(OBJ_DIR)$(STRUCT_DIR)
 	mkdir -p $(OBJ_DIR)$(T_CMD_DIR)
 	mkdir -p $(OBJ_DIR)$(T_ENVLIST_DIR)
 	mkdir -p $(OBJ_DIR)$(T_TOKEN_DIR)
