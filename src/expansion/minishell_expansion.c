@@ -1,32 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_expansion.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/05/27 01:38:46 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// クオーテーションをとる関数 word_lenの部分修正。
-
-static size_t	count_quot(t_token *token)
+static size_t	get_length(const char *word)
 {
+	char	quot;
+	size_t	i;
+	size_t	len;
 
+	i = 0;
+	len = 0;
+	if (ft_strchr(word, '\'') == NULL && ft_strchr(word, '\"') == NULL)
+		return (0);
+	while (word[i + len] != '\0')
+	{
+		while (word[i + len] != '\0' && \
+		word[i + len] != '\'' && word[i + len] != '\"')
+			len++;
+		quot = word[i + len];
+		i++;
+		while (word[i + len] != quot)
+			len++;
+		i++;
+	}
+	return (len);
 }
 
 static int	remove_quot(t_token *token)
 {
-	char	*tmp;
+	char	*new;
+	char	quot;
+	size_t	i;
+	size_t	len;
 
 	token = token->next;
-	while (token->type != TAIL)
+	len = get_length(token->word);
+	if (len == 0)
+		return (0);
+	new = malloc(sizeof(char) * len + 1);
+	i = 0;
+	len = 0;
+	while (token->word[i + len] != '\0')
 	{
-		if (token->word[0] == '\'' || token->word[0] == '\"')
+		printf("%s\n", token->word + i + len);
+		while (token->word[i + len] != '\0' && \
+		token->word[i + len] != '\'' && token->word[i + len] != '\"')
 		{
-			tmp = token->word;
-			token->word = malloc(token->word_len - 1);
-			if (token->word == NULL)
-				return (1);
-			token->word[0] = '\0';
-			ft_strlcpy(token->word, (tmp + 1), token->word_len - 1);
-			token->word_len -= 2;
-			free(tmp);
+			new[len] = token->word[i + len];
+			len++;
 		}
-		token = token->next;
+		quot = token->word[i + len];
+		i++;
+		while (token->word[i + len] != quot)
+		{
+			new[len] = token->word[i + len];
+			len++;
+		}
+		i++;
 	}
+	new[i + len] = '\0';
+	free(token->word);
+	token->word = new;
 	return (0);
 }
 
