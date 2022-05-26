@@ -55,21 +55,23 @@ static int	check_head_type(t_token *token, t_envlist *env)
 
 static int	check_quot(const char *line)
 {
-	char	*quot;
+	size_t	sq;
+	size_t	dq;
 
+	sq = 0;
+	dq = 0;
 	while (*line != '\0')
 	{
-		while (*line != '\0' && *line != '\'' && *line != '\"')
-			line++;
-		if (*line == '\0')
-			return (0);
-		quot = ft_strrchr(line, *line);
-		if (line == quot)	//片方しかない
-			exit(1);
-		line = quot;
+		if (*line == '\'')
+			sq++;
+		else if (*line == '\"')
+			dq++;
 		line++;
 	}
-	return (0);
+	if (sq % 2 == 0 && dq % 2 == 0)
+		return (0);
+	else
+		return (1);
 }
 
 int	parser(t_token *token, t_envlist *env)
