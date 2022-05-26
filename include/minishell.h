@@ -45,16 +45,7 @@ int		parser(t_token *token, t_envlist *env);
 int		heredocument(t_token *head);
 
 //expansion
-int		remove_quot(t_token *token);
 int		expansion(t_token *token, t_envlist *env);
-void	move_pointer(char **tmp, size_t len);
-void	add_string_ex(t_token *token, t_flag *flag, char **tmp);
-void	add_string(t_token *token, t_flag *flag, char **tmp);
-void	add_string_dq(t_token *token, t_flag *flag, char **tmp, t_envlist *env);
-void	add_dq_end(t_token *token, t_flag *flag, char **tmp);
-void	add_dollar(t_token *token, t_flag *flag, char **tmp);
-void	add_childprocess(\
-	t_token *token, t_flag *flag, char **tmp, t_envlist *env);
 int		expansion_dq(t_token *token, t_envlist *env);
 
 //utils

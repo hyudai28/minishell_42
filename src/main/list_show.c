@@ -3,13 +3,12 @@
 void	debug1(t_token *tmp)
 {
 	printf("token : %s[%p]\n", tmp->word, &tmp->word);
-	if (tmp->type != HEAD)
-		printf("prev token : %s\n", tmp->prev->word);
+	// if (tmp->type != HEAD)
+		// printf("prev token : %s\n", tmp->prev->word);
 	printf("token_len : %d\n", (int)tmp->word_len);
-	printf("<token type> HEAD=0,TAIL=1,EXPANDABLE_DQ=2,\
-	NONEXPANDABLE_SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6,R_STDIN=7\n");
+	printf("<token type> HEAD=0,TAIL=1,DQ=2,\
+SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6,R_STDIN=7\n");
 	printf("token type: %d\n", tmp->type);
-	printf("space before token? yes:1 no:0   %d\n", tmp->space_flag);
 	printf("--------------------------\n");
 }
 
@@ -59,8 +58,8 @@ void	debug2(t_token *tmp)
 	printf("token : %s\n", tmp->word);
 	/*
 	printf("token_len : %d\n", (int)tmp->word_len);
-	printf("<token type> HEAD=0,TAIL=1,EXPANDABLE_DQ=2,\
-	NONEXPANDABLE_SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6\n");
+	printf("<token type> HEAD=0,TAIL=1,DQ=2,\
+	SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6\n");
 	printf("token type: %d\n", tmp->type);
 	printf("--------------------------\n");
 	*/

@@ -12,15 +12,7 @@
 
 #include "minishell.h"
 
-void	flag_set(t_flag *flag, char c)
-{
-	if (c == '>' || c == '<')
-		flag->redirect = TRUE;
-	else if (c == '|')
-		flag->pipe = TRUE;
-}
-
-t_token	*new_token(t_flag *flag, t_token *cur, char **str)
+t_token	*new_token(t_token *cur, char **str)
 {
 	t_token	*new;
 

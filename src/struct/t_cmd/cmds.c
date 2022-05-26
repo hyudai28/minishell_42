@@ -6,6 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/05/26 21:59:03 by mfujishi         ###   ########.fr       */
 /*   Updated: 2022/05/26 21:47:46 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -72,6 +73,8 @@ t_cmds	*token_to_cmds(t_token *token)
 	token = token->next;
 	while (token->type != TAIL)
 	{
+		while (token_check_separate(token->type))
+			token = token->next;
 		new = cmds_constructor(FALSE, head);
 		new->cmd = separate_token(token);
 		while (token_check_separate(token->type))

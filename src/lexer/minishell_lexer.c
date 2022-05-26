@@ -2,13 +2,11 @@
 
 int	lexer(char *argv, t_token *head)
 {
-	t_flag	flag;
 	t_token	*cur;
 	char	*str;
 
 	str = argv;
 	cur = head;
-	flag = (t_flag){0};
 	while (*str != '\0')
 	{
 		while (ft_isspace(*str))
