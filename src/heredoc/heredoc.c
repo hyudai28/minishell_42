@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/05/21 23:25:15 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:57:00 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	heredocument(t_token *head)
 			exit(0);
 			//heredocを受け取る
 			//<<を上書きする
-			//token->type = NONEXPANDABLE_SQ;
-			if (ft_strchr(token->next->word, '\'') ||\
-			ft_strchr(token->next->word, '\"'))
-				token->type = NONEXPANDABLE_SQ;
-			else
-				token->type = EXPANDABLE;
+			//token->type = SQ;
+			// if (ft_strchr(token->next->word, '\'') ||
+			// ft_strchr(token->next->word, '\"'))
+				// token->type = SQ;
+			// else
+				// token->type = EXPANDABLE;
 			//EOFを削除
 			token_delone(token->next);
 		}

@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:50:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/24 00:50:40 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/26 23:04:44 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	get_normal(char *str, t_token *new)
 	new->type = EXPANDABLE;
 }
 
-static void	get_redirect(char *str, t_token *new, t_flag *flag)
+static void	get_redirect(char *str, t_token *new)
 {
 	if (!ft_strncmp(str, ">>", 2))
 	{
@@ -79,22 +79,22 @@ static void	get_redirect(char *str, t_token *new, t_flag *flag)
 		new->word_len = 1;
 		new->type = R_STDIN;
 	}
-	flag->redirect = FALSE;
 }
 
-static void	get_pipe(t_token *new, t_flag *flag)
+static void	get_pipe(char *str, t_token *new)
 {
 	new->word_len = 1;
+	if (str[1] == '|')
+		new->word_len = 2;
 	new->type = PIPE;
-	flag->pipe = FALSE;
 }
 
-void	get_token(t_token *new, t_flag *flag, char **str)
+void	get_token(t_token *new, char *str)
 {
-	if (flag->pipe == TRUE)
-		get_pipe(new, flag);
-	else if (flag->redirect == TRUE)
-		get_redirect(*str, new, flag);
+	if (*str == '|')
+		get_pipe(str, new);
+	else if (*str == '<' || *str == '>')
+		get_redirect(str, new);
 	else
-		get_normal(*str, new);
+		get_normal(str, new);
 }

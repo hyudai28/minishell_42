@@ -12,15 +12,7 @@
 
 #include "minishell.h"
 
-void	flag_set(t_flag *flag, char c)
-{
-	if (c == '>' || c == '<')
-		flag->redirect = TRUE;
-	else if (c == '|')
-		flag->pipe = TRUE;
-}
-
-t_token	*new_token(t_flag *flag, t_token *cur, char **str)
+t_token	*new_token(t_token *cur, char **str)
 {
 	t_token	*new;
 
@@ -30,7 +22,7 @@ t_token	*new_token(t_flag *flag, t_token *cur, char **str)
 	ft_memset(new, 0, sizeof(t_token));
 	cur->next = new;
 	new->prev = cur;
-	get_token(new, flag, str);
+	get_token(new, *str);
 	new->word = (char *)malloc(new->word_len + 1);//失敗
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == WORD_LEN_ERROR)

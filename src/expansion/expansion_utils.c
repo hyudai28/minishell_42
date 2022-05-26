@@ -84,11 +84,25 @@ int	expansion_dq(t_token *token, t_envlist *env)
 	size_t	tword_i;
 	size_t	tword_len;
 	size_t	envlen;
+	int		single_quot;
 
 	tword_i = 0;
 	tword_len = ft_strlen(token->word);
+	single_quot = 0;
 	while (token->word && tword_i < tword_len)
 	{
+		if (token->word[tword_i] == '\'')
+		{
+			if (single_quot == 0)
+				single_quot = 1;
+			else if (single_quot == 1)
+				single_quot = 0;
+		}
+		if (single_quot == 1)
+		{
+			tword_i++;
+			continue ;
+		}
 		if (token->word[tword_i] == '$')
 			if (token->word[tword_i + 1] == '?')
 				tword_i = assign_var(token, env, tword_i, \
