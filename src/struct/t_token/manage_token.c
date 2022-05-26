@@ -18,12 +18,16 @@ t_token	*new_token(t_token *cur, char **str)
 
 	if (**str == '\0')
 		return (cur);
-	new = (t_token *)malloc(sizeof(t_token));//失敗
+	new = (t_token *)malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
 	ft_memset(new, 0, sizeof(t_token));
 	cur->next = new;
 	new->prev = cur;
-	get_token(new, *str);
-	new->word = (char *)malloc(new->word_len + 1);//失敗
+	get_token(new, flag, str);
+	new->word = (char *)malloc(new->word_len + 1);
+	if (!new->word)
+		return (new);
 	ft_strlcpy(new->word, *str, new->word_len + 1);
 	if (new->word_len == WORD_LEN_ERROR)
 		return (new);
@@ -37,6 +41,8 @@ t_token	*end_token(t_token *cur)
 	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
 	ft_memset(new, 0, sizeof(t_token));
 	new->type = TAIL;
 	cur->next = new;

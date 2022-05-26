@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:47 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/26 21:47:16 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:05:19 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ t_token	*token_constructor(void)
 {
 	t_token	*head;
 
-	head = (t_token *)malloc(sizeof(t_token));//失敗
+	head = (t_token *)malloc(sizeof(t_token));
+	if (!head)
+		return (NULL);
 	ft_memset(head, 0, sizeof(t_token));
 	head->next = NULL;
 	head->prev = NULL;

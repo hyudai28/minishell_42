@@ -92,4 +92,7 @@ int		command_execute(char **cmds, t_envlist *env);
 int		minishell_signal(void);
 int		execute_signal(void);
 
+//struct
+int		free_structors(t_token *token, t_cmds *cmds, t_envlist *env);
+
 #endif
