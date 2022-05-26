@@ -63,8 +63,8 @@ static int	check_quot(const char *line)
 			line++;
 		if (*line == '\0')
 			return (0);
-		quot = ft_strrchr(line, *line);
-		if (line == quot)	//片方しかない
+		quot = ft_strchr(line + 1, *line);
+		if (quot == NULL)	//片方しかない
 			exit(1);
 		line = quot;
 		line++;
