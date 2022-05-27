@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/27 21:51:53 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/27 22:32:02 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	remove_quot(t_token *token)
 		}
 		i++;
 	}
-	new[i + len] = '\0';
+	new[len] = '\0';
 	free(token->word);
 	token->word = new;
 	return (0);
