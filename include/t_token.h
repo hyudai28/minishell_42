@@ -17,6 +17,7 @@ enum	e_token_type
 	TAIL,
 	EXPANDABLE,
 	PIPE,
+	APPEND_REDIRECT,
 	REDIRECT,
 	R_STDIN,
 	HEREDOC,
