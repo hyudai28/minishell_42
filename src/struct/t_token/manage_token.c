@@ -24,7 +24,7 @@ t_token	*new_token(t_token *cur, char **str)
 	ft_memset(new, 0, sizeof(t_token));
 	cur->next = new;
 	new->prev = cur;
-	get_token(new, flag, str);
+	get_token(new, *str);
 	new->word = (char *)malloc(new->word_len + 1);
 	if (!new->word)
 		return (new);

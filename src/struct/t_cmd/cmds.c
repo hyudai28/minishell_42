@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/26 21:59:03 by mfujishi         ###   ########.fr       */
-/*   Updated: 2022/05/26 21:47:46 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/27 13:49:25 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "t_cmds.h"
 
@@ -83,6 +83,7 @@ t_cmds	*token_to_cmds(t_token *token)
 		now->next = new;
 		head->prev = now;
 		now = now->next;
+		token = token->next;
 	}
 	return (head);
 }

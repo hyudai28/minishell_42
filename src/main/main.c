@@ -6,7 +6,7 @@ int	minishell(char *command, t_envlist *envp)
 	int		result;
 
 	head = token_constructor();
-	if (!lexer(command, head))
+	if (lexer(command, head) == 1)
 		return (free_structors(head, NULL, NULL));
 	// if (heredocument(head))
 		// return (1);
@@ -15,7 +15,6 @@ int	minishell(char *command, t_envlist *envp)
 	// debug_all(head);
 	if (expansion(head, envp) != 0)
 		return (1);
-	exit(1);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));

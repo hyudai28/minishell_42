@@ -11,14 +11,13 @@ int	lexer(char *argv, t_token *head)
 	{
 		while (ft_isspace(*str))
 			str++;
-		flag_set(&flag, *str);
-		cur = new_token(&flag, cur, &str);
+		cur = new_token(cur, &str);
 		if (!cur)
-			return (NULL);
+			return (1);
 	}
 	cur = end_token(cur);
 	if (!cur)
-		return (NULL);
+		return (1);
 	free(argv);
 	argv = NULL;
 	return (0);
