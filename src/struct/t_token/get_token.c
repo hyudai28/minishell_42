@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:50:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/26 23:04:44 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:52:36 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	get_redirect(char *str, t_token *new)
 	if (!ft_strncmp(str, ">>", 2))
 	{
 		new->word_len = 2;
-		new->type = REDIRECT;
+		new->type = APPEND_REDIRECT;
 	}
 	else if (!ft_strncmp(str, ">", 1))
 	{

@@ -4,19 +4,16 @@ static int	check_pipe_error(t_token *token, t_envlist *env)
 {
 	if (token->type == PIPE)
 	{
-		if (token->next->type == PIPE)
-		{
-			if (token->next->word[0] == '|' && token->next->word[1] == '\0')
-				error(\
-				"minishell: syntax error near unexpected token `|'", 2, env);
-			else if (token->next->word[0] == '|' && token->next->word[1] == '|')
-				error(\
-				"minishell: syntax error near unexpected token `||'", 2, env);
-			return (1);
-		}
 		if (token->next->type == TAIL)
 		{
 			error("Error \"syntax error around pipe\"", 1, env);
+			return (1);
+		}
+		else if (token->next->type == PIPE)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			ft_putstr_fd(token->next->word, 2);
+			error("'", 2, env);
 			return (1);
 		}
 	}
@@ -25,12 +22,20 @@ static int	check_pipe_error(t_token *token, t_envlist *env)
 
 static int	check_redirect_error(t_token *token, t_envlist *env)
 {
-	if (token->type == REDIRECT || token->type == R_STDIN)
+	if (token->type == REDIRECT || token->type == APPEND_REDIRECT || \
+			token->type == R_STDIN || token->type == HEREDOC)
 	{
-		if (token->next->type == REDIRECT || token->next->type == PIPE ||
-		token->next->type == TAIL || token->next->type == R_STDIN)
+		if (token->next->type == TAIL)
 		{
-			error("Error \"syntax error around redirect\"", 1, env);
+			error("bash: syntax error near unexpected token `newline'", 2, env);
+			return (1);
+		}
+		else if (token->type == REDIRECT || token->type == APPEND_REDIRECT || \
+			token->type == R_STDIN || token->type == HEREDOC)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			ft_putstr_fd(token->next->word, 2);
+			error("'", 2, env);
 			return (1);
 		}
 	}
@@ -41,10 +46,9 @@ static int	check_head_type(t_token *token, t_envlist *env)
 {
 	if (token->type == PIPE)
 	{
-		if (token->word[0] == '|' && token->word[1] == '\0')
-			error("minishell: syntax error near unexpected token `|'", 2, env);
-		else if (token->word[0] == '|' && token->word[1] == '|')
-			error("minishell: syntax error near unexpected token `||'", 2, env);
+		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+		ft_putstr_fd(token->word, 2);
+		error("'", 2, env);
 		return (1);
 	}
 	else if ((token->type == R_STDIN || token->type == HEREDOC || \
