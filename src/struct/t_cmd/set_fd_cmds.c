@@ -12,38 +12,22 @@
 
 #include "t_cmds.h"
 
-static enum e_cmds_out_fd	cmds_set_outfd(enum e_token_type type)
-{
-	if (type == PIPE)
-		return (C_PIPE);
-	if (type == REDIRECT)
-		return (C_REDIRECT);
-	return (C_STDOUT);
-}
-
-static enum e_cmds_out_fd	cmds_set_infd(enum e_token_type type)
-{
-	if (type == PIPE)
-		return (IN_PIPE);
-	if (type == R_STDIN)
-		return (IN_REDIRECT);
-	return (C_STDOUT);
-}
-
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
-	if (token->type == PIPE || token->type == REDIRECT)
+	if (token->next->type == PIPE)
 	{
-		new->outfd_type = cmds_set_outfd(token->type);
-		token = token->next;
+		new->infd_type = FD_PIPE_IN;
+		new->outfd_type = FD_PIPE_OUT;
 	}
-	else if (token->prev->type == PIPE || token->type == R_STDIN)
-	{
-		if (token->type == R_STDIN)
-			new->outfd_type = cmds_set_infd(token->type);
-		else
-			new->outfd_type = cmds_set_infd(token->prev->type);
-		token = token->next;
-	}
+	else if (token->next->type == REDIRECT)
+		new->outfd_type = FD_REDIRECT;
+	else if (token->next->type == APPEND_REDIRECT)
+		new->outfd_type = FD_APPEND_REDIRECT;
+	else if (token->next->type == R_STDIN)
+		new->infd_type = FD_R_STDIN;
+	else if (token->next->type == HEREDOC)
+		new->infd_type = FD_HEREDOC;
+	else
+		new->outfd_type = FD_STDOUT;
 	return (token);
 }

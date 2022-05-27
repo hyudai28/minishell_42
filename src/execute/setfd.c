@@ -20,7 +20,7 @@ int	pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env)
 {
 	int	pipe_fd[2];
 	//when error happen, ret_pipe_fd[0] == -1
-	if (cmds->outfd_type == C_PIPE)
+	if (cmds->outfd_type == FD_PIPE_OUT)
 	{
 		if (pipe(pipe_fd) != 0)
 		{

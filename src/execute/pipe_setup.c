@@ -4,12 +4,12 @@ static int	outfd_setup(t_cmds *cmds, int *stdfd)
 {
 	int	stdout_fd;
 
-	if (cmds->outfd_type == C_STDOUT)
+	if (cmds->outfd_type == FD_STDOUT)
 	{
 		close(1);
 		dup2(stdfd[1], 1);
 	}
-	else if (cmds->outfd_type == C_REDIRECT)
+	else if (cmds->outfd_type == FD_REDIRECT)
 	{
 		close(1);
 		stdout_fd = open(cmds->next->cmd[0], O_WRONLY | O_TRUNC | O_CREAT);
@@ -27,7 +27,7 @@ static int	infd_setup(t_cmds *cmds, int *stdfd)
 {
 	int	stdin_fd;
 
-	if (cmds->outfd_type == IN_REDIRECT)
+	if (cmds->infd_type == FD_R_STDIN)
 	{
 		close(0);
 		stdin_fd = open(cmds->next->cmd[0], O_RDONLY);
@@ -45,7 +45,7 @@ static int	infd_setup(t_cmds *cmds, int *stdfd)
 
 int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 {
-	if (cmds->outfd_type == C_PIPE || cmds->prev->outfd_type == C_PIPE)
+	if (cmds->outfd_type == FD_PIPE_OUT || cmds->prev->outfd_type == FD_PIPE_OUT)
 	{
 		*infd = pipe_setfd(cmds, stdfd, *infd, env);
 		if (*infd == -1)

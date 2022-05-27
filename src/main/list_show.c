@@ -45,6 +45,24 @@ void	debug_all(t_token *tmp)
 	debug1(tmp);
 }
 
+void	print_cmds_type(enum e_cmds_out_fd type)
+{
+	printf("-outfd = [");
+	if (type == FD_PIPE_OUT)
+		printf("FD_PIPE_OUT");
+	else if (type == FD_REDIRECT)
+		printf("FD_REDIRECT");
+	else if (type == FD_APPEND_REDIRECT)
+		printf("FD_APPEND_REDIRECT");
+	else if (type == FD_R_STDIN)
+		printf("FD_R_STDIN");
+	else if (type == FD_HEREDOC)
+		printf("FD_HEREDOC");
+	else if (type == FD_STDOUT)
+		printf("FD_STDOUT");
+	printf("]\n");
+}
+
 void	debug_cmds(t_cmds *tmp)
 {
 	int	i;
@@ -59,9 +77,9 @@ void	debug_cmds(t_cmds *tmp)
 		while (tmp->cmd[j])
 		{
 			printf("-cmd[%d] = [%s][%p]\n", j, tmp->cmd[j], &tmp->cmd[j]);
-			printf("-outfd[%d] = [%d]\n", j, tmp->outfd_type);
 			j++;
 		}
+		print_cmds_type(tmp->outfd_type);
 		tmp = tmp->next;
 		i++;
 	}

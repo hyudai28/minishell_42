@@ -9,16 +9,24 @@
 
 enum	e_cmds_out_fd
 {
-	C_STDOUT,
-	C_REDIRECT,
-	C_PIPE,
-	IN_PIPE,
-	IN_REDIRECT,
+	FD_PIPE_OUT,
+	FD_REDIRECT,
+	FD_APPEND_REDIRECT,
+	FD_STDOUT,
+};
+
+enum	e_cmds_in_fd
+{
+	FD_PIPE_IN,
+	FD_R_STDIN,
+	FD_HEREDOC,
+	FD_STDIN,
 };
 
 typedef struct s_cmds
 {
 	char				**cmd;
+	enum e_cmds_in_fd	infd_type;
 	enum e_cmds_out_fd	outfd_type;
 	char				*outfd_line;
 	// bool	is_infile;
@@ -33,5 +41,6 @@ void		cmds_destructor(t_cmds *cmds);
 
 //set_fd_cmds.c
 t_cmds		*token_to_cmds(t_token *token);
+t_token		*cmds_set_fd(t_cmds *new, t_token *token);
 
 #endif

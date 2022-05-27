@@ -63,7 +63,7 @@ int	minishell_execute(t_token *head, t_envlist *env)
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
 			result = command_execute(cmds->cmd, env);
-		if (cmds->outfd_type == C_REDIRECT || cmds->outfd_type == IN_REDIRECT)
+		if (cmds->outfd_type == FD_REDIRECT)
 			cmds = cmds->next;
 		cmds = cmds->next;
 	}

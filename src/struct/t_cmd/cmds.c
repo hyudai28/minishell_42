@@ -6,10 +6,9 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/27 21:05:54 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/27 23:35:09 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "t_cmds.h"
 
@@ -31,7 +30,8 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
 		new->next = cmd_head;
 		new->head = 0;
 	}
-	new->outfd_type = C_STDOUT;
+	new->infd_type = FD_STDIN;
+	new->outfd_type = FD_STDOUT;
 	new->cmd = NULL;
 	return (new);
 }
@@ -71,12 +71,13 @@ t_cmds	*token_to_cmds(t_token *token)
 	head = cmds_constructor(TRUE, NULL);
 	now = head;
 	token = token->next;
-	while (token->type != TAIL)
+	while (token->type != TAIL) //ls | cat
 	{
 		while (token_check_separate(token->type))
 			token = token->next;
 		new = cmds_constructor(FALSE, head);
 		new->cmd = separate_token(token);
+		token = cmds_set_fd(new, token);
 		while (!token_check_separate(token->type))
 			token = token->next;
 		new->prev = now;

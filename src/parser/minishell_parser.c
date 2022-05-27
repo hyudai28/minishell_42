@@ -30,8 +30,9 @@ static int	check_redirect_error(t_token *token, t_envlist *env)
 			error("bash: syntax error near unexpected token `newline'", 2, env);
 			return (1);
 		}
-		else if (token->type == REDIRECT || token->type == APPEND_REDIRECT || \
-			token->type == R_STDIN || token->type == HEREDOC)
+		else if (token->next->type == REDIRECT || \
+		token->next->type == APPEND_REDIRECT || \
+		token->next->type == R_STDIN || token->next->type == HEREDOC)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 			ft_putstr_fd(token->next->word, 2);
