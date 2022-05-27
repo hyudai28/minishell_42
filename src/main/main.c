@@ -10,11 +10,13 @@ int	minishell(char *command, t_envlist *envp)
 		return (free_structors(head, NULL, NULL));
 	// if (heredocument(head))
 		// return (1);
-	debug_all(head);
 	if (parser(head, envp) != 0)
 		return (1);
+	debug_all(head);
 	if (expansion(head, envp) != 0)
 		return (1);
+	debug_all(head);
+	exit(1);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));

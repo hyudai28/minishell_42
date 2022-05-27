@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_expansion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/27 01:40:38 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:51:53 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	remove_quot(t_token *token)
 	size_t	i;
 	size_t	len;
 
-	token = token->next;
 	len = get_length(token->word);
 	if (len == 0)
 		return (0);
@@ -84,7 +83,11 @@ int	expansion(t_token *token, t_envlist *env)
 		expansion_dq(token, env);
 		token = token->next;
 	}
-	if (remove_quot(head) != 0)
-		return (1);
+	token = head->next;
+	while (token->type != TAIL)
+	{
+		remove_quot(token);
+		token = token->next;
+	}
 	return (0);
 }
