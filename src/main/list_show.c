@@ -1,13 +1,33 @@
 #include "minishell.h"
 
+void	print_token_type(enum e_token_type	type)
+{
+	printf("token type : ");
+	if (type == HEAD)
+		printf("HEAD");
+	else if (type == TAIL)
+		printf("TAIL");
+	else if (type == EXPANDABLE)
+		printf("EXPANDABLE");
+	else if (type == PIPE)
+		printf("PIPE");
+	else if (type == REDIRECT)
+		printf("REDIRECT");
+	else if (type == R_STDIN)
+		printf("R_STDIN");
+	else if (type == HEREDOC)
+		printf("HEREDOC");
+	printf("\n");
+}
+
 void	debug1(t_token *tmp)
 {
 	printf("token : %s[%p]\n", tmp->word, &tmp->word);
 	// if (tmp->type != HEAD)
 		// printf("prev token : %s\n", tmp->prev->word);
 	printf("token_len : %d\n", (int)tmp->word_len);
-	printf("<token type> HEAD=0,TAIL=1,DQ=2,\
-SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6,R_STDIN=7\n");
+	// printf("<token type> HEAD=0,TAIL=1,DQ=2,SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6,R_STDIN=7\n");
+	print_token_type(tmp->type);
 	printf("token type: %d\n", tmp->type);
 	printf("--------------------------\n");
 }
