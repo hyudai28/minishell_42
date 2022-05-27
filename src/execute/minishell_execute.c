@@ -53,7 +53,7 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	int		result;
 
 	cmds = token_to_cmds(head);
-	// debug_cmds(cmds->next);
+	debug_cmds(cmds->next);
 	pipe_infd = -2;
 	set_backup_fd(backup_stdfd);
 	cmds = cmds->next;
