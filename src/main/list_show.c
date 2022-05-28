@@ -45,8 +45,19 @@ void	debug_all(t_token *tmp)
 	debug1(tmp);
 }
 
-void	print_cmds_type(enum e_cmds_out_fd type)
+void	print_cmds_type(enum e_cmds_out_fd type, enum e_cmds_in_fd type2)
 {
+	printf("-infd  = [");
+	if (type2 == FD_PIPE_IN)
+		printf("FD_PIPE_IN");
+	else if (type2 == FD_R_STDIN)
+		printf("FD_R_STDIN");
+	else if (type2 == FD_HEREDOC)
+		printf("FD_HEREDOC");
+	else if (type2 == FD_STDIN)
+		printf("FD_STDIN");
+	printf("]\n");
+
 	printf("-outfd = [");
 	if (type == FD_PIPE_OUT)
 		printf("FD_PIPE_OUT");
@@ -79,7 +90,7 @@ void	debug_cmds(t_cmds *tmp)
 			printf("-cmd[%d] = [%s][%p]\n", j, tmp->cmd[j], &tmp->cmd[j]);
 			j++;
 		}
-		print_cmds_type(tmp->outfd_type);
+		print_cmds_type(tmp->outfd_type, tmp->infd_type);
 		tmp = tmp->next;
 		i++;
 	}

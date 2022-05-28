@@ -49,13 +49,17 @@ int	minishell_execute(t_token *head, t_envlist *env)
 {
 	t_cmds	*cmds;
 	int		pipe_infd;
+	int		backup_default_stdfd[2];
 	int		backup_stdfd[2];
 	int		result;
 
+	backup_default_stdfd[0] = dup(0);
+	backup_default_stdfd[1] = dup(1);
+	backup_stdfd[0] = dup(0);
+	backup_stdfd[1] = dup(1);
 	cmds = token_to_cmds(head);
 	debug_cmds(cmds->next);
-	pipe_infd = -2;
-	set_backup_fd(backup_stdfd);
+	pipe_infd = -1;
 	cmds = cmds->next;
 	while (!cmds->head)
 	{
@@ -67,7 +71,8 @@ int	minishell_execute(t_token *head, t_envlist *env)
 			cmds = cmds->next;
 		cmds = cmds->next;
 	}
-	clean_fd(backup_stdfd);
 	cmds_destructor(cmds);
+	clean_fd(backup_default_stdfd[0], 0);
+	clean_fd(backup_default_stdfd[1], 1);
 	return (result);
 }
