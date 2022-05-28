@@ -63,11 +63,12 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	cmds = cmds->next;
 	while (!cmds->head)
 	{
+		dprintf(2, "a\n");
 		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
 			result = command_execute(cmds->cmd, env);
-		if (cmds->outfd_type == FD_REDIRECT)
+		if (cmds->outfd_type == FD_REDIRECT || cmds->outfd_type == FD_APPEND_REDIRECT)
 			cmds = cmds->next;
 		cmds = cmds->next;
 	}

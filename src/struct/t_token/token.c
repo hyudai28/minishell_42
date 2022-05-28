@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:47 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/26 22:05:19 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/28 22:19:48 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	token_check_separate(enum e_token_type type)
 {
 	if (type == TAIL)
 		return (2);
-	if (type == PIPE || type == REDIRECT || type == R_STDIN)
+	if (type == PIPE || type == REDIRECT || type == R_STDIN || \
+		type == APPEND_REDIRECT || type == HEREDOC)
 		return (1);
 	return (0);
 }
