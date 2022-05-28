@@ -82,12 +82,12 @@ int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 	}
 	else if (cmds->outfd_type == FD_REDIRECT)
 	{
-		redirect_fd = open(cmds->next->cmd[0], O_WRONLY | O_TRUNC | O_CREAT);
+		redirect_fd = open(cmds->next->cmd[0], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		clean_fd(redirect_fd, 1);
 	}
 	else if (cmds->outfd_type == FD_APPEND_REDIRECT)
 	{
-		redirect_fd = open(cmds->next->cmd[0], O_WRONLY | O_APPEND | O_CREAT);
+		redirect_fd = open(cmds->next->cmd[0], O_WRONLY | O_APPEND | O_CREAT, 0644);
 		clean_fd(redirect_fd, 1);
 	}
 	// if (stdfd[0] == -1)

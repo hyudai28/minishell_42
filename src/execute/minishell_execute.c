@@ -63,7 +63,6 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	cmds = cmds->next;
 	while (!cmds->head)
 	{
-		dprintf(2, "a\n");
 		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
