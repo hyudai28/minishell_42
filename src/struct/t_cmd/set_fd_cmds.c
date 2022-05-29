@@ -28,5 +28,5 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 		new->outfd_type = FD_APPEND_REDIRECT;
 	else
 		new->outfd_type = FD_STDOUT;
-	return (token);
+	return (token->next);
 }
