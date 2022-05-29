@@ -52,8 +52,10 @@ static int	check_head_type(t_token *token, t_envlist *env)
 		error("'", 2, env);
 		return (1);
 	}
-	else if ((token->type == R_STDIN || token->type == HEREDOC || \
-	token->type == REDIRECT) && token->next->type == TAIL)
+	if (token->next->type != TAIL)
+		return (0);
+	else if (token->type == R_STDIN || token->type == HEREDOC || \
+	token->type == REDIRECT)
 	{
 		error(\
 		"minishell: syntax error near unexpected token `newline'", 2, env);
