@@ -59,7 +59,7 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	backup_stdfd[1] = dup(1);
 	cmds = token_to_cmds(head);
 	debug_cmds(cmds->next);
-	pipe_infd = -1;
+	pipe_infd = -2;
 	cmds = cmds->next;
 	while (!cmds->head)
 	{
@@ -67,7 +67,7 @@ int	minishell_execute(t_token *head, t_envlist *env)
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
 			result = command_execute(cmds->cmd, env);
-		if (cmds->outfd_type == FD_REDIRECT || cmds->outfd_type == FD_APPEND_REDIRECT)
+		if (cmds->outfd_type == FD_REDIRECT || cmds->outfd_type == FD_APPEND_REDIRECT || cmds->infd_type == FD_R_STDIN || cmds->infd_type == FD_HEREDOC)
 			cmds = cmds->next;
 		cmds = cmds->next;
 	}

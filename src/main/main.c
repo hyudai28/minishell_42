@@ -8,13 +8,18 @@ int	minishell(char *command, t_envlist *envp)
 	head = token_constructor();
 	if (lexer(command, head) == 1)
 		return (free_structors(head, NULL, NULL));
-	// if (heredocument(head))
-		// return (1);
-	// debug_all(head);
+	if (head->next->type == TAIL)
+	{
+		free_structors(head, NULL, NULL);
+		return (0);
+	}
 	if (parser(head, envp) != 0)
+		return (1);
+	if (heredocument(head))
 		return (1);
 	if (expansion(head, envp) != 0)
 		return (1);
+	// debug_all(head);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));
@@ -33,6 +38,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
 	t_envlist	*env_head;
+	int			exit_status;
+
 
 	(void)argv;
 	(void)argc;
@@ -57,5 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		//free(command);
 		//system("leaks minishell");
 	}
+	exit_status = env_head->doller_ret;
+	envlist_destructor(env_head);
 	return (env_head->doller_ret);
 }

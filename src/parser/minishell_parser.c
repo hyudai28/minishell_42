@@ -128,14 +128,17 @@ static int	check_quot(const char *line, enum e_token_type type)
 		while (*line != '\0' && *line != '\'' && *line != '\"')
 			line++;
 		if (*line == '\0')
-			return (type);
+			return (0);
 		quot = ft_strchr(line + 1, *line);
-		if (quot == NULL)	//片方しかない
-			exit(1);
+		if (quot == NULL)
+		{
+			printf("minishell: quotation no matching.\n");
+			return (1);
+		}
 		line = quot;
 		line++;
 	}
-	return (type);
+	return (0);
 }
 
 int	parser(t_token *token, t_envlist *env)
@@ -145,7 +148,8 @@ int	parser(t_token *token, t_envlist *env)
 	token = token->next;
 	while (token->type != TAIL)
 	{
-		token->type = check_quot(token->word, token->type);
+		if (check_quot(token->word, token->type) == 1)
+			return (1);
 		if (check_pipe(token, env) == 1)
 			return (1);
 		if (check_redirect(token, env) == 1)

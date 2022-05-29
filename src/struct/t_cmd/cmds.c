@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/29 22:49:26 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/30 01:42:08 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ t_cmds	*token_to_cmds(t_token *token)
 	head = cmds_constructor(TRUE, NULL);
 	now = head;
 	token = token->next;
-	while (token->type != TAIL) //ls | cat
+	while (token->type != TAIL)
 	{
-		while (token_check_separate(token->type))
+		while (token_check_separate(token->type) == 1)
 			token = token->next;
 		new = cmds_constructor(FALSE, head);
 		new->cmd = separate_token(token);
@@ -81,7 +81,7 @@ t_cmds	*token_to_cmds(t_token *token)
 		now->next = new;
 		head->prev = new;
 		now = now->next;
-		while (!token_check_separate(token->next->type))
+		while (token_check_separate(token->next->type) == 0)
 			token = token->next;
 		token = cmds_set_fd(new, token);
 	}

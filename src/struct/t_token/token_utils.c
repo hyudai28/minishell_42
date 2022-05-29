@@ -37,6 +37,21 @@ char	*token_strjoin(char *cmd_line, char *s2)
 	return (str);
 }
 
+size_t	count_token(t_token *token)
+{
+	size_t	size;
+
+	size = 0;
+	if (token->type == HEREDOC)
+		return (1);
+	while (!token_check_separate(token->type) && token->type != HEREDOC)
+	{
+		size++;
+		token = token->next;
+	}
+	return (size);
+}
+
 char	**separate_token(t_token *token)
 {
 	char	**cmd;

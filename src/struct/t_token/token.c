@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:47 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/28 22:19:48 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/30 01:47:18 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,6 @@ void	token_destructor(t_token *token)
 	}
 	free(token);
 	token = NULL;
-}
-
-size_t	count_token(t_token *token)
-{
-	size_t	size;
-
-	size = 0;
-	while (!token_check_separate(token->type))
-	{
-		size++;
-		token = token->next;
-	}
-	return (size);
 }
 
 int	token_check_separate(enum e_token_type type)

@@ -5,8 +5,8 @@ char	*ft_strjoin3(char *a, char *b, char *c, int need_free)
 	char	*ret1;
 	char	*ret2;
 
-	ret1 = ft_strjoin(a, b);
-	ret2 = ft_strjoin(ret1, c);
+	ret1 = ft_strjoin(a, b); //malloc
+	ret2 = ft_strjoin(ret1, c); //malloc
 	free(ret1);
 	ret1 = NULL;
 	if (need_free)
