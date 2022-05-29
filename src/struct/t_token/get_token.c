@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:50:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/27 20:52:36 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/29 21:38:15 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ static void	get_redirect(char *str, t_token *new)
 static void	get_pipe(char *str, t_token *new)
 {
 	new->word_len = 1;
-	if (str[1] == '|')
-		new->word_len = 2;
 	new->type = PIPE;
 }
 
