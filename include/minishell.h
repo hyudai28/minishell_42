@@ -42,11 +42,15 @@ int		lexer(char *argv, t_token *head);
 int		parser(t_token *token, t_envlist *env);
 
 //heredoc
-int		heredocument(t_token *head);
+int		heredocument(t_token *head, t_envlist *env);
 
 //expansion
 int		expansion(t_token *token, t_envlist *env);
 int		expansion_dq(t_token *token, t_envlist *env);
+int		remove_quot(t_token *token);
+char	*ft_strjoin3(char *a, char *b, char *c, int need_free);
+size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var);
+size_t	get_envlen(const char *line);
 
 //utils
 int		char_count(char **count);

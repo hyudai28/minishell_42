@@ -16,7 +16,6 @@ int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 	char	*heredoc2 = "b\n";
 	char	*heredoc3 = "c\n";
 
-
 	if (cmds->infd_type == FD_PIPE_IN)
 	{
 		clean_fd(*infd, 0);

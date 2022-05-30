@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/30 01:51:38 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/30 23:11:24 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static size_t	get_length(const char *word)
 	return (len);
 }
 
-static int	remove_quot(t_token *token)
+int	remove_quot(t_token *token)
 {
 	char	*new;
 	char	quot;
 	size_t	i;
 	size_t	len;
 
-	len = get_length(token->word);
-	if (len == 0)
+	token->word_len = get_length(token->word);
+	if (token->word_len == 0)
 		return (0);
-	new = malloc(sizeof(char) * len + 1);//malloc
+	new = malloc(sizeof(char) * token->word_len + 1);//malloc
 	i = 0;
 	len = 0;
 	while (token->word[i + len] != '\0')
@@ -80,12 +80,22 @@ int	expansion(t_token *token, t_envlist *env)
 	token = token->next;
 	while (token->type != TAIL)
 	{
+		if (token->type == HEREDOC)
+		{
+			token = token->next->next;
+			continue ;
+		}
 		expansion_dq(token, env);
 		token = token->next;
 	}
 	token = head->next;
 	while (token->type != TAIL)
 	{
+		if (token->type == HEREDOC)
+		{
+			token = token->next->next;
+			continue ;
+		}
 		remove_quot(token);
 		token = token->next;
 	}

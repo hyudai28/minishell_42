@@ -60,7 +60,7 @@ static int	check_redirect(t_token *token, t_envlist *env)
 			error("'", 2, env);
 			return (1);
 		}
-		else if (token->next->next->type != TAIL)
+		else if (token_check_separate(token->next->next->type) == 0)
 			redirect_to_tail(token->prev, token);
 	}
 	return (0);
@@ -143,6 +143,7 @@ static int	check_quot(const char *line, enum e_token_type type)
 
 int	parser(t_token *token, t_envlist *env)
 {
+	t_token *head = token;
 	if (check_head_type(token->next, env) == 1)
 		return (1);
 	token = token->next;

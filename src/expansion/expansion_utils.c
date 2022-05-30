@@ -57,6 +57,7 @@ size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var)
 	char	*after_var;
 	size_t	var_len;
 
+	//varはnullになりうるよ
 	if (token->word[tword_i + 1] == '?')
 		var_len = 2 + tword_i;
 	else
@@ -65,14 +66,14 @@ size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var)
 		var = get_envline(env, var);
 		if (!var)
 		{
-			var = ft_strdup("");
+			var = ft_strdup("");//malloc
 			var_len -= 1;
 		}
 	}
-	before_var = ft_substr(token->word, 0, tword_i);
-	after_var = ft_substr(token->word, var_len, ft_strlen(token->word));
+	before_var = ft_substr(token->word, 0, tword_i);//malloc
+	after_var = ft_substr(token->word, var_len, ft_strlen(token->word));//malloc
 	tword_i = ft_strlen(before_var) + ft_strlen(var);
-	var = ft_strjoin3(before_var, var, after_var, TRUE);
+	var = ft_strjoin3(before_var, var, after_var, TRUE);//malloc
 	free(token->word);
 	token->word = var;
 	token->word_len = ft_strlen(var);
