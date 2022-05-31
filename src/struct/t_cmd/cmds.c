@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/31 23:59:31 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/01 00:29:34 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_cmds	*token_to_cmds(t_token *token)
 		head->prev = new;
 		now = now->next;
 		token = separate_token(new, token);
-		if (token->next->type == TAIL)
+		if (token->type == TAIL)
 			break ;
 		token = cmds_set_fd(new, token);
 		if (!token)

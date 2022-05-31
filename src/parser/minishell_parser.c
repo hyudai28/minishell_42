@@ -151,9 +151,8 @@ int	parser(t_token *token, t_envlist *env)
 		swap_head_meta(token->prev, token);
 		token = head->next;
 	}
-	if (check_head_type(token->next, env) == 1)
+	if (check_head_type(token, env) == 1)
 		return (1);
-	token = token->next;
 	while (token->type != TAIL)
 	{
 		if (check_quot(token->word, token->type) == 1)

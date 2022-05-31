@@ -16,7 +16,7 @@ static int	set_type_infd(t_cmds *new, t_token *token)
 {
 	while (token->type != PIPE && token->type != TAIL)
 		token = token->next;
-	while (token->type != R_STDIN && token->type != HEREDOC)
+	while (token->type != R_STDIN && token->type != HEREDOC && token->type != HEAD)
 		token = token->prev;
 	if (token->type == R_STDIN)
 	{
@@ -43,7 +43,7 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 {
 	while (token->type != PIPE && token->type != TAIL)
 		token = token->next;
-	while (token->type != REDIRECT && token->type != APPEND_REDIRECT)
+	while (token->type != REDIRECT && token->type != APPEND_REDIRECT && token->type != HEAD)
 		token = token->prev;
 	if (token->type == REDIRECT)
 	{
@@ -75,6 +75,5 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 		return (NULL);
 	while (token->type != PIPE && token->type != TAIL)
 		token = token->next;
-	if (token->type == PIPE)
 	return (token);
 }
