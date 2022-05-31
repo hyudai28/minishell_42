@@ -12,49 +12,68 @@
 
 #include "t_cmds.h"
 
-static	int	set_type_infd(t_cmds *new, t_token *token)
+static	t_token	*set_type_infd(t_cmds *new, t_token *token)
 {
-	if (token->prev->type == R_STDIN)
+	if (token->type == R_STDIN)
 	{
+		token = token->next;
 		new->infd_type = FD_R_STDIN;
-		new->infd = open(token->word, O_RDONLY);//open err
+		new->infd = open(token->word, O_RDONLY);
+		token = token->next;
 	}
-	else if (new->prev->outfd_type == FD_PIPE_OUT)
+	else if (new->outfd_type == FD_PIPE_OUT)
+	{
+		token = token->next;
 		new->infd_type = FD_PIPE_IN;
-	else if (token->prev->type == HEREDOC)
+		token = token->next;
+	}
+	else if (token->type == HEREDOC)
+	{
+		token = token->next;
 		new->infd_type = HEREDOC;
+		token = token->next;
+	}
 	if (new->infd == -1)
-		return (-1);
-	return (0);
+		return (NULL);
+	return (token);
 }
 
-static	int	set_type_outfd(t_cmds *new, t_token *token)
+static	t_token	*set_type_outfd(t_cmds *new, t_token *token)
 {
-	if (token->prev->type == REDIRECT)
+	if (token->type == REDIRECT)
 	{
+		token = token->next;
 		new->outfd_type = FD_REDIRECT;
-		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644); //open err
+		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		token = token->next;
 	}
-	else if (token->prev->type == PIPE)
-		new->outfd_type = FD_PIPE_OUT;
-	else if (token->prev->type == APPEND_REDIRECT)
+	else if (token->type == PIPE)
 	{
+		token = token->next;
+		new->outfd_type = FD_PIPE_OUT;
+		token = token->next;
+	}
+	else if (token->type == APPEND_REDIRECT)
+	{
+		token = token->next;
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_APPEND | O_CREAT, 0644); //open err
+		token = token->next;
 	}
 	if (new->outfd == -1)
-		return (-1);
-	return (0);
+		return (NULL);
+	return (token);
 }
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
 	if (token->type == TAIL)
 		return (token);
-	token = token->next;
-	if (set_type_infd(new, token) == -1)
+	token = set_type_infd(new, token);
+	if (!token)
 		return (NULL);
-	if (set_type_outfd(new, token) == -1)
+	token = set_type_outfd(new, token);
+	if (!token)
 		return (NULL);
-	return (token->next);
+	return (token);
 }

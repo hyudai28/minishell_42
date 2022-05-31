@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/31 22:58:08 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/05/31 23:22:39 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,11 @@ t_cmds	*token_to_cmds(t_token *token)
 	token = token->next;
 	while (token->type != TAIL)
 	{
-		printf("aaa\n");
 		new = cmds_constructor(FALSE, head);
 		new->prev = now;
 		now->next = new;
 		head->prev = new;
 		now = now->next;
-		//expandableの保証が欲しい
 		token = separate_token(new, token);
 		if (token->next->type == TAIL)
 			break ;
