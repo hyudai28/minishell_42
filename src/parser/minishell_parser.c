@@ -74,7 +74,7 @@ static void	swap_head_meta(t_token *head, t_token *token)
 	t_token	*tail;
 
 	tail = token->next;
-	while (token_check_separate(tail->type) == 0)
+	while (tail->type != PIPE && tail->type != TAIL)
 		tail = tail->next;
 	meta = head->next;
 	target = meta->next;
@@ -97,24 +97,21 @@ static int	check_head_type(t_token *token, t_envlist *env)
 		error("'", 2, env);
 		return (1);
 	}
-	if (token->next->type != TAIL && (token->type == R_STDIN || token->type \
-	== HEREDOC || token->type == REDIRECT || token->type == R_STDIN))
+	if (token->next->type == TAIL)
 	{
-		swap_head_meta(token->prev, token);
-		return (0);
-	}
-	else if (token->type == R_STDIN || token->type == HEREDOC || \
-	token->type == REDIRECT)
-	{
-		error(\
-		"minishell: syntax error near unexpected token `newline'", 2, env);
-		return (1);
-	}
-	else if (token->type == R_STDIN)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(token->next->word, 2);
-		error(": No such file or directory", 2, env);
+		if (token->type == R_STDIN || token->type == HEREDOC || \
+		token->type == REDIRECT)
+		{
+			error(\
+			"minishell: syntax error near unexpected token `newline'", 2, env);
+			return (1);
+		}
+		else if (token->type == R_STDIN)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(token->next->word, 2);
+			error(": No such file or directory", 2, env);
+		}
 	}
 	return (0);
 }
@@ -143,7 +140,17 @@ static int	check_quot(const char *line, enum e_token_type type)
 
 int	parser(t_token *token, t_envlist *env)
 {
-	t_token *head = token;
+	t_token *head;
+
+	head = token;
+	token = token->next;
+	while (token->next->type != TAIL && (\
+	token->type == R_STDIN || token->type == HEREDOC || \
+	token->type == REDIRECT || token->type == R_STDIN))
+	{
+		swap_head_meta(token->prev, token);
+		token = head->next;
+	}
 	if (check_head_type(token->next, env) == 1)
 		return (1);
 	token = token->next;

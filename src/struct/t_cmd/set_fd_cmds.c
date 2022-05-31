@@ -12,68 +12,69 @@
 
 #include "t_cmds.h"
 
-static	t_token	*set_type_infd(t_cmds *new, t_token *token)
+static int	set_type_infd(t_cmds *new, t_token *token)
 {
+	while (token->type != PIPE && token->type != TAIL)
+		token = token->next;
+	while (token->type != R_STDIN && token->type != HEREDOC)
+		token = token->prev;
 	if (token->type == R_STDIN)
 	{
 		token = token->next;
 		new->infd_type = FD_R_STDIN;
 		new->infd = open(token->word, O_RDONLY);
-		token = token->next;
 	}
 	else if (new->outfd_type == FD_PIPE_OUT)
 	{
 		token = token->next;
 		new->infd_type = FD_PIPE_IN;
-		token = token->next;
 	}
 	else if (token->type == HEREDOC)
 	{
 		token = token->next;
 		new->infd_type = HEREDOC;
-		token = token->next;
 	}
 	if (new->infd == -1)
-		return (NULL);
-	return (token);
+		return (1);
+	return (0);
 }
 
-static	t_token	*set_type_outfd(t_cmds *new, t_token *token)
+static int	set_type_outfd(t_cmds *new, t_token *token)
 {
+	while (token->type != PIPE && token->type != TAIL)
+		token = token->next;
+	while (token->type != REDIRECT && token->type != APPEND_REDIRECT)
+		token = token->prev;
 	if (token->type == REDIRECT)
 	{
 		token = token->next;
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		token = token->next;
 	}
 	else if (token->type == PIPE)
 	{
 		token = token->next;
 		new->outfd_type = FD_PIPE_OUT;
-		token = token->next;
 	}
 	else if (token->type == APPEND_REDIRECT)
 	{
 		token = token->next;
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_APPEND | O_CREAT, 0644); //open err
-		token = token->next;
 	}
 	if (new->outfd == -1)
-		return (NULL);
-	return (token);
+		return (1);
+	return (0);
 }
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
-	if (token->type == TAIL)
-		return (token);
-	token = set_type_infd(new, token);
-	if (!token)
+	if (set_type_infd(new, token) == 1)
 		return (NULL);
-	token = set_type_outfd(new, token);
-	if (!token)
+	if (set_type_outfd(new, token) == 1)
 		return (NULL);
+	while (token->type != PIPE && token->type != TAIL)
+		token = token->next;
+	if (token->type == PIPE)
 	return (token);
 }
