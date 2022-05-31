@@ -58,7 +58,10 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	backup_stdfd[0] = dup(0);
 	backup_stdfd[1] = dup(1);
 	cmds = token_to_cmds(head);
+	if (!cmds)
+		error("open err", 1, env);
 	debug_cmds(cmds->next);
+	exit(1);
 	pipe_infd = -2;
 	cmds = cmds->next;
 	while (!cmds->head)

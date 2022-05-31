@@ -15,7 +15,7 @@ int	minishell(char *command, t_envlist *envp)
 	}
 	if (parser(head, envp) != 0)
 		return (1);
-	// debug_all(head);
+	 debug_all(head);
 	if (heredocument(head, envp) != 0)
 		return (1);
 	if (expansion(head, envp) != 0)

@@ -12,9 +12,6 @@ int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 	int	pipe_fd[2];
 	int	out_redirect_fd;
 	int	in_redirect_fd;
-	char	*heredoc1 = "a\n";
-	char	*heredoc2 = "b\n";
-	char	*heredoc3 = "c\n";
 
 	if (cmds->infd_type == FD_PIPE_IN)
 	{

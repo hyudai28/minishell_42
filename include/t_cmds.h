@@ -3,6 +3,8 @@
 
 # include <stdlib.h>
 
+# include <fcntl.h>
+
 # include "libft.h"
 
 # include "t_token.h"
@@ -28,7 +30,10 @@ typedef struct s_cmds
 	char				**cmd;
 	enum e_cmds_in_fd	infd_type;
 	enum e_cmds_out_fd	outfd_type;
-	char				*outfd_line;
+	int					infd;
+	int					outfd;
+	//char				*outfd_line;
+	//char				*infd_line;
 	// bool	is_infile;
 	struct s_cmds		*next;
 	struct s_cmds		*prev;

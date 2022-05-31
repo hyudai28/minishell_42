@@ -50,6 +50,5 @@ char		*token_strjoin(char *cmd_line, char *s2);
 
 //token_utils.c
 char	*token_strjoin(char *cmd_line, char *s2);
-char	**separate_token(t_token *token);
 
 #endif

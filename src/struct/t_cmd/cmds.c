@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/30 23:52:43 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/05/31 22:58:08 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,28 @@ void	cmds_destructor(t_cmds *cmds)
 	cmds = NULL;
 }
 
+static t_token	*separate_token(t_cmds *new, t_token *token)
+{
+	char	**cmd;
+	size_t	size;
+	size_t	index;
+
+	size = count_token(token);
+	cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	if (cmd == NULL)
+		return (NULL);
+	index = 0;
+	while (!token_check_separate(token->type))
+	{
+		cmd[index] = ft_strdup(token->word);//malloc失敗時にfree処理
+		token = token->next;
+		index++;
+	}
+	cmd[index] = NULL;
+	new->cmd = cmd;
+	return (token);
+}
+
 t_cmds	*token_to_cmds(t_token *token)
 {
 	t_cmds	*head;
@@ -73,17 +95,19 @@ t_cmds	*token_to_cmds(t_token *token)
 	token = token->next;
 	while (token->type != TAIL)
 	{
-		while (token_check_separate(token->type) == 1)
-			token = token->next;
+		printf("aaa\n");
 		new = cmds_constructor(FALSE, head);
-		new->cmd = separate_token(token);
 		new->prev = now;
 		now->next = new;
 		head->prev = new;
 		now = now->next;
-		while (token_check_separate(token->next->type) == 0)
-			token = token->next;
+		//expandableの保証が欲しい
+		token = separate_token(new, token);
+		if (token->next->type == TAIL)
+			break ;
 		token = cmds_set_fd(new, token);
+		if (!token)
+			return (NULL);
 	}
 	return (head);
 }
