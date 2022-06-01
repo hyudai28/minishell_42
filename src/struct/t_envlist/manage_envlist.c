@@ -25,9 +25,8 @@ int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 	new->head = 0;
 	new->doller_ret = 0;
 	envlist_set_keyvalue(new, new_line);
-	// if (new->key == NULL || new->value == NULL)
-	// 	return (1);
-	// exit(0);
+	if (new->key == NULL || new->value == NULL)
+		return (1);
 	new->prev = prev;
 	new->next = head;
 	prev->next = new;

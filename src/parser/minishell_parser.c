@@ -60,8 +60,6 @@ static int	check_redirect(t_token *token, t_envlist *env)
 			error("'", 2, env);
 			return (1);
 		}
-		else if (token_check_separate(token->next->next->type) == 0)
-			redirect_to_tail(token->prev, token);
 	}
 	return (0);
 }
@@ -144,13 +142,6 @@ int	parser(t_token *token, t_envlist *env)
 
 	head = token;
 	token = token->next;
-	while (token->next->type != TAIL && (\
-	token->type == R_STDIN || token->type == HEREDOC || \
-	token->type == REDIRECT || token->type == R_STDIN))
-	{
-		swap_head_meta(token->prev, token);
-		token = head->next;
-	}
 	if (check_head_type(token, env) == 1)
 		return (1);
 	while (token->type != TAIL)
