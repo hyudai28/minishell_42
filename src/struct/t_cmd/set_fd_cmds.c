@@ -21,6 +21,8 @@ static int	set_type_infd(t_cmds *new, t_token *token)
 	if (token->type == R_STDIN)
 	{
 		token = token->next;
+		if (new->infd_type == FD_R_STDIN)
+			close(new->infd);
 		new->infd_type = FD_R_STDIN;
 		new->infd = open(token->word, O_RDONLY);
 	}
@@ -48,7 +50,7 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 	if (token->type == REDIRECT)
 	{
 		token = token->next;
-		if (new->outfd_type == FD_REDIRECT)
+		if (new->outfd_type == FD_REDIRECT || new->outfd_type == FD_APPEND_REDIRECT)
 			close(new->outfd);
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
@@ -61,6 +63,8 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 	else if (token->type == APPEND_REDIRECT)
 	{
 		token = token->next;
+		if (new->outfd_type == FD_REDIRECT || new->outfd_type == FD_APPEND_REDIRECT)
+			close(new->outfd);
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_APPEND | O_CREAT, 0644); //open err
 	}
