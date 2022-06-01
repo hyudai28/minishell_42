@@ -24,7 +24,7 @@ void		envlist_destructor(t_envlist *envlist);
 void		envlist_show(t_envlist *env);
 
 //manage_envlist.c
-void		envlist_add(char *new_line, t_envlist *prev, t_envlist *head);
+int			envlist_add(char *new_line, t_envlist *prev, t_envlist *head);
 t_envlist	*envlist_search(char *tr_line, t_envlist *node);
 void		envlist_delete(char *delete_line, t_envlist *head);
 
