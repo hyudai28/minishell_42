@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/01 22:20:20 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	envpcmp(char *s1, char *s2)
@@ -73,14 +85,25 @@ int	export_is_invalid(char *line)
 	return (0);
 }
 
+static int	add_error(char *line)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(line, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	return (1);
+}
+
 int	builtin_export(char **cmds, int argc, t_envlist *head)
 {
 	char	**split;
-	int		arg_i;
+	size_t	arg_i;
+	size_t	i;
 
 	if (argc == 1)
 	{
 		split = envlist_to_char(head);
+		if (split == NULL)
+			return (1);
 		envlist_swap(split, head);
 	}
 	else if (export_is_invalid(cmds[1]))
@@ -88,10 +111,17 @@ int	builtin_export(char **cmds, int argc, t_envlist *head)
 	arg_i = 1;
 	while (arg_i < argc)
 	{
+		i = 0;
+		while (cmds[arg_i][i] != '\0' && cmds[arg_i][i] != '=')
+		{
+			if (cmds[arg_i][i] == ' ')
+				return (add_error(cmds[arg_i]));
+			i++;
+		}
 		if (ft_strchr(cmds[arg_i], '-') && arg_i != 2)
-			export_error(cmds[arg_i], EXPORT_IDENTIFIER);
-		else
-			envlist_add(cmds[arg_i], head->prev, head);
+			return (export_error(cmds[arg_i], EXPORT_IDENTIFIER));
+		else if (envlist_add(cmds[arg_i], head->prev, head) == 1)
+			return (error(strerror(errno), 1, head));
 		arg_i++;
 	}
 	return (SUCCESS);

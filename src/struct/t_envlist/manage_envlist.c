@@ -12,20 +12,27 @@
 
 #include "t_envlist.h"
 
-void	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
+int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 {
 	t_envlist	*new;
+	size_t		i;
 
+	i = 0;
 	new = (t_envlist *)malloc(sizeof(t_envlist));
-	//失敗ケア
+	if (new == NULL)
+		return (1);
 	ft_memset(new, 0, sizeof(t_envlist));
-	new->prev = prev;
-	new->next = head;
 	new->head = 0;
 	new->doller_ret = 0;
 	envlist_set_keyvalue(new, new_line);
+	// if (new->key == NULL || new->value == NULL)
+	// 	return (1);
+	// exit(0);
+	new->prev = prev;
+	new->next = head;
 	prev->next = new;
 	head->prev = new;
+	return (0);
 }
 
 t_envlist	*envlist_search(char *tr_line, t_envlist	*node)
