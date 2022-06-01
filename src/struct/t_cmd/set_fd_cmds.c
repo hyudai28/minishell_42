@@ -12,8 +12,10 @@
 
 #include "t_cmds.h"
 
-static int	set_type_infd(t_cmds *new, t_token *token)
+static t_token	*set_type_infd(t_cmds *new, t_token *token)
 {
+	if (token->type == TAIL)
+		return (token);
 	if (token->type == R_STDIN)
 	{
 		token = token->next;
@@ -21,6 +23,7 @@ static int	set_type_infd(t_cmds *new, t_token *token)
 			close(new->infd);
 		new->infd_type = FD_R_STDIN;
 		new->infd = open(token->word, O_RDONLY);
+		token = token->next;
 	}
 	else if (new->outfd_type == FD_PIPE_OUT)
 	{
@@ -33,12 +36,14 @@ static int	set_type_infd(t_cmds *new, t_token *token)
 		new->infd_type = HEREDOC;
 	}
 	if (new->infd == -1)
-		return (1);
-	return (0);
+		return (NULL);
+	return (token);
 }
 
-static int	set_type_outfd(t_cmds *new, t_token *token)
+static t_token	*set_type_outfd(t_cmds *new, t_token *token)
 {
+	if (token->type == TAIL)
+		return (token);
 	if (token->type == REDIRECT)
 	{
 		token = token->next;
@@ -46,6 +51,8 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 			close(new->outfd);
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		token = token->next;
+		printf("token->type=[%d]\n", token->type);
 	}
 	else if (token->type == PIPE)
 	{
@@ -61,19 +68,46 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 		new->outfd = open(token->word, O_WRONLY | O_APPEND | O_CREAT, 0644); //open err
 	}
 	if (new->outfd == -1)
-		return (1);
-	return (0);
+		return (NULL);
+	return (token);
 }
+
+static t_token	*separate_token(t_cmds *new, t_token *token)
+{
+	char	**cmd;
+	size_t	size;
+	size_t	index;
+
+	if (token_check_separate(token->type))
+		return (token);
+	size = count_token(token);
+	cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	if (cmd == NULL)
+		return (NULL);
+	index = 0;
+	while (!token_check_separate(token->type))
+	{
+		cmd[index] = ft_strdup(token->word);//malloc失敗時にfree処理
+		token = token->next;
+		index++;
+	}
+	cmd[index] = NULL;
+	new->cmd = cmd;
+	return (token);
+}
+
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
 	while (token->type != PIPE && token->type != TAIL)
 	{
-		if (set_type_infd(new, token) == 1)
+		token = set_type_infd(new, token);
+		if (!token)
 			return (NULL);
-		if (set_type_outfd(new, token) == 1)
+		token = set_type_outfd(new, token);
+		if (!token)
 			return (NULL);
-		token = token->next;
+		token = separate_token(new, token);
 	}
 	return (token);
 }

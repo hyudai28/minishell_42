@@ -81,6 +81,8 @@ void	debug_cmds(t_cmds *tmp)
 	{
 		printf("\n------cmds[%d]------\n", i);
 		j = 0;
+		if (!tmp->cmd)
+			return ;
 		while (tmp->cmd[j])
 		{
 			printf("-cmd[%d] = [%s][%p]\n", j, tmp->cmd[j], &tmp->cmd[j]);
