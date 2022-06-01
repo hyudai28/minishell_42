@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/01 00:29:34 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:57:20 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_cmds.h"
 
-t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
+t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 {
 	t_cmds	*new;
 
@@ -29,6 +29,9 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head)
 	{
 		new->next = cmd_head;
 		new->head = 0;
+		new->prev = now;
+		now->next = new;
+		cmd_head->prev = new;
 	}
 	new->infd_type = FD_STDIN;
 	new->outfd_type = FD_STDOUT;
@@ -90,15 +93,12 @@ t_cmds	*token_to_cmds(t_token *token)
 	t_cmds	*new;
 	t_cmds	*now;
 
-	head = cmds_constructor(TRUE, NULL);
+	head = cmds_constructor(TRUE, NULL, NULL);
 	now = head;
 	token = token->next;
 	while (token->type != TAIL)
 	{
-		new = cmds_constructor(FALSE, head);
-		new->prev = now;
-		now->next = new;
-		head->prev = new;
+		new = cmds_constructor(FALSE, head, now);
 		now = now->next;
 		token = separate_token(new, token);
 		if (token->type == TAIL)

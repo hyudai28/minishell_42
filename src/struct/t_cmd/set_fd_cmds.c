@@ -48,6 +48,8 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 	if (token->type == REDIRECT)
 	{
 		token = token->next;
+		if (new->outfd_type == FD_REDIRECT)
+			close(new->outfd);
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
@@ -69,11 +71,13 @@ static int	set_type_outfd(t_cmds *new, t_token *token)
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
-	if (set_type_infd(new, token) == 1)
-		return (NULL);
-	if (set_type_outfd(new, token) == 1)
-		return (NULL);
 	while (token->type != PIPE && token->type != TAIL)
+	{
+		if (set_type_infd(new, token) == 1)
+			return (NULL);
+		if (set_type_outfd(new, token) == 1)
+			return (NULL);
 		token = token->next;
+	}
 	return (token);
 }

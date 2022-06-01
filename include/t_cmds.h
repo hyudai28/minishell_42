@@ -41,7 +41,7 @@ typedef struct s_cmds
 }		t_cmds;
 
 //cmds.c
-t_cmds		*cmds_constructor(int head, t_cmds *cmd_head);
+t_cmds		*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now);
 void		cmds_destructor(t_cmds *cmds);
 
 //set_fd_cmds.c
