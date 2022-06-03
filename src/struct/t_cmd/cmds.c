@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/01 23:46:09 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/04 00:56:33 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 	new->infd_type = FD_STDIN;
 	new->outfd_type = FD_STDOUT;
 	new->cmd = NULL;
+	new->heredoc_str = NULL;
 	return (new);
 }
 
@@ -48,7 +49,7 @@ void	cmds_destructor(t_cmds *cmds)
 	while (cmds->head != 1)
 	{
 		i = 0;
-		while (cmds->cmd[i])
+		while (cmds->cmd[i] != NULL)
 		{
 			free(cmds->cmd[i]);
 			cmds->cmd[i] = NULL;
@@ -64,28 +65,6 @@ void	cmds_destructor(t_cmds *cmds)
 	free(cmds);
 	cmds = NULL;
 }
-
-//static t_token	*separate_token(t_cmds *new, t_token *token)
-//{
-//	char	**cmd;
-//	size_t	size;
-//	size_t	index;
-
-//	size = count_token(token);
-//	cmd = (char **)malloc(sizeof(char *) * (size + 1));
-//	if (cmd == NULL)
-//		return (NULL);
-//	index = 0;
-//	while (!token_check_separate(token->type))
-//	{
-//		cmd[index] = ft_strdup(token->word);//malloc失敗時にfree処理
-//		token = token->next;
-//		index++;
-//	}
-//	cmd[index] = NULL;
-//	new->cmd = cmd;
-//	return (token);
-//}
 
 t_cmds	*token_to_cmds(t_token *token)
 {
