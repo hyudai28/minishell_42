@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/04 01:00:49 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/04 01:13:59 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 		new_line = readline("> ");
 		if (new_line == NULL)
 			break ;
-		if (ft_strncmp(new_line, dlmt, dlmt_l) == 0)
+		if (ft_strncmp(new_line, dlmt, (dlmt_l + 1)) == 0)
 			break ;
 		*line = ft_strjoin3(*line, "\n", new_line, 0); //malloc失敗
 		free(temp);
@@ -42,7 +42,7 @@ int	get_heredoc(t_token *token, char *delimiter)
 	line = readline("> "); //malloc失敗
 	if (line == NULL) //error
 		return (2);
-	if (ft_strncmp(line, delimiter, delimiter_length) == 0)
+	if (ft_strncmp(line, delimiter, (delimiter_length + 1)) == 0)
 	{
 		free(line);
 		free(token->next->word);
