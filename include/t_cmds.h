@@ -32,6 +32,7 @@ typedef struct s_cmds
 	enum e_cmds_out_fd	outfd_type;
 	int					infd;
 	int					outfd;
+	char				*heredoc_str;
 	//char				*outfd_line;
 	//char				*infd_line;
 	// bool	is_infile;

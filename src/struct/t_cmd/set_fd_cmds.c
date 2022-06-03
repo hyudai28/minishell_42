@@ -33,7 +33,10 @@ static t_token	*set_type_infd(t_cmds *new, t_token *token)
 	else if (token->type == HEREDOC)
 	{
 		token = token->next;
-		new->infd_type = HEREDOC;
+		new->heredoc_str = token->word;
+		token->word = NULL;
+		new->infd_type = FD_HEREDOC;
+		token = token->next;
 	}
 	if (new->infd == -1)
 		return (NULL);
@@ -52,7 +55,6 @@ static t_token	*set_type_outfd(t_cmds *new, t_token *token)
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		token = token->next;
-		printf("token->type=[%d]\n", token->type);
 	}
 	else if (token->type == PIPE)
 	{
@@ -101,13 +103,13 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
 	while (token->type != PIPE && token->type != TAIL)
 	{
+		token = separate_token(new, token);
+		if (!token)
+			return (NULL);
 		token = set_type_infd(new, token);
 		if (!token)
 			return (NULL);
 		token = set_type_outfd(new, token);
-		if (!token)
-			return (NULL);
-		token = separate_token(new, token);
 	}
 	return (token);
 }

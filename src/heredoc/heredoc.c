@@ -6,13 +6,13 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/05/30 23:34:09 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/03 22:52:56 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	read_heredoc(t_token *token, char *dlmt, size_t dlmt_l, char **line)
+static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 {
 	char	*new_line;
 	char	*temp;
@@ -30,12 +30,58 @@ static int	read_heredoc(t_token *token, char *dlmt, size_t dlmt_l, char **line)
 		free(new_line);
 	}
 	free(new_line);
+	return (0);
 }
+
+// static int	read_file(t_token *token, char *delimiter, size_t delimiter_length)
+// {
+// 	char	*line;
+// 	char	*new_line;
+// 	char	*temp;
+// 	int		fd;
+
+// 	if (token->next->next->type == TAIL)
+// 		return (1);
+// 	token = token->next->next;
+// 	line = NULL;
+// 	fd = open(token->word, O_RDONLY);
+// 	if (get_next_line(fd, &new_line) <= 0)
+// 		exit(0);
+// 	while (1)
+// 	{
+// 		if (get_next_line(fd, &new_line) <= 0)
+// 			break ;
+// 		temp = line;
+// 		line = ft_strjoin3(line, "\n", new_line, 0);
+// 		free(temp);
+// 		free(new_line);
+// 	}
+// 	token->prev->word = line;
+// 	token_delone(token);
+// 	close(fd);
+
+// 	new_line = readline("> ");
+// 	if (new_line == NULL)
+// 		return (2);
+// 	if (ft_strncmp(new_line, delimiter, delimiter_length) == 0)
+// 	{
+// 		free(new_line);
+// 		return (0);
+// 	}
+// 	while (1)
+// 	{
+// 		free(new_line);
+// 		new_line = readline("> ");
+// 		if (ft_strncmp(new_line, delimiter, delimiter_length) == 0)
+// 			break ;
+// 	}
+// 	free(new_line);
+// 	return (0);
+// }
 
 int	get_heredoc(t_token *token, char *delimiter)
 {
 	char	*line;
-	char	*new_line;
 	size_t	delimiter_length;
 
 	delimiter_length = ft_strlen(delimiter);
@@ -49,7 +95,7 @@ int	get_heredoc(t_token *token, char *delimiter)
 		token->next->word = ft_strdup("");
 		return (0);
 	}
-	read_heredoc(token, delimiter, delimiter_length, &line);
+	read_heredoc(delimiter, delimiter_length, &line);
 	free(token->next->word);
 	token->next->word = line;
 	return (0);

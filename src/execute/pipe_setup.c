@@ -26,7 +26,7 @@ int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 			error(strerror(errno), 1, env);
 			return (-1);
 		}
-		ft_putendl_fd(cmds->next->cmd[0], pipe_fd[1]);
+		ft_putendl_fd(cmds->heredoc_str, pipe_fd[1]);
 		clean_fd(pipe_fd[0], 0);
 		clean_fd(pipe_fd[1], 1);
 	}
