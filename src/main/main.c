@@ -9,12 +9,12 @@ int	minishell(char *command, t_envlist *envp)
 	if (lexer(command, head) == 1)
 		return (1);
 	parser(head, envp);
+	heredocument(head, envp);
+	expansion(head, envp);
 	debug_all(head);
 	token_destructor(head);
 	envlist_destructor(envp);
 	exit(0);
-	heredocument(head, envp);
-	expansion(head, envp);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));

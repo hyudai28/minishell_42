@@ -13,6 +13,7 @@ int	lexer(char *argv, t_token *head)
 		cur = new_token();
 		if (cur == NULL)
 		{
+			free(argv);
 			token_destructor(head);//malloc error output
 			return (1);
 		}
@@ -21,6 +22,7 @@ int	lexer(char *argv, t_token *head)
 		cur->word = (char *)malloc(sizeof(char) * cur->word_len + 1);
 		if (cur->word == NULL)
 		{
+			free(argv);
 			token_destructor(head);//malloc error output
 			return (1);
 		}
@@ -28,6 +30,5 @@ int	lexer(char *argv, t_token *head)
 		str += cur->word_len;
 	}
 	free(argv);
-	argv = NULL;
 	return (0);
 }

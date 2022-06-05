@@ -20,25 +20,6 @@ static int	check_pipe(t_token *token, t_envlist *env)
 	return (0);
 }
 
-static void	redirect_to_tail(t_token *prev, t_token *meta)
-{
-	t_token	*arg_last;
-	t_token	*target;
-	t_token	*tail;
-
-	tail = meta->next;
-	while (token_check_separate(tail->type) == 0)
-		tail = tail->next;
-	arg_last = tail->prev;
-	target = meta->next;
-	prev->next = target->next;
-	target->next->prev = prev;
-	arg_last->next = meta;
-	meta->prev = arg_last;
-	target->next = tail;
-	tail->prev = target;
-}
-
 static int	check_redirect(t_token *token, t_envlist *env)
 {
 	if (token->type == REDIRECT || token->type == APPEND_REDIRECT || \
@@ -62,28 +43,6 @@ static int	check_redirect(t_token *token, t_envlist *env)
 		}
 	}
 	return (0);
-}
-
-static void	swap_head_meta(t_token *head, t_token *token)
-{
-	t_token	*meta;
-	t_token	*target;
-	t_token	*cmd;
-	t_token	*tail;
-
-	tail = token->next;
-	while (tail->type != PIPE && tail->type != TAIL)
-		tail = tail->next;
-	meta = head->next;
-	target = meta->next;
-	cmd = target->next;
-	tail->prev->next = meta;
-	tail->prev = target;
-	target->next = tail;
-	target->prev = meta;
-	meta->prev = cmd;
-	cmd->prev = head;
-	head->next = cmd;
 }
 
 static int	check_head_type(t_token *token, t_envlist *env)

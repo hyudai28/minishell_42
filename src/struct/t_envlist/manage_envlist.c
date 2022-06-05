@@ -37,7 +37,7 @@ int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 	return (0);
 }
 
-t_envlist	*envlist_search(char *tr_line, t_envlist	*node)
+t_envlist	*envlist_search(char *tr_line, t_envlist *node)
 {
 	size_t	tr_len;
 

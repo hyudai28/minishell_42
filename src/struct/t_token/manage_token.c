@@ -23,18 +23,6 @@ t_token	*new_token(void)
 	return (new);
 }
 
-t_token	*get_token_last(t_token *head)
-{
-	t_token	*token;
-
-	token = head;
-	while (token->type != TAIL)
-	{
-		token = token->next;
-	}
-	return (token);
-}
-
 t_token	*add_token_last(t_token *head, t_token *cur)
 {
 	t_token	*tail;
