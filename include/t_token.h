@@ -38,6 +38,7 @@ t_token		*token_constructor(void);
 void		token_destructor(t_token *token);
 size_t		count_token(t_token *token);
 int			token_check_separate(enum e_token_type type);
+t_token		*add_one(t_token *now, char **str);
 
 //get_token.c
 void	get_token(t_token *new, char *str);

@@ -82,6 +82,8 @@ static t_token	*separate_token(t_cmds *new, t_token *token)
 
 	if (token_check_separate(token->type))
 		return (token);
+	//if (!add_separate_token(token))
+	//	return (NULL);
 	size = count_token(token);
 	cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	if (cmd == NULL)
@@ -97,7 +99,6 @@ static t_token	*separate_token(t_cmds *new, t_token *token)
 	new->cmd = cmd;
 	return (token);
 }
-
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {

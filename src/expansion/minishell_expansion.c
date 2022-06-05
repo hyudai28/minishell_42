@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_expansion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/30 23:11:24 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/05 15:49:13 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,79 @@ int	remove_quot(t_token *token)
 	return (0);
 }
 
+static void	split_free(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	split = NULL;
+}
+
+//quotを見つけたら次のquotまで無視する。
+static int	ft_split_count(char *s, char c)
+{
+	int		count;
+	int		i;
+	char	quout;
+
+	i = 0;
+	count = 0;
+	while (s[i] != '\0')
+	{
+		if ((s[i] == '\'' || s[i] == '\"') && s[i] != '\0')
+		{
+			quout = s[i++];
+			while (s[i] != quout && s[i] != '\0')
+				i++;
+			i++;
+		}
+		while (s[i] == c && s[i] != '\0')
+			i++;
+		if (s[i] != c && s[i] != '\0' && !(s[i] == '\'' || s[i] == '\"'))
+		{
+			count++;
+			while (s[i] != c && s[i] != '\0' && !(s[i] == '\'' || s[i] == '\"'))
+				i++;
+		}
+	}
+	return (count);
+}
+
+t_token	*add_separate_token(t_token *token)
+{
+	int		split_ct;
+	int		split_i;
+	char	**split_token_word;
+
+	split_ct = ft_split_count(token->word, ' ');
+	if (split_ct == 1)
+		return (token);
+	split_token_word = ft_split(token->word, ' ');
+	if (!split_token_word)
+		return (NULL);
+	token->word[ft_strchr_gnl(token->word, ' ')] = '\0';
+	split_i = 1;
+	while (split_i < split_ct)
+	{
+		token = add_one(token, &split_token_word[split_i]);
+		if (!token)
+		{
+			split_free(split_token_word);
+			return (NULL);
+		}
+		split_i++;
+	}
+	split_free(split_token_word);
+	return (token);
+}
+
 int	expansion(t_token *token, t_envlist *env)
 {
 	t_token	*head;
@@ -86,6 +159,7 @@ int	expansion(t_token *token, t_envlist *env)
 			continue ;
 		}
 		expansion_dq(token, env);
+		add_separate_token(token);
 		token = token->next;
 	}
 	token = head->next;

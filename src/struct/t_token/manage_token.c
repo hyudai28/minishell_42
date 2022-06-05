@@ -36,6 +36,25 @@ t_token	*new_token(t_token *cur, char **str)
 	return (new);
 }
 
+t_token	*add_one(t_token *now, char **str)
+{
+	t_token	*after;
+	t_token	*new;
+	char	*add_str;
+
+	after = now->next;
+	add_str = ft_strdup(*str);
+	if (!add_str)
+		return (NULL);
+	new = new_token(now, &add_str);
+	if (!new)
+		return (NULL);
+	new->next = after;
+	if (after)
+		after->prev = new;
+	return (new);
+}
+
 t_token	*end_token(t_token *cur)
 {
 	t_token	*new;
