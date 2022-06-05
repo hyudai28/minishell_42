@@ -46,7 +46,8 @@ int	main(int argc, char **argv, char **envp)
 	g_signal_handled = 0;
 	command = NULL;
 	env_head = envlist_constructor(envp);
-	printf("envlist is done\n");
+	if (!env_head)
+		return (!error("envp set up is failed.", 1, NULL));
 	minishell_signal();
 	rl_signal_event_hook = event_hook;
 	while (1)

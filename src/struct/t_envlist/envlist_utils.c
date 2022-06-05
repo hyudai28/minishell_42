@@ -54,7 +54,7 @@ char	*envlist_get_env(t_envlist *tmp)
 	char	*key;
 
 	key = NULL;
-	key = token_strjoin(key, tmp->key);//失敗
+	key = token_strjoin(key, tmp->key);
 	if (key == NULL)
 	{
 		free(key);
@@ -76,10 +76,7 @@ char	**envlist_to_char(t_envlist *head)
 	char		**split;
 
 	if (!head->next)
-	{
-		printf("envlist is null\n");
 		return (NULL);
-	}
 	tmp = head->next;
 	while (!tmp->head)
 	{
