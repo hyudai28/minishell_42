@@ -79,7 +79,17 @@ static t_token	*set_type_outfd(t_cmds *new, t_token *token)
 
 static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 {
-	if (new->cmd == NULL)
+	char	**cmd;
+	size_t	size;
+	size_t	index;
+
+	if (token_check_separate(token->type))
+		return (token);
+	//if (!add_separate_token(token))
+	//	return (NULL);
+	size = count_token(token);
+	cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	if (cmd == NULL)
 		return (NULL);
 	if (token->type != EXPANDABLE)
 		return (token);
