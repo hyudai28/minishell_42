@@ -29,7 +29,10 @@ int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 		return (1);
 	new->prev = prev;
 	new->next = head;
-	prev->next = new;
+	if (prev)
+		prev->next = new;
+	else
+		head->next = new;
 	head->prev = new;
 	return (0);
 }
