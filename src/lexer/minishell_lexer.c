@@ -6,17 +6,27 @@ int	lexer(char *argv, t_token *head)
 	char	*str;
 
 	str = argv;
-	cur = head;
 	while (*str != '\0')
 	{
 		while (ft_isspace(*str))
 			str++;
-		cur = new_token(cur, &str);
-		if (!cur)
+		cur = new_token();
+		if (cur == NULL)
+		{
+			token_destructor(head);//malloc error output
 			return (1);
+		}
+		add_token_last(head, cur);
+		get_token(cur, str);
+		cur->word = (char *)malloc(sizeof(char) * cur->word_len + 1);
+		if (cur->word == NULL)
+		{
+			token_destructor(head);//malloc error output
+			return (1);
+		}
+		ft_strlcpy(cur->word, str, cur->word_len + 1);
+		str += cur->word_len;
 	}
-	if (!cur)
-		return (1);
 	free(argv);
 	argv = NULL;
 	return (0);

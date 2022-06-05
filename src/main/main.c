@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "minishell.h"	//still reachable 218 blocks
 
 int	minishell(char *command, t_envlist *envp)
 {
@@ -7,19 +7,14 @@ int	minishell(char *command, t_envlist *envp)
 
 	head = token_constructor();
 	if (lexer(command, head) == 1)
-		return (free_structors(head, NULL, NULL));
-	if (head->next->type == TAIL)
-	{
-		free_structors(head, NULL, NULL);
-		return (0);
-	}
-	if (parser(head, envp) != 0)
 		return (1);
-	if (heredocument(head, envp) != 0)
-		return (1);
-	if (expansion(head, envp) != 0)
-		return (1);
-	//debug_all(head);
+	parser(head, envp);
+	debug_all(head);
+	token_destructor(head);
+	envlist_destructor(envp);
+	exit(0);
+	heredocument(head, envp);
+	expansion(head, envp);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));
@@ -46,7 +41,6 @@ int	main(int argc, char **argv, char **envp)
 	g_signal_handled = 0;
 	command = NULL;
 	env_head = envlist_constructor(envp);
-	printf("envlist is done\n");
 	minishell_signal();
 	rl_signal_event_hook = event_hook;
 	while (1)

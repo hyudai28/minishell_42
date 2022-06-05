@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:54 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/05 17:59:23 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/05 18:49:28 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_envlist	*envlist_constructor(char **envp)
 	t_envlist	*head;
 	int			env_i;
 
-	printf("	envlist constructor\n");
 	new = (t_envlist *)malloc(sizeof(t_envlist));
 	//失敗ケア
 	ft_memset(new, 0, sizeof(t_envlist));
@@ -30,10 +29,8 @@ t_envlist	*envlist_constructor(char **envp)
 	new->value = NULL;
 	env_i = -1;
 	head = new;
-	printf("	envlist seted\n");
 	while (envp[++env_i])
 	{
-		printf("	envp_i[%d]\n", env_i);
 		envlist_add(envp[env_i], new, head);
 		new = new->next;
 	}

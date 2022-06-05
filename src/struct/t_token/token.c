@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:47 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/05 18:18:03 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:31:35 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ t_token	*token_constructor(void)
 	ft_memset(head, 0, sizeof(t_token));
 	ft_memset(tail, 0, sizeof(t_token));
 	head->next = tail;
-	tail->next = NULL;
-	head->prev = NULL;
+	tail->next = head;
+	head->prev = tail;
 	tail->prev = head;
 	head->type = HEAD;
 	tail->type = TAIL;
 	head->word = NULL;
 	tail->word = NULL;
-	head->head = 1;
-	tail->head = 0;
 	return (head);
 }
 
