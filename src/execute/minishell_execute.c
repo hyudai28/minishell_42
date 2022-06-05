@@ -60,7 +60,7 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	cmds = token_to_cmds(head);
 	if (!cmds)
 		error("open err", 1, env);
-	debug_cmds(cmds->next);
+	//debug_cmds(cmds->next);
 	if (!cmds->next->cmd)
 		return (0);
 	pipe_infd = -2;

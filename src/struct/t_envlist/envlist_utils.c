@@ -75,6 +75,11 @@ char	**envlist_to_char(t_envlist *head)
 	char		*key;
 	char		**split;
 
+	if (!head->next)
+	{
+		printf("envlist is null\n");
+		return (NULL);
+	}
 	tmp = head->next;
 	while (!tmp->head)
 	{
