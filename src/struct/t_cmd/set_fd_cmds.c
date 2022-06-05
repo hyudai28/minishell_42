@@ -33,6 +33,8 @@ static t_token	*set_type_infd(t_cmds *new, t_token *token)
 	else if (token->type == HEREDOC)
 	{
 		token = token->next;
+		if (new->heredoc_str != NULL)
+			free(new->heredoc_str);
 		new->heredoc_str = token->word;
 		token->word = NULL;
 		new->infd_type = FD_HEREDOC;
@@ -68,13 +70,14 @@ static t_token	*set_type_outfd(t_cmds *new, t_token *token)
 			close(new->outfd);
 		new->outfd_type = FD_REDIRECT;
 		new->outfd = open(token->word, O_WRONLY | O_APPEND | O_CREAT, 0644); //open err
+		token = token->next;
 	}
 	if (new->outfd == -1)
 		return (NULL);
 	return (token);
 }
 
-static t_token	*separate_token(t_cmds *new, t_token *token)
+static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 {
 	char	**cmd;
 	size_t	size;
@@ -88,29 +91,34 @@ static t_token	*separate_token(t_cmds *new, t_token *token)
 	cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	if (cmd == NULL)
 		return (NULL);
-	index = 0;
-	while (!token_check_separate(token->type))
-	{
-		cmd[index] = ft_strdup(token->word);//malloc失敗時にfree処理
-		token = token->next;
-		index++;
-	}
-	cmd[index] = NULL;
-	new->cmd = cmd;
+	if (token->type != EXPANDABLE)
+		return (token);
+	new->cmd[*index] = ft_strdup(token->word);//malloc失敗時にfree処理
+	token = token->next;
+	(*index)++;
 	return (token);
 }
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
+	size_t	index;
+	size_t	size;
+
+	index = 0;
+	size = count_token(token);
+	new->cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	while (token->type != PIPE && token->type != TAIL)
 	{
-		token = separate_token(new, token);
-		if (!token)
-			return (NULL);
+		new->cmd[index + 1] = NULL;
 		token = set_type_infd(new, token);
 		if (!token)
 			return (NULL);
 		token = set_type_outfd(new, token);
+		if (!token)
+			return (NULL);
+		token = separate_token(new, token, &index);
+		if (!token)
+			return (NULL);
 	}
 	return (token);
 }

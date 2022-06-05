@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/03 22:52:56 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/04 01:13:59 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 		new_line = readline("> ");
 		if (new_line == NULL)
 			break ;
-		if (ft_strncmp(new_line, dlmt, dlmt_l) == 0)
+		if (ft_strncmp(new_line, dlmt, (dlmt_l + 1)) == 0)
 			break ;
 		*line = ft_strjoin3(*line, "\n", new_line, 0); //malloc失敗
 		free(temp);
@@ -31,53 +31,7 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 	}
 	free(new_line);
 	return (0);
-}
-
-// static int	read_file(t_token *token, char *delimiter, size_t delimiter_length)
-// {
-// 	char	*line;
-// 	char	*new_line;
-// 	char	*temp;
-// 	int		fd;
-
-// 	if (token->next->next->type == TAIL)
-// 		return (1);
-// 	token = token->next->next;
-// 	line = NULL;
-// 	fd = open(token->word, O_RDONLY);
-// 	if (get_next_line(fd, &new_line) <= 0)
-// 		exit(0);
-// 	while (1)
-// 	{
-// 		if (get_next_line(fd, &new_line) <= 0)
-// 			break ;
-// 		temp = line;
-// 		line = ft_strjoin3(line, "\n", new_line, 0);
-// 		free(temp);
-// 		free(new_line);
-// 	}
-// 	token->prev->word = line;
-// 	token_delone(token);
-// 	close(fd);
-
-// 	new_line = readline("> ");
-// 	if (new_line == NULL)
-// 		return (2);
-// 	if (ft_strncmp(new_line, delimiter, delimiter_length) == 0)
-// 	{
-// 		free(new_line);
-// 		return (0);
-// 	}
-// 	while (1)
-// 	{
-// 		free(new_line);
-// 		new_line = readline("> ");
-// 		if (ft_strncmp(new_line, delimiter, delimiter_length) == 0)
-// 			break ;
-// 	}
-// 	free(new_line);
-// 	return (0);
-// }
+};
 
 int	get_heredoc(t_token *token, char *delimiter)
 {
@@ -88,7 +42,7 @@ int	get_heredoc(t_token *token, char *delimiter)
 	line = readline("> "); //malloc失敗
 	if (line == NULL) //error
 		return (2);
-	if (ft_strncmp(line, delimiter, delimiter_length) == 0)
+	if (ft_strncmp(line, delimiter, (delimiter_length + 1)) == 0)
 	{
 		free(line);
 		free(token->next->word);

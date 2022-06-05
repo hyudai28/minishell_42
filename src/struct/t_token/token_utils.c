@@ -42,10 +42,13 @@ size_t	count_token(t_token *token)
 	size_t	size;
 
 	size = 0;
-	if (token->type == HEREDOC)
-		return (1);
-	while (!token_check_separate(token->type) && token->type != HEREDOC)
+	while (token->type != PIPE && token->type != TAIL)
 	{
+		if (token_check_separate(token->type) == 1)
+		{
+			token = token->next->next;
+			continue ;
+		}
 		size++;
 		token = token->next;
 	}
