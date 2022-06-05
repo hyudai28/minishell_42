@@ -81,7 +81,6 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 {
 	char	**cmd;
 	size_t	size;
-	size_t	index;
 
 	if (token_check_separate(token->type))
 		return (token);
