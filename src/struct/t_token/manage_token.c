@@ -22,6 +22,7 @@ t_token	*new_token(t_token *cur, char **str)
 	if (!new)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_token));
+	new->next = cur->next;
 	cur->next = new;
 	new->prev = cur;
 	get_token(new, *str);
@@ -52,20 +53,6 @@ t_token	*add_one(t_token *now, char **str)
 	new->next = after;
 	if (after)
 		after->prev = new;
-	return (new);
-}
-
-t_token	*end_token(t_token *cur)
-{
-	t_token	*new;
-
-	new = (t_token *)malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	ft_memset(new, 0, sizeof(t_token));
-	new->type = TAIL;
-	cur->next = new;
-	new->prev = cur;
 	return (new);
 }
 

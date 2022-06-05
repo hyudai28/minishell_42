@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/05 17:42:30 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/05 17:42:31 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_strjoin3(char *a, char *b, char *c, int need_free)
@@ -6,17 +18,23 @@ char	*ft_strjoin3(char *a, char *b, char *c, int need_free)
 	char	*ret2;
 
 	ret1 = ft_strjoin(a, b); //malloc
+	if (ret1 == NULL)
+	{
+		if (need_free)
+		{
+			free(a);
+			free(b);
+			free(c);
+		}
+		return (NULL);
+	}
 	ret2 = ft_strjoin(ret1, c); //malloc
 	free(ret1);
-	ret1 = NULL;
 	if (need_free)
 	{
 		free(a);
 		free(b);
 		free(c);
-		a = NULL;
-		b = NULL;
-		c = NULL;
 	}
 	return (ret2);
 }

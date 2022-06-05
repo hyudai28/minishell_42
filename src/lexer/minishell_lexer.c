@@ -15,7 +15,6 @@ int	lexer(char *argv, t_token *head)
 		if (!cur)
 			return (1);
 	}
-	cur = end_token(cur);
 	if (!cur)
 		return (1);
 	free(argv);
