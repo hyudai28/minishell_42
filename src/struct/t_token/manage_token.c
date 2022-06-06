@@ -37,6 +37,17 @@ t_token	*add_token_last(t_token *head, t_token *cur)
 	return (cur);
 }
 
+t_token	*add_token_next(t_token *prev, t_token *cur, t_token *next)
+{
+	if (prev->type == TAIL)
+		return (cur);
+	prev->next = cur;
+	cur->prev = prev;
+	cur->next = next;
+	next->prev = cur;
+	return (cur);
+}
+
 t_token	*add_one(t_token *now, char **str)
 {
 	t_token	*after;

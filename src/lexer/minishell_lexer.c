@@ -6,10 +6,10 @@ int	lexer(char *argv, t_token *head)
 	char	*str;
 
 	str = argv;
+	while (ft_isspace(*str))
+		str++;
 	while (*str != '\0')
 	{
-		while (ft_isspace(*str))
-			str++;
 		cur = new_token();
 		if (cur == NULL)
 		{
@@ -28,6 +28,8 @@ int	lexer(char *argv, t_token *head)
 		}
 		ft_strlcpy(cur->word, str, cur->word_len + 1);
 		str += cur->word_len;
+		while (ft_isspace(*str))
+			str++;
 	}
 	free(argv);
 	return (0);

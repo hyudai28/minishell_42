@@ -8,13 +8,12 @@ int	minishell(char *command, t_envlist *envp)
 	head = token_constructor();
 	if (lexer(command, head) == 1)
 		return (1);
-	parser(head, envp);
-	heredocument(head, envp);
-	expansion(head, envp);
-	debug_all(head);
-	token_destructor(head);
-	envlist_destructor(envp);
-	exit(0);
+	if (parser(head, envp) == 1)
+		return (1);
+	if (heredocument(head, envp) == 1)
+		return (1);
+	if (expansion(head, envp) == 1)
+		return (1);
 	result = minishell_execute(head, envp);
 	token_destructor(head);
 	return (doller_ret(result, envp));
