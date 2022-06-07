@@ -84,8 +84,6 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 
 	if (token_check_separate(token->type))
 		return (token);
-	//if (!add_separate_token(token))
-	//	return (NULL);
 	size = count_token(token);
 	cmd = (char **)malloc(sizeof(char *) * (size + 1));
 	if (cmd == NULL)
@@ -93,6 +91,8 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 	if (token->type != EXPANDABLE)
 		return (token);
 	new->cmd[*index] = ft_strdup(token->word);//malloc失敗時にfree処理
+	if (new->cmd[*index] == NULL)
+		return (NULL);
 	token = token->next;
 	(*index)++;
 	return (token);
@@ -106,13 +106,15 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	index = 0;
 	size = count_token(token);
 	new->cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	if (new->cmd == NULL)
+		return (NULL);
 	while (token->type != PIPE && token->type != TAIL)
 	{
 		new->cmd[index + 1] = NULL;
-		token = set_type_infd(new, token);
+		token = set_type_infd(new, token); //open errorのケース
 		if (!token)
 			return (NULL);
-		token = set_type_outfd(new, token);
+		token = set_type_outfd(new, token); //open errorのケース
 		if (!token)
 			return (NULL);
 		token = separate_token(new, token, &index);

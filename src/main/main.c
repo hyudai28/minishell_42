@@ -3,6 +3,7 @@
 int	minishell(char *command, t_envlist *envp)
 {
 	t_token	*head;
+	t_cmds	*cmds;
 	int		result;
 
 	head = token_constructor();
@@ -14,8 +15,9 @@ int	minishell(char *command, t_envlist *envp)
 		return (1);
 	if (expansion(head, envp) == 1)
 		return (1);
-	result = minishell_execute(head, envp);
+	cmds = token_to_cmds(head);
 	token_destructor(head);
+	result = minishell_execute(cmds, envp);
 	return (doller_ret(result, envp));
 }
 
@@ -40,6 +42,11 @@ int	main(int argc, char **argv, char **envp)
 	g_signal_handled = 0;
 	command = NULL;
 	env_head = envlist_constructor(envp);
+	if (env_head == NULL)
+	{
+		envlist_destructor(env_head);
+		return (1); //malloc error
+	}
 	minishell_signal();
 	rl_signal_event_hook = event_hook;
 	while (1)
