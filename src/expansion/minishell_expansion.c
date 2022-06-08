@@ -6,11 +6,26 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/06 23:29:52 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 22:25:14 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	split_free(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	split = NULL;
+}
 
 static size_t	get_length(const char *word)
 {
@@ -75,21 +90,6 @@ int	remove_quot(t_token *token)
 	return (0);
 }
 
-static void	split_free(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		split[i] = NULL;
-		i++;
-	}
-	free(split);
-	split = NULL;
-}
-
 int	add_separate_token(t_token *token)
 {
 	size_t	i;
@@ -112,7 +112,9 @@ int	add_separate_token(t_token *token)
 		return (0);
 	left = ft_substr(token->word, 0, i);
 	if (left == NULL)
+	{
 		return (1);
+	}
 	while (token->word[i] == ' ')
 		i++;
 	right = ft_substr(token->word, i, ft_strlen(token->word + i));
@@ -152,17 +154,19 @@ int	expansion(t_token *token, t_envlist *env)
 		}
 		if (expansion_env(token, env) == 1)
 		{
-			token_destructor(token);
+			token_destructor(head);
 			return (1);
 		}
 		if (add_separate_token(token) == 1)
 		{
-			token_destructor(token);
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
 		if (remove_quot(token) == 1)
 		{
-			token_destructor(token);
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
 		token = token->next;

@@ -5,9 +5,10 @@ int	minishell(char *command, t_envlist *envp)
 	t_token	*head;
 	t_cmds	*cmds;
 	int		result;
+	static int	i = 0;
 
 	head = token_constructor();
-	if (lexer(command, head) == 1)
+	if (lexer(command, head, envp) == 1)
 		return (1);
 	if (parser(head, envp) == 1)
 		return (1);

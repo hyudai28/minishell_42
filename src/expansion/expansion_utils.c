@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 17:42:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/06 23:43:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 22:44:09 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,25 @@ static char	*expansion_line(\
 	size_t temp = 0;
 	while (expand_word_index < total_length)
 	{
-		if (word[word_index] == '$')
+		if (word[word_index] != '$')
+		{
+			if (word[word_index] == '\'')
+			{
+				expand_word[expand_word_index] = word[word_index];
+				expand_word_index++;
+				word_index++;
+				while (word[word_index] != '\0' && word[word_index] != '\'')
+				{
+					expand_word[expand_word_index] = word[word_index];
+					expand_word_index++;
+					word_index++;
+				}
+			}
+			expand_word[expand_word_index] = word[word_index];
+			expand_word_index++;
+			word_index++;
+		}
+		else
 		{
 			word_index++;
 			if (word[word_index] == '?')
@@ -314,13 +332,6 @@ static char	*expansion_line(\
 					}
 			}
 		}
-		else
-		{
-			expand_word[expand_word_index] = word[word_index];
-			expand_word_index++;
-			word_index++;
-		}
-		// printf("%s: %ld\n", expand_word, expand_word_index);
 	}
 	return (expand_word);
 }

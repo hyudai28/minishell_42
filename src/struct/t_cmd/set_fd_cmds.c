@@ -23,6 +23,11 @@ static t_token	*set_type_infd(t_cmds *new, t_token *token)
 			close(new->infd);
 		new->infd_type = FD_R_STDIN;
 		new->infd = open(token->word, O_RDONLY);
+		if (new->infd == -1)
+		{
+			error("");
+			exit(0);
+		}
 		token = token->next;
 	}
 	else if (new->outfd_type == FD_PIPE_OUT)
@@ -85,9 +90,6 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 	if (token_check_separate(token->type))
 		return (token);
 	size = count_token(token);
-	cmd = (char **)malloc(sizeof(char *) * (size + 1));
-	if (cmd == NULL)
-		return (NULL);
 	if (token->type != EXPANDABLE)
 		return (token);
 	new->cmd[*index] = ft_strdup(token->word);//malloc失敗時にfree処理
@@ -100,9 +102,12 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
+	t_token	*token_head;
 	size_t	index;
 	size_t	size;
+	static int i = 0;
 
+	token_head = token;
 	index = 0;
 	size = count_token(token);
 	new->cmd = (char **)malloc(sizeof(char *) * (size + 1));

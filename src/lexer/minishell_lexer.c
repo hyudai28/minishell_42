@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	lexer(char *argv, t_token *head)
+int	lexer(char *argv, t_token *head, t_envlist *env)
 {
 	t_token	*cur;
 	char	*str;
@@ -14,7 +14,8 @@ int	lexer(char *argv, t_token *head)
 		if (cur == NULL)
 		{
 			free(argv);
-			token_destructor(head);//malloc error output
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
 		add_token_last(head, cur);
@@ -23,7 +24,8 @@ int	lexer(char *argv, t_token *head)
 		if (cur->word == NULL)
 		{
 			free(argv);
-			token_destructor(head);//malloc error output
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
 		ft_strlcpy(cur->word, str, cur->word_len + 1);
