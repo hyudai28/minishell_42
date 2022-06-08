@@ -220,7 +220,6 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
 	if (expand_word == NULL)
 		return (1);
-	return (1);
 	expand_word[total_length] = '\0';
 	expand_word = expansion_line(expand_word, token->word, env, total_length);
 	free(token->word);
