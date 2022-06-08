@@ -12,29 +12,40 @@
 
 #include "minishell.h"
 
-t_token	*new_token(t_token *cur, char **str)
+t_token	*new_token(void)
 {
 	t_token	*new;
 
-	if (**str == '\0')
-		return (cur);
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_token));
-	new->next = cur->next;
-	cur->next = new;
-	new->prev = cur;
-	get_token(new, *str);
-	new->word = (char *)malloc(new->word_len + 1);
-	if (!new->word)
-		return (new);
-	ft_strlcpy(new->word, *str, new->word_len + 1);
-	if (new->word_len == WORD_LEN_ERROR)
-		return (new);
-	(*str) += (new->word_len);
-	new->head = 0;
 	return (new);
+}
+
+t_token	*add_token_last(t_token *head, t_token *cur)
+{
+	t_token	*tail;
+	t_token	*last;
+
+	tail = head->prev;
+	last = tail->prev;
+	last->next = cur;
+	cur->prev = last;
+	cur->next = tail;
+	tail->prev = cur;
+	return (cur);
+}
+
+t_token	*add_token_next(t_token *prev, t_token *cur, t_token *next)
+{
+	if (prev->type == TAIL)
+		return (cur);
+	prev->next = cur;
+	cur->prev = prev;
+	cur->next = next;
+	next->prev = cur;
+	return (cur);
 }
 
 t_token	*add_one(t_token *now, char **str)
@@ -47,7 +58,7 @@ t_token	*add_one(t_token *now, char **str)
 	add_str = ft_strdup(*str);
 	if (!add_str)
 		return (NULL);
-	new = new_token(now, &add_str);
+	// new = new_token(now, &add_str);
 	if (!new)
 		return (NULL);
 	new->next = after;
@@ -61,7 +72,7 @@ int	token_delone(t_token *token)
 	t_token	*before;
 	t_token	*after;
 
-	if (token->head != 1)
+	if (token->type != HEAD)
 		before = token->prev;
 	else
 		return (1);

@@ -45,9 +45,8 @@ int	command_execute(char **cmds, t_envlist *env)
 	return (result);
 }
 
-int	minishell_execute(t_token *head, t_envlist *env)
+int	minishell_execute(t_cmds *cmds, t_envlist *env)
 {
-	t_cmds	*cmds;
 	int		pipe_infd;
 	int		backup_default_stdfd[2];
 	int		backup_stdfd[2];
@@ -57,7 +56,6 @@ int	minishell_execute(t_token *head, t_envlist *env)
 	backup_default_stdfd[1] = dup(1);
 	backup_stdfd[0] = dup(0);
 	backup_stdfd[1] = dup(1);
-	cmds = token_to_cmds(head);
 	if (!cmds)
 		error("open err", 1, env);
 	//debug_cmds(cmds->next);

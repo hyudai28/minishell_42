@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_expansion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/05 15:49:13 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/08 23:35:14 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	split_free(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	split = NULL;
+}
 
 static size_t	get_length(const char *word)
 {
@@ -36,17 +51,23 @@ static size_t	get_length(const char *word)
 	return (len);
 }
 
-int	remove_quot(t_token *token)
+int	remove_quot(t_token *token, t_envlist *env)
 {
 	char	*new;
 	char	quot;
 	size_t	i;
 	size_t	len;
 
-	token->word_len = get_length(token->word);
-	if (token->word_len == 0)
+	len = get_length(token->word);
+	if (len == 0)
 		return (0);
+	token->word_len = len;
 	new = malloc(sizeof(char) * token->word_len + 1);//malloc
+	if (new == NULL)
+	{
+		error("minishell: Cannot allocate memory", 1, env);
+		return (1);
+	}
 	i = 0;
 	len = 0;
 	while (token->word[i + len] != '\0')
@@ -72,77 +93,56 @@ int	remove_quot(t_token *token)
 	return (0);
 }
 
-static void	split_free(char **split)
+int	add_separate_token(t_token *token, t_envlist *env)
 {
-	int	i;
+	size_t	i;
+	char	*left;
+	char	*right;
+	t_token	*new;
 
 	i = 0;
-	while (split[i])
+	while (token->word[i] != '\0' && token->word[i] != ' ')
 	{
-		free(split[i]);
-		split[i] = NULL;
+		if (token->word[i] == '\'')
+		{
+			i++;
+			while (token->word[i] != '\0' && token->word[i] != '\'')
+				i++;
+		}
 		i++;
 	}
-	free(split);
-	split = NULL;
-}
-
-//quotを見つけたら次のquotまで無視する。
-static int	ft_split_count(char *s, char c)
-{
-	int		count;
-	int		i;
-	char	quout;
-
-	i = 0;
-	count = 0;
-	while (s[i] != '\0')
+	if (token->word[i] == '\0')
+		return (0);
+	left = ft_substr(token->word, 0, i);
+	if (left == NULL)
 	{
-		if ((s[i] == '\'' || s[i] == '\"') && s[i] != '\0')
-		{
-			quout = s[i++];
-			while (s[i] != quout && s[i] != '\0')
-				i++;
-			i++;
-		}
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		if (s[i] != c && s[i] != '\0' && !(s[i] == '\'' || s[i] == '\"'))
-		{
-			count++;
-			while (s[i] != c && s[i] != '\0' && !(s[i] == '\'' || s[i] == '\"'))
-				i++;
-		}
+		error("minishell: Cannot allocate memory", 1, env);
+		return (1);
 	}
-	return (count);
-}
-
-t_token	*add_separate_token(t_token *token)
-{
-	int		split_ct;
-	int		split_i;
-	char	**split_token_word;
-
-	split_ct = ft_split_count(token->word, ' ');
-	if (split_ct == 1)
-		return (token);
-	split_token_word = ft_split(token->word, ' ');
-	if (!split_token_word)
-		return (NULL);
-	token->word[ft_strchr_gnl(token->word, ' ')] = '\0';
-	split_i = 1;
-	while (split_i < split_ct)
+	while (token->word[i] == ' ')
+		i++;
+	right = ft_substr(token->word, i, ft_strlen(token->word + i));
+	if (right == NULL)
 	{
-		token = add_one(token, &split_token_word[split_i]);
-		if (!token)
-		{
-			split_free(split_token_word);
-			return (NULL);
-		}
-		split_i++;
+		error("minishell: Cannot allocate memory", 1, env);
+		free(left);
+		return (1);
 	}
-	split_free(split_token_word);
-	return (token);
+	new = new_token();
+	if (new == NULL)
+	{
+		error("minishell: Cannot allocate memory", 1, env);
+		free(right);
+		free(left);
+		return (1);
+	}
+	new->word = right;
+	new->type = EXPANDABLE;
+	new->word_len =	ft_strlen(new->word);
+	free(token->word);
+	token->word = left;
+	add_token_next(token, new, token->next);
+	return (0);
 }
 
 int	expansion(t_token *token, t_envlist *env)
@@ -158,19 +158,21 @@ int	expansion(t_token *token, t_envlist *env)
 			token = token->next->next;
 			continue ;
 		}
-		expansion_dq(token, env);
-		add_separate_token(token);
-		token = token->next;
-	}
-	token = head->next;
-	while (token->type != TAIL)
-	{
-		if (token->type == HEREDOC)
+		if (expansion_env(token, env) == 1)
 		{
-			token = token->next->next;
-			continue ;
+			token_destructor(head);
+			return (1);
 		}
-		remove_quot(token);
+		if (add_separate_token(token, env) == 1)
+		{
+			token_destructor(head);
+			return (1);
+		}
+		if (remove_quot(token, env) == 1)
+		{
+			token_destructor(head);
+			return (1);
+		}
 		token = token->next;
 	}
 	return (0);

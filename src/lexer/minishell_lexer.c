@@ -1,23 +1,38 @@
 #include "minishell.h"
 
-int	lexer(char *argv, t_token *head)
+int	lexer(char *argv, t_token *head, t_envlist *env)
 {
 	t_token	*cur;
 	char	*str;
 
 	str = argv;
-	cur = head;
+	while (ft_isspace(*str))
+		str++;
 	while (*str != '\0')
 	{
+		cur = new_token();
+		if (cur == NULL)
+		{
+			free(argv);
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
+			return (1);
+		}
+		add_token_last(head, cur);
+		get_token(cur, str);
+		cur->word = (char *)malloc(sizeof(char) * cur->word_len + 1);
+		if (cur->word == NULL)
+		{
+			free(argv);
+			token_destructor(head);
+			error("minishell: Cannot allocate memory", 1, env);
+			return (1);
+		}
+		ft_strlcpy(cur->word, str, cur->word_len + 1);
+		str += cur->word_len;
 		while (ft_isspace(*str))
 			str++;
-		cur = new_token(cur, &str);
-		if (!cur)
-			return (1);
 	}
-	if (!cur)
-		return (1);
 	free(argv);
-	argv = NULL;
 	return (0);
 }
