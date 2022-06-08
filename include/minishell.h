@@ -37,18 +37,19 @@ volatile sig_atomic_t	g_signal_handled;
 // t_envlist *envp_head;
 
 //lexer
-int		lexer(char *argv, t_token *head);
+int		lexer(char *argv, t_token *head, t_envlist *env);
 
 //parser
 int		parser(t_token *token, t_envlist *env);
 
 //heredoc
 int		heredocument(t_token *head, t_envlist *env);
+int		heredoc_expansion(t_token *token, t_envlist *env);
 
 //expansion
 int		expansion(t_token *token, t_envlist *env);
-int		expansion_dq(t_token *token, t_envlist *env);
-int		remove_quot(t_token *token);
+int		expansion_env(t_token *token, t_envlist *env);
+int		remove_quot(t_token *token, t_envlist *env);
 char	*ft_strjoin3(char *a, char *b, char *c, int need_free);
 size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var);
 size_t	get_envlen(const char *line);
@@ -59,7 +60,7 @@ void	envsplit_free(char **split);
 int		doller_ret(int ret, t_envlist *env);
 
 //execute
-int		minishell_execute(t_token *head, t_envlist *envp);
+int		minishell_execute(t_cmds *cmds, t_envlist *envp);
 char	*get_command_path(char **cmds, t_envlist *env);
 int		pipex(char **cmds, t_envlist *env, char *path);
 void	clean_fd(int close_fd, int backup_fd);

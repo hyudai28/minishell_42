@@ -30,7 +30,6 @@ typedef struct s_token
 	enum e_token_type	type;
 	char				*word;
 	size_t				word_len;
-	bool				head;
 }		t_token;
 
 //token.c
@@ -44,8 +43,10 @@ t_token		*add_one(t_token *now, char **str);
 void	get_token(t_token *new, char *str);
 
 //manage_token.c
-t_token		*new_token(t_token *cur, char **str);
-t_token		*end_token(t_token *cur);
+t_token		*new_token(void);
+t_token		*add_token_last(t_token *head, t_token *cur);
+t_token		*add_token_next(t_token *prev, t_token *cur, t_token *next);
+
 int			token_delone(t_token *token);
 char		*token_strjoin(char *cmd_line, char *s2);
 

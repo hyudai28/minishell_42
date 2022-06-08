@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 17:42:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/08 22:44:09 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 23:29:07 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strjoin3(char *a, char *b, char *c, int need_free)
 		}
 		return (NULL);
 	}
+	// return (NULL);
 	ret2 = ft_strjoin(ret1, c); //malloc
 	free(ret1);
 	if (need_free)
@@ -160,6 +161,8 @@ static size_t	get_env_length(char *word, t_envlist *env)
 	{
 		if (!ft_strncmp(word, env->key, tr_len))
 		{
+			if (env->value == NULL)
+				return (0);
 			value_len = ft_strlen(env->value);
 			return (value_len);
 		}
@@ -249,7 +252,7 @@ static size_t	get_env_only_length(char *word, t_envlist *env)
 	return (length);
 }
 
-size_t	exit_status_cat(char *expand_word, t_envlist *env, size_t stat_len)
+static size_t	exit_status_cat(char *expand_word, t_envlist *env, size_t stat_len)
 {
 	size_t	i;
 	int		exit_status;
@@ -288,7 +291,7 @@ static char	*expansion_line(\
 	word_index = 0;
 	exit_status_length = get_exit_status_digit(env);
 	size_t temp = 0;
-	while (expand_word_index < total_length)
+	while (word[word_index] != '\0')
 	{
 		if (word[word_index] != '$')
 		{

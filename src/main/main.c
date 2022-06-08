@@ -5,7 +5,6 @@ int	minishell(char *command, t_envlist *envp)
 	t_token	*head;
 	t_cmds	*cmds;
 	int		result;
-	static int	i = 0;
 
 	head = token_constructor();
 	if (lexer(command, head, envp) == 1)
@@ -53,12 +52,15 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		command = readline("minishell > ");
+		if (command == NULL)
+		{
+			envlist_destructor(env_head);
+			return (!write(2, "exit", 4));
+		}
 		if (g_signal_handled != 0)
 			env_head->doller_ret = g_signal_handled;
 		g_signal_handled = 0;
-		if (command == NULL)
-			return (!write(2, "exit", 4));
-		else if (ft_strlen(command) > 0)
+		if (ft_strlen(command) > 0)
 		{
 			add_history(command);
 			minishell(command, env_head);

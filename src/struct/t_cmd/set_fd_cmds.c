@@ -110,12 +110,11 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	token_head = token;
 	index = 0;
 	size = count_token(token);
-	new->cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	new->cmd = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (new->cmd == NULL)
 		return (NULL);
 	while (token->type != PIPE && token->type != TAIL)
 	{
-		new->cmd[index + 1] = NULL;
 		token = set_type_infd(new, token); //open errorのケース
 		if (!token)
 			return (NULL);

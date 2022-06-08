@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/08 22:25:14 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 23:35:14 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static size_t	get_length(const char *word)
 	return (len);
 }
 
-int	remove_quot(t_token *token)
+int	remove_quot(t_token *token, t_envlist *env)
 {
 	char	*new;
 	char	quot;
@@ -64,7 +64,10 @@ int	remove_quot(t_token *token)
 	token->word_len = len;
 	new = malloc(sizeof(char) * token->word_len + 1);//malloc
 	if (new == NULL)
+	{
+		error("minishell: Cannot allocate memory", 1, env);
 		return (1);
+	}
 	i = 0;
 	len = 0;
 	while (token->word[i + len] != '\0')
@@ -90,7 +93,7 @@ int	remove_quot(t_token *token)
 	return (0);
 }
 
-int	add_separate_token(t_token *token)
+int	add_separate_token(t_token *token, t_envlist *env)
 {
 	size_t	i;
 	char	*left;
@@ -113,6 +116,7 @@ int	add_separate_token(t_token *token)
 	left = ft_substr(token->word, 0, i);
 	if (left == NULL)
 	{
+		error("minishell: Cannot allocate memory", 1, env);
 		return (1);
 	}
 	while (token->word[i] == ' ')
@@ -120,12 +124,14 @@ int	add_separate_token(t_token *token)
 	right = ft_substr(token->word, i, ft_strlen(token->word + i));
 	if (right == NULL)
 	{
+		error("minishell: Cannot allocate memory", 1, env);
 		free(left);
 		return (1);
 	}
 	new = new_token();
 	if (new == NULL)
 	{
+		error("minishell: Cannot allocate memory", 1, env);
 		free(right);
 		free(left);
 		return (1);
@@ -157,16 +163,14 @@ int	expansion(t_token *token, t_envlist *env)
 			token_destructor(head);
 			return (1);
 		}
-		if (add_separate_token(token) == 1)
+		if (add_separate_token(token, env) == 1)
 		{
 			token_destructor(head);
-			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
-		if (remove_quot(token) == 1)
+		if (remove_quot(token, env) == 1)
 		{
 			token_destructor(head);
-			error("minishell: Cannot allocate memory", 1, env);
 			return (1);
 		}
 		token = token->next;
