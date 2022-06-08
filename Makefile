@@ -6,11 +6,11 @@ LIBFT = libft.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory #-Wall -Wextra -Werror
-OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include #-Wall -Wextra -Werror
+CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -g #-Wall -Wextra -Werror
+OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -g #-Wall -Wextra -Werror
 #CFLAGS = -L $(shell brew --prefix readline)/lib $(INCLUDE)
 #INCLUDE = -I $(shell brew --prefix readline)/include -I include/ -I $(LIB_DIR)
-# DEBUG = -g -fsanitize=address
+DEBUG = -g -fsanitize=address
 LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -lhistory
 #LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -ltinfo
 
@@ -162,7 +162,9 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)$(T_ENVLIST_DIR)
 	mkdir -p $(OBJ_DIR)$(T_TOKEN_DIR)
 
-debug: $(LIBFT) $(OBJS)
+#debug: $(LIBFT) $(OBJS)
+debug: $(OBJS)
+	make -C $(LIB_DIR)
 	$(CC) $(CFLAGS) $(DEBUG) $(LIBFLAGS) $(OBJS) -o $(NAME)
 
 clean:

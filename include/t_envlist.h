@@ -15,6 +15,7 @@ typedef struct s_envlist
 	struct s_envlist		*next;
 	struct s_envlist		*prev;
 	bool					head;
+	int						myself;
 	int						doller_ret;
 }		t_envlist;
 
@@ -29,7 +30,9 @@ t_envlist	*envlist_search(char *tr_line, t_envlist *node);
 void		envlist_delete(char *delete_line, t_envlist *head);
 
 //envlist_utils.c
-void		envlist_set_keyvalue(t_envlist *target, char *new_line);
-char		**envlist_to_char(t_envlist *head);
+int			envlist_set_keyvalue(t_envlist *target, char *new_line);
+char		**envlist_to_key(t_envlist *head);
+char	*envlist_get_key(char *line);
+int	envlist_set_value(t_envlist *target, char *value_line);
 
 #endif

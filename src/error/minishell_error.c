@@ -2,7 +2,8 @@
 
 int	error(char *msg, int error_no, t_envlist *env)
 {
-	env->doller_ret = error_no;
+	if (env)
+		env->doller_ret = error_no;
 	ft_putendl_fd(msg, 2);
 	return (0);
 }

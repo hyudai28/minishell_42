@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:54 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/05 21:56:51 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:04:51 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_envlist	*envlist_constructor(char **envp)
 	int			env_i;
 
 	new = (t_envlist *)malloc(sizeof(t_envlist));
-	//失敗ケア
+	if (!new)
+		return (NULL);
 	ft_memset(new, 0, sizeof(t_envlist));
 	new->prev = NULL;
 	new->next = NULL;
@@ -31,7 +32,11 @@ t_envlist	*envlist_constructor(char **envp)
 	head = new;
 	while (envp[++env_i])
 	{
-		envlist_add(envp[env_i], new, head);
+		if (envlist_add(envp[env_i], new, head))
+		{
+			envlist_destructor(head);
+			return (NULL);
+		}
 		new = new->next;
 	}
 	return (head);
@@ -41,6 +46,13 @@ void	envlist_destructor(t_envlist *envlist)
 {
 	t_envlist	*tmp;
 
+	if (!envlist)
+		return ;
+	else if (!envlist->next)
+	{
+		free(envlist);
+		return ;
+	}
 	envlist = envlist->next;
 	while (envlist->head != 1)
 	{
@@ -49,6 +61,11 @@ void	envlist_destructor(t_envlist *envlist)
 		free(envlist->value);
 		envlist->value = NULL;
 		tmp = envlist;
+		if (!envlist->next)
+		{
+			free(envlist);
+			break ;
+		}
 		envlist = envlist->next;
 		free(tmp);
 		tmp = NULL;

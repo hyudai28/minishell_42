@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 			minishell(command, env_head);
 		}
 		//free(command);
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 	exit_status = env_head->doller_ret;
 	envlist_destructor(env_head);

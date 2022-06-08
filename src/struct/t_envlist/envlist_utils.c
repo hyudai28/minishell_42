@@ -11,25 +11,63 @@
 /* ************************************************************************** */
 
 #include "t_envlist.h"
+//ここでmallocするのが理想
 
-void	envlist_set_keyvalue(t_envlist *target, char *new_line)
+int	envlist_set_key(t_envlist *target, char *new_line, size_t key_length)
 {
-	int	chr;
+	char	*chr_pt;
+	size_t	new_line_length;
 
-	chr = ft_strchr_gnl(new_line, '=');
-	if (chr == -1)
+	new_line_length = ft_strlen(new_line);
+	target->key = ft_substr(new_line, 0, key_length);
+	if (!target->key)
+		return (1);
+	return (0);
+}
+
+int	envlist_set_value(t_envlist *target, char *value_line)
+{
+	char	*chr_pt;
+	size_t	key_length;
+
+	key_length = ft_strlen(value_line);
+	if (target->value)
+		free(target->value);
+	if (key_length == 0)
+	{
+		target->value = (char *)malloc(1);
+		if (!target->value)
+			return (1);
+		target->value[0] = '\0';
+		return (0);
+	}
+	target->value = ft_strdup(value_line);
+	if (!target->value)
+		return (1);
+	return (0);
+}
+
+int	envlist_set_keyvalue(t_envlist *target, char *new_line)
+{
+	char	*chr_pt;
+
+	chr_pt = ft_strchr(new_line, '=');
+	if (!chr_pt)
 	{
 		target->key = ft_strdup(new_line);
+		if (!target->key)
+			return (1);
 		target->value = NULL;
-		return ;
+		return (0);
 	}
-	target->key = ft_substr(new_line, 0, chr);
-	target->value = ft_substr(new_line, chr + 1, ft_strlen(new_line) - chr);
-	if (target->value == NULL)
+	else
 	{
-		free(target->key);
-		return ;
+		if (envlist_set_key(target, new_line, chr_pt - new_line))
+			return (1);
+		if (envlist_set_value(target, chr_pt + 1))
+			return (1);
 	}
+	return (0);
 }
 
 int	envlist_node_count(t_envlist *head)
@@ -49,46 +87,53 @@ int	envlist_node_count(t_envlist *head)
 	return (node_count);
 }
 
-char	*envlist_get_env(t_envlist *tmp)
+char	*envlist_get_env(t_envlist *env, char *key)
 {
-	char	*key;
-
-	key = NULL;
-	key = token_strjoin(key, tmp->key);//失敗
-	if (key == NULL)
-	{
-		free(key);
-		return (NULL);
-	}
 	key = token_strjoin(key, " ");
-	if (key == NULL)
-	{
-		free(key);
+	if (!key)
 		return (NULL);
-	}
+	key = token_strjoin(key, env->key);
+	if (!key)
+		return (NULL);
 	return (key);
 }
 
-char	**envlist_to_char(t_envlist *head)
+char	**envlist_to_key(t_envlist *head)
 {
 	t_envlist	*tmp;
 	char		*key;
 	char		**split;
 
 	if (!head->next)
-	{
-		printf("envlist is null\n");
 		return (NULL);
-	}
 	tmp = head->next;
+	key =	NULL;
 	while (!tmp->head)
 	{
-		key = envlist_get_env(tmp);
+		key = envlist_get_env(tmp, key);
+		if (!key)
+		{
+			break ;
+		}
 		tmp = tmp->next;
 	}
 	split = ft_split(key, ' ');
 	if (split == NULL)
 		return (NULL);
 	free(key);
+	key = NULL;
 	return (split);
+}
+
+char	*envlist_get_key(char *line)
+{
+	char	*str_key;
+	char	*tmp;
+
+	str_key = ft_strdup(line);
+	if (!str_key)
+		return (NULL);
+	tmp = ft_strchr(str_key, '=');
+	*tmp = '\0';
+	return (str_key);
 }
