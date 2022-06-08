@@ -33,6 +33,14 @@ int	envlist_set_value(t_envlist *target, char *value_line)
 	key_length = ft_strlen(value_line);
 	if (target->value)
 		free(target->value);
+	if (key_length == 0)
+	{
+		target->value = (char *)malloc(1);
+		if (!target->value)
+			return (1);
+		target->value[0] = '\0';
+		return (0);
+	}
 	target->value = ft_strdup(value_line);
 	if (!target->value)
 		return (1);
