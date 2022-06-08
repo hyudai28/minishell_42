@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/03 23:14:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 21:58:39 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	envpcmp(char *s1, char *s2)
 	}
 	if (!s1[i])
 	{
-		printf("si is null\n");
+		printf("s1 is null\n");
 		return (1);
 	}
 	return (0);
@@ -93,36 +93,85 @@ static int	add_error(char *line)
 	return (1);
 }
 
-int	builtin_export(char **cmds, int argc, t_envlist *head)
+int	export_print(t_envlist *head)
 {
-	char	**split;
-	size_t	arg_i;
-	size_t	i;
+	char **split;
 
-	if (argc == 1)
+	split = envlist_to_key(head);
+	if (split == NULL)
+		return (1);
+	envlist_swap(split, head);
+	envsplit_free(split);
+	return (0);
+}
+
+int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
+{
+	t_envlist	*env;
+	char	*chr_pt;
+	char	*str_key;
+
+	chr_pt = ft_strchr(new_line, '=');
+	if (!chr_pt)
+		return (0);
+	else
 	{
-		split = envlist_to_char(head);
-		if (split == NULL)
+		str_key = envlist_get_key(new_line);
+		if (!str_key)
 			return (1);
-		envlist_swap(split, head);
+		printf("strkey = [%s]\n", str_key);
+		env = envlist_search(str_key, head);
+		free(str_key);
+		str_key = NULL;
+		printf("chr_pt + 1 = [%s]\n", chr_pt + 1);
+		if (!env)
+		{
+			printf("env is null\n");
+			return (2);
+		}
+		else if (envlist_set_value(env, chr_pt + 1))
+			return (1);
 	}
-	else if (export_is_invalid(cmds[1]))
-		export_error(cmds[1], INVALID_OPTION);
+	return (0);
+}
+
+int export_add(char **cmds, int argc, t_envlist *head)
+{
+	size_t arg_i;
+	size_t i;
+	int		ret;
+
 	arg_i = 1;
 	while (arg_i < argc)
 	{
 		i = 0;
-		while (cmds[arg_i][i] != '\0' && cmds[arg_i][i] != '=')
-		{
-			if (cmds[arg_i][i] == ' ')
-				return (add_error(cmds[arg_i]));
-			i++;
-		}
 		if (ft_strchr(cmds[arg_i], '-') && arg_i != 2)
 			return (export_error(cmds[arg_i], EXPORT_IDENTIFIER));
-		else if (envlist_add(cmds[arg_i], head->prev, head) == 1)
+		ret = export_change(cmds[arg_i], head->prev, head);
+		if (ret == 1)
 			return (error(strerror(errno), 1, head));
+		if (ret == 2)
+		{
+			if (envlist_add(cmds[arg_i], head->prev, head) == 1)
+				return (error(strerror(errno), 1, head));
+		}
 		arg_i++;
 	}
-	return (SUCCESS);
+	return (0);
+}
+
+int builtin_export(char **cmds, int argc, t_envlist *head)
+{
+	if (argc == 1)
+	{
+		printf("EXPORT print \n");
+		return (export_print(head));
+	}
+	else if (export_is_invalid(cmds[1]))
+	{
+		printf("EXPORT ERR\n");
+		return (export_error(cmds[1], INVALID_OPTION));
+	}
+	printf("EXPORT ADD\n");
+	return (export_add(cmds, argc, head));
 }

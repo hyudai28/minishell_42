@@ -29,7 +29,7 @@ int	pipex(char **cmds, t_envlist *env, char *path)
 	if (pid == 0)
 	{
 		execute_signal();
-		envp = envlist_to_char(env);
+		envp = envlist_to_key(env);//keyしか使ってない
 		if (execve(path, cmds, envp))
 		{
 			error(strerror(errno), 1, env);
