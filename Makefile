@@ -61,7 +61,8 @@ PARSER_FILES	=	minishell_parser.c
 PARSER_SRCS	=	$(addprefix $(PARSER_DIR), $(PARSER_FILES))
 
 HEREDOC_DIR =	heredoc/
-HEREDOC_FILES	=	heredoc.c
+HEREDOC_FILES	=	heredoc.c \
+			heredoc_expansion.c
 HEREDOC_SRCS	=	$(addprefix $(HEREDOC_DIR), $(HEREDOC_FILES))
 
 SIGNAL_DIR	=	signal/
