@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:24:14 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/01 21:27:22 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/08 22:38:50 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtins(char **cmds, t_envlist *env)
 		return (builtin_pwd(cmds, argc, env));
 	else if (!ft_strncmp(cmds[0], "export", 7))
 		return (builtin_export(cmds, argc, env));
-	else if (!ft_strncmp(cmds[0], "unset", 5))
+	else if (!ft_strncmp(cmds[0], "unset", 6))
 		return (builtin_unset(cmds, argc, env));
 	else if (!ft_strncmp(cmds[0], "env", 4))
 		return (builtin_env(cmds, argc, env));

@@ -87,9 +87,9 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 	//if (!add_separate_token(token))
 	//	return (NULL);
 	size = count_token(token);
-	cmd = (char **)malloc(sizeof(char *) * (size + 1));
-	if (cmd == NULL)
-		return (NULL);
+	//cmd = (char **)malloc(sizeof(char *) * (size + 1));
+	//if (cmd == NULL)
+	//	return (NULL);
 	if (token->type != EXPANDABLE)
 		return (token);
 	new->cmd[*index] = ft_strdup(token->word);//malloc失敗時にfree処理

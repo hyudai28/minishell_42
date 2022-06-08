@@ -31,6 +31,8 @@ int	envlist_set_value(t_envlist *target, char *value_line)
 	size_t	key_length;
 
 	key_length = ft_strlen(value_line);
+	if (target->value)
+		free(target->value);
 	target->value = ft_strdup(value_line);
 	if (!target->value)
 		return (1);
@@ -105,7 +107,6 @@ char	**envlist_to_key(t_envlist *head)
 		{
 			break ;
 		}
-		printf("	key[%p]\n", &key);
 		tmp = tmp->next;
 	}
 	split = ft_split(key, ' ');

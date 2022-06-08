@@ -51,6 +51,7 @@ int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 	if (envlist_set_keyvalue(new, new_line))
 		return (1);
 	envlist_link_list(new, prev, head);
+	new->myself = 0;
 	return (0);
 }
 
@@ -79,7 +80,7 @@ void	envlist_delete(char *delete_line, t_envlist *head)
 	t_envlist	*target_next;
 
 	target = envlist_search(delete_line, head);
-	if (!target)
+	if (!target || !target->myself)
 		return ;
 	target_next = target->next;
 	target_prev = target->prev;

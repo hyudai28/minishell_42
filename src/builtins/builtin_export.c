@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/08 21:58:39 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/08 22:37:06 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	envpcmp(char *s1, char *s2)
 void	export_output(char *line, t_envlist *head)
 {
 	t_envlist	*node;
-
 	ft_putstr("declare -x ");
 	ft_putstr(line);
 	node = envlist_search(line, head);
@@ -119,16 +118,11 @@ int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 		str_key = envlist_get_key(new_line);
 		if (!str_key)
 			return (1);
-		printf("strkey = [%s]\n", str_key);
 		env = envlist_search(str_key, head);
 		free(str_key);
 		str_key = NULL;
-		printf("chr_pt + 1 = [%s]\n", chr_pt + 1);
 		if (!env)
-		{
-			printf("env is null\n");
 			return (2);
-		}
 		else if (envlist_set_value(env, chr_pt + 1))
 			return (1);
 	}
@@ -154,6 +148,8 @@ int export_add(char **cmds, int argc, t_envlist *head)
 		{
 			if (envlist_add(cmds[arg_i], head->prev, head) == 1)
 				return (error(strerror(errno), 1, head));
+			else
+				head->prev->myself = 1;
 		}
 		arg_i++;
 	}
