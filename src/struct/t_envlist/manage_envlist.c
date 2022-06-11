@@ -15,9 +15,7 @@
 t_envlist	*envlist_new()
 {
 	t_envlist	*new;
-	size_t		i;
 
-	i = 0;
 	new = (t_envlist *)malloc(sizeof(t_envlist));
 	if (new == NULL)
 		return (NULL);
@@ -42,9 +40,7 @@ int	envlist_link_list(t_envlist *new, t_envlist *prev, t_envlist *head)
 int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 {
 	t_envlist	*new;
-	size_t		i;
 
-	i = 0;
 	new = envlist_new();
 	if (!new)
 		return (1);

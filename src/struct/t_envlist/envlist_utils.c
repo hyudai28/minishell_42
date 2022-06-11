@@ -11,14 +11,9 @@
 /* ************************************************************************** */
 
 #include "t_envlist.h"
-//ここでmallocするのが理想
 
 int	envlist_set_key(t_envlist *target, char *new_line, size_t key_length)
 {
-	char	*chr_pt;
-	size_t	new_line_length;
-
-	new_line_length = ft_strlen(new_line);
 	target->key = ft_substr(new_line, 0, key_length);
 	if (!target->key)
 		return (1);
@@ -27,7 +22,6 @@ int	envlist_set_key(t_envlist *target, char *new_line, size_t key_length)
 
 int	envlist_set_value(t_envlist *target, char *value_line)
 {
-	char	*chr_pt;
 	size_t	key_length;
 
 	key_length = ft_strlen(value_line);

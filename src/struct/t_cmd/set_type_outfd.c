@@ -35,6 +35,7 @@ static t_token	*append_redirect(t_cmds *new, t_token *token)
 	if (new->outfd == -1)
 		return (NULL);
 	token = token->next;
+	return (token);
 }
 
 t_token	*set_type_outfd(t_cmds *new, t_token *token)

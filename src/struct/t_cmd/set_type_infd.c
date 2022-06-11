@@ -34,6 +34,7 @@ static t_token	*heredoc(t_cmds *new, t_token *token)
 	token->word = NULL;
 	new->infd_type = FD_HEREDOC;
 	token = token->next;
+	return (token);
 }
 
 t_token	*set_type_infd(t_cmds *new, t_token *token)

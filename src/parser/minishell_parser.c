@@ -73,7 +73,7 @@ static int	check_head_type(t_token *token, t_envlist *env)
 	return (0);
 }
 
-static int	check_quot(const char *line, enum e_token_type type)
+static int	check_quot(const char *line)
 {
 	char	*quot;
 
@@ -97,20 +97,23 @@ static int	check_quot(const char *line, enum e_token_type type)
 
 int	parser(t_token *token, t_envlist *env)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = token;
 	token = token->next;
 	if (check_head_type(token, env) == 1)
+	{
+		token_destructor(token);
 		return (1);
+	}
 	while (token->type != TAIL)
 	{
-		if (check_quot(token->word, token->type) == 1)
+		if (check_quot(token->word) == 1 || \
+			check_pipe(token, env) == 1 || check_redirect(token, env) == 1)
+		{
+			token_destructor(head);
 			return (1);
-		if (check_pipe(token, env) == 1)
-			return (1);
-		if (check_redirect(token, env) == 1)
-			return (1);
+		}
 		token = token->next;
 	}
 	return (0);

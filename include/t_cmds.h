@@ -48,5 +48,7 @@ void		cmds_destructor(t_cmds *cmds);
 //set_fd_cmds.c
 t_cmds		*token_to_cmds(t_token *token);
 t_token		*cmds_set_fd(t_cmds *new, t_token *token);
+t_token		*set_type_infd(t_cmds *new, t_token *token);
+t_token		*set_type_outfd(t_cmds *new, t_token *token);
 
 #endif

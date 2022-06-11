@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 22:17:57 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/11 23:13:00 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	expansion_token(t_token *token, t_envlist *env)
 	{
 		return (1);
 	}
+	return (0);
 }
 
 int	expansion(t_token *token, t_envlist *env)
@@ -46,7 +47,6 @@ int	expansion(t_token *token, t_envlist *env)
 			token_destructor(head);
 			return (1);
 		}
-		debug_all(head);
 		token = token->next;
 	}
 	return (0);

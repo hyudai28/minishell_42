@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 22:17:45 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/11 23:10:28 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	minishell(char *command, t_envlist *envp)
 	if (expansion(head, envp) == 1)
 		return (1);
 	cmds = token_to_cmds(head);
+	if (cmds == NULL)
+		return (1);
 	token_destructor(head);
 	result = minishell_execute(cmds, envp);
 	return (doller_ret(result, envp));
@@ -46,7 +48,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
 	t_envlist	*env_head;
-	int			exit_status;
 
 	(void)argv;
 	(void)argc;
@@ -72,7 +73,6 @@ int	main(int argc, char **argv, char **envp)
 			minishell(command, env_head);
 		}
 	}
-	exit_status = env_head->doller_ret;
 	envlist_destructor(env_head);
 	return (env_head->doller_ret);
 }

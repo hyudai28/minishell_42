@@ -93,8 +93,7 @@ char *expand_word, size_t *expand_word_i, char *word, t_envlist *env)
 	}
 }
 
-char	*expansion_line(
-	char *expand_word, char *word, t_envlist *env, size_t total_length)
+char	*expansion_line(char *expand_word, char *word, t_envlist *env)
 {
 	size_t	expand_word_i;
 	size_t	word_i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/08 22:37:06 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/11 23:12:45 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ int	export_is_invalid(char *line)
 	return (0);
 }
 
-static int	add_error(char *line)
-{
-	ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(line, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
-	return (1);
-}
-
 int	export_print(t_envlist *head)
 {
 	char **split;
@@ -110,6 +102,7 @@ int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 	char	*chr_pt;
 	char	*str_key;
 
+	(void)prev;
 	chr_pt = ft_strchr(new_line, '=');
 	if (!chr_pt)
 		return (0);
@@ -131,14 +124,12 @@ int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 
 int export_add(char **cmds, int argc, t_envlist *head)
 {
-	size_t arg_i;
-	size_t i;
+	int		arg_i;
 	int		ret;
 
 	arg_i = 1;
 	while (arg_i < argc)
 	{
-		i = 0;
 		if (ft_strchr(cmds[arg_i], '-') && arg_i != 2)
 			return (export_error(cmds[arg_i], EXPORT_IDENTIFIER));
 		ret = export_change(cmds[arg_i], head->prev, head);

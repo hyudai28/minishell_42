@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-static size_t	get_next_sq(char *word)
-{
-	size_t	len;
-
-	len = 0;
-	while (word[len] != '\0' && word[len] != '\'')
-	{
-		len++;
-	}
-	return (len + 1);
-}
-
 static size_t	get_env_length(char *word, t_envlist *env)
 {
 	size_t	tr_len;
@@ -56,7 +44,7 @@ static char	*get_env_value(char *word, t_envlist *env)
 	return (NULL);
 }
 
-static size_t	get_env_less_length(char *word, t_envlist *env)
+static size_t	get_env_less_length(char *word)
 {
 	size_t	env_less_len;
 	size_t	env_len;
@@ -140,7 +128,7 @@ static size_t	exit_status_cat(char *expand_word, t_envlist *env, size_t stat_len
 }
 
 static char	*heredoc_expansion_line(\
-	char *expand_word, char *word, t_envlist *env, size_t total_length)
+	char *expand_word, char *word, t_envlist *env)
 {
 	char	*env_word;
 	size_t	expand_word_index;
@@ -196,13 +184,13 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	size_t	total_length;
 
 	env_length = get_env_only_length(token->word, env);
-	env_less_length = get_env_less_length(token->word, env);
+	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
 	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
 	if (expand_word == NULL)
 		return (1);
 	expand_word[total_length] = '\0';
-	expand_word = heredoc_expansion_line(expand_word, token->word, env, total_length);
+	expand_word = heredoc_expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;
 	token->word_len = ft_strlen(expand_word);

@@ -48,7 +48,7 @@ static size_t	get_env_length(char *word, t_envlist *env)
 	return (0);
 }
 
-static size_t	get_env_less_length(char *word, t_envlist *env)
+static size_t	get_env_less_length(char *word)
 {
 	size_t	env_less_len;
 	size_t	env_len;
@@ -117,13 +117,13 @@ int	expansion_env(t_token *token, t_envlist *env)
 	size_t	total_length;
 
 	env_length = get_env_only_length(token->word, env);
-	env_less_length = get_env_less_length(token->word, env);
+	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
 	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
 	if (expand_word == NULL)
 		return (1);
 	expand_word[total_length] = '\0';
-	expand_word = expansion_line(expand_word, token->word, env, total_length);
+	expand_word = expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;
 	token->word_len = ft_strlen(expand_word);
