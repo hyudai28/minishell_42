@@ -12,7 +12,7 @@
 
 #include "t_envlist.h"
 
-t_envlist	*envlist_new()
+t_envlist	*envlist_new(void)
 {
 	t_envlist	*new;
 
@@ -20,8 +20,6 @@ t_envlist	*envlist_new()
 	if (new == NULL)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_envlist));
-	//new->head = 0;
-	//new->doller_ret = 0;
 	return (new);
 }
 
@@ -53,7 +51,7 @@ int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
 
 t_envlist	*envlist_search(char *tr_line, t_envlist *head)
 {
-	size_t	tr_len;
+	size_t		tr_len;
 	t_envlist	*node;
 
 	node = head;

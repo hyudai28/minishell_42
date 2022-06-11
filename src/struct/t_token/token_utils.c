@@ -26,7 +26,7 @@ char	*token_strjoin(char *cmd_line, char *s2)
 		len2 = 0;
 	else
 		len2 = ft_strlen(s2);
-	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));//失敗ケア
+	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	ft_memcpy(str, cmd_line, len1);
