@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:43:10 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 23:50:55 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:52:29 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	signal_ctrl_c(int sig)
 {
 	(void)sig;
 	g_signal_handled = sig;
+	write(1, "\b\b\n", 3);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

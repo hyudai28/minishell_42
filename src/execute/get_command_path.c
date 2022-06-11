@@ -45,7 +45,7 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 
 	path_i = 0;
 	access_ret = access(cmd, X_OK);
-	if (access_ret == 0)
+	if (access_ret == 0 && ft_strchr(cmd, '/') != NULL)
 		return (ft_strdup(cmd));
 	while (bin_path[path_i])
 	{
