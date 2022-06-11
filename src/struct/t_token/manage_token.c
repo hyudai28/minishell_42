@@ -48,25 +48,6 @@ t_token	*add_token_next(t_token *prev, t_token *cur, t_token *next)
 	return (cur);
 }
 
-t_token	*add_one(t_token *now, char **str)
-{
-	t_token	*after;
-	t_token	*new;
-	char	*add_str;
-
-	after = now->next;
-	add_str = ft_strdup(*str);
-	if (!add_str)
-		return (NULL);
-	// new = new_token(now, &add_str);
-	if (!new)
-		return (NULL);
-	new->next = after;
-	if (after)
-		after->prev = new;
-	return (new);
-}
-
 int	token_delone(t_token *token)
 {
 	t_token	*before;
