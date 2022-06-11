@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 23:12:45 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/12 01:32:11 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ int export_add(char **cmds, int argc, t_envlist *head)
 		{
 			if (envlist_add(cmds[arg_i], head->prev, head) == 1)
 				return (error(strerror(errno), 1, head));
-			else
-				head->prev->myself = 1;
 		}
 		arg_i++;
 	}

@@ -43,9 +43,9 @@ t_token	*set_type_outfd(t_cmds *new, t_token *token)
 	if (token->type == TAIL)
 		return (token);
 	if (token->type == REDIRECT)
-		redirect(new, token);
+		token = redirect(new, token);
 	else if (token->type == APPEND_REDIRECT)
-		append_redirect(new, token);
+		token = append_redirect(new, token);
 	if (new->outfd == -1)
 		return (NULL);
 	return (token);

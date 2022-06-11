@@ -15,7 +15,6 @@ typedef struct s_envlist
 	struct s_envlist		*next;
 	struct s_envlist		*prev;
 	bool					head;
-	int						myself;
 	int						doller_ret;
 }		t_envlist;
 

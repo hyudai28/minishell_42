@@ -43,13 +43,16 @@ EXECUTE_DIR	=	execute/
 EXECUTE_FILES	=	minishell_execute.c \
 					get_command_path.c \
 					pipe_setup.c \
-					pipex.c \
-					setfd.c
+					pipex.c 
 EXECUTE_SRCS	=	$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES))
 
 EXPANSION_DIR	=	expansion/
 EXPANSION_FILES	=	expansion_utils.c \
-					minishell_expansion.c
+					minishell_expansion.c \
+					expansion_line.c \
+					remove_quot.c \
+					add_separate_token.c \
+					expansion_env.c
 EXPANSION_SRCS	=	$(addprefix $(EXPANSION_DIR), $(EXPANSION_FILES))
 
 LEXER_DIR	=	lexer/
@@ -75,13 +78,17 @@ STRUCT_SRCS	=	$(addprefix $(STRUCT_DIR), $(STRUCT_FILES))
 
 T_CMD_DIR	=	struct/t_cmd/
 T_CMD_FILES	=	cmds.c \
-				set_fd_cmds.c
+				set_fd_cmds.c \
+				set_type_infd.c \
+				set_type_outfd.c \
+				token_to_cmds.c
 T_CMD_SRCS	=	$(addprefix $(T_CMD_DIR), $(T_CMD_FILES))
 
 T_ENVLIST_DIR	=	struct/t_envlist/
 T_ENVLIST_FILES	=	envlist.c \
 					envlist_utils.c \
-					manage_envlist.c
+					manage_envlist.c \
+					envlist_get.c
 T_ENVLIST_SRCS	=	$(addprefix $(T_ENVLIST_DIR), $(T_ENVLIST_FILES))
 
 T_TOKEN_DIR	=	struct/t_token/
