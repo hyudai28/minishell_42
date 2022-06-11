@@ -1,14 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_signal.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/11 23:43:10 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/11 23:50:55 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void    signal_ctrl_c(int sig)
+void	signal_ctrl_c(int sig)
 {
-    (void)sig;
+	(void)sig;
 	g_signal_handled = sig;
-    // write(1, "\b\b  \b\n", 6);
-     write(1, "\b\b\n", 3);
-     rl_on_new_line();
-     rl_replace_line("", 0);
-     rl_redisplay();
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	perr_exit(char *err_msg)
