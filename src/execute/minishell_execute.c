@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_execute.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/11 18:34:29 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_directory(char *msg)
@@ -58,7 +70,6 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 	backup_stdfd[1] = dup(1);
 	if (!cmds)
 		error("open err", 1, env);
-	//debug_cmds(cmds->next);
 	if (!cmds->next->cmd)
 		return (0);
 	pipe_infd = -2;

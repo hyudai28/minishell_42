@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/11 22:17:45 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"	//still reachable 218 blocks
 
 int	minishell(char *command, t_envlist *envp)
@@ -36,17 +48,11 @@ int	main(int argc, char **argv, char **envp)
 	t_envlist	*env_head;
 	int			exit_status;
 
-
 	(void)argv;
 	(void)argc;
 	g_signal_handled = 0;
 	command = NULL;
 	env_head = envlist_constructor(envp);
-	if (env_head == NULL)
-	{
-		envlist_destructor(env_head);
-		return (1); //malloc error
-	}
 	minishell_signal();
 	rl_signal_event_hook = event_hook;
 	while (1)
@@ -65,8 +71,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(command);
 			minishell(command, env_head);
 		}
-		//free(command);
-		system("leaks minishell");
 	}
 	exit_status = env_head->doller_ret;
 	envlist_destructor(env_head);

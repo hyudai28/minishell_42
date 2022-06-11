@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_show.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/11 15:31:15 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/11 15:32:55 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	print_token_type(enum e_token_type	type)
@@ -25,12 +37,8 @@ void	print_token_type(enum e_token_type	type)
 void	debug1(t_token *tmp)
 {
 	printf("token	: %s[%p]\n", tmp->word, &tmp->word);
-	// if (tmp->type != HEAD)
-		// printf("prev token : %s\n", tmp->prev->word);
 	printf("token_len	: %d\n", (int)tmp->word_len);
-	// printf("<token type> HEAD=0,TAIL=1,DQ=2,SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6,R_STDIN=7\n");
 	print_token_type(tmp->type);
-	// printf("token type	: %d\n", tmp->type);
 	printf("--------------------------\n");
 }
 
@@ -39,7 +47,6 @@ void	debug_all(t_token *tmp)
 	while (tmp->type != TAIL)
 	{
 		debug1(tmp);
-		// debug2(tmp);
 		tmp = tmp->next;
 	}
 	debug1(tmp);
@@ -57,7 +64,6 @@ void	print_cmds_type(enum e_cmds_out_fd type, enum e_cmds_in_fd type2)
 	else if (type2 == FD_STDIN)
 		printf("FD_STDIN");
 	printf("]\n");
-
 	printf("-outfd = [");
 	if (type == FD_PIPE_OUT)
 		printf("FD_PIPE_OUT");
@@ -105,11 +111,4 @@ void	debug_read(void)
 void	debug2(t_token *tmp)
 {
 	printf("token : %s\n", tmp->word);
-	/*
-	printf("token_len : %d\n", (int)tmp->word_len);
-	printf("<token type> HEAD=0,TAIL=1,DQ=2,\
-	SQ=3,EXPANDABLE=4,PIPE=5,REDIRECT=6\n");
-	printf("token type: %d\n", tmp->type);
-	printf("--------------------------\n");
-	*/
 }

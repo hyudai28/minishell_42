@@ -1,22 +1,5 @@
 #include "minishell.h"
 
-static size_t	get_exit_status_digit(t_envlist *env)
-{
-	int		exit_status;
-	size_t	digit;
-
-	digit = 0;
-	exit_status = env->doller_ret;
-	if (exit_status == 0)
-		return (1);
-	while (exit_status != 0)
-	{
-		exit_status = exit_status / 10;
-		digit++;
-	}
-	return (digit);
-}
-
 static size_t	get_next_sq(char *word)
 {
 	size_t	len;
@@ -156,7 +139,7 @@ static size_t	exit_status_cat(char *expand_word, t_envlist *env, size_t stat_len
 	return (temp);
 }
 
-static char	*expansion_line(\
+static char	*heredoc_expansion_line(\
 	char *expand_word, char *word, t_envlist *env, size_t total_length)
 {
 	char	*env_word;
@@ -172,14 +155,12 @@ static char	*expansion_line(\
 	{
 		if (word[word_index] != '$')
 		{
-			// write(1, "a\n", 2);
 			expand_word[expand_word_index] = word[word_index];
 			expand_word_index++;
 			word_index++;
 		}
 		else
 		{
-			// write(1, "b\n", 2);
 			expand_word[expand_word_index] = word[word_index];
 			word_index++;
 			if (word[word_index] == '?')
@@ -221,7 +202,7 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	if (expand_word == NULL)
 		return (1);
 	expand_word[total_length] = '\0';
-	expand_word = expansion_line(expand_word, token->word, env, total_length);
+	expand_word = heredoc_expansion_line(expand_word, token->word, env, total_length);
 	free(token->word);
 	token->word = expand_word;
 	token->word_len = ft_strlen(expand_word);

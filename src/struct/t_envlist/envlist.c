@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:54 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/05 19:04:51 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/11 14:23:27 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_envlist	*envlist_constructor(char **envp)
 	{
 		if (envlist_add(envp[env_i], new, head))
 		{
-			envlist_destructor(head);
+			envlist_destructor(head); //末尾わかるの？
 			return (NULL);
 		}
 		new = new->next;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/11 18:35:35 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/11 18:35:35 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	do_parent(void)
@@ -29,7 +41,7 @@ int	pipex(char **cmds, t_envlist *env, char *path)
 	if (pid == 0)
 	{
 		execute_signal();
-		envp = envlist_to_key(env);//keyしか使ってない
+		envp = envlist_to_key(env);
 		if (execve(path, cmds, envp))
 		{
 			error(strerror(errno), 1, env);
