@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 00:32:19 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/12 01:00:03 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 	backup_stdfd[1] = dup(1);
 	if (!cmds)
 		error("open err", 1, env);
+	if (cmds->next == NULL)
+		return (1);
 	if (!cmds->next->cmd)
 		return (0);
 	pipe_infd = -2;

@@ -6,11 +6,14 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 00:22:20 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/12 01:05:26 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"	//still reachable 218 blocks
+
+//""
+// のみ
 
 int	minishell(char *command, t_envlist *envp)
 {
@@ -44,6 +47,18 @@ int	event_hook(void)
 	return (0);
 }
 
+static int	all_space(char *command)
+{
+	size_t	i;
+
+	i = 0;
+	while (ft_isspace(command[i]))
+		i++;
+	if (command[i] == '\0')
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
@@ -67,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		if (g_signal_handled != 0)
 			env_head->doller_ret = g_signal_handled;
 		g_signal_handled = 0;
-		if (ft_strlen(command) > 0)
+		if (ft_strlen(command) > 0 && all_space(command) == 0)
 		{
 			add_history(command);
 			minishell(command, env_head);
