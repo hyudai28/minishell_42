@@ -49,9 +49,12 @@ int		heredoc_expansion(t_token *token, t_envlist *env);
 //expansion
 int		expansion(t_token *token, t_envlist *env);
 int		expansion_env(t_token *token, t_envlist *env);
+char	*expansion_line(\
+			char *expand_word, char *word, t_envlist *env, size_t total_length);
 int		remove_quot(t_token *token, t_envlist *env);
+int		add_separate_token(t_token *token, t_envlist *env);
+size_t	get_exit_status_digit(t_envlist *env);
 char	*ft_strjoin3(char *a, char *b, char *c, int need_free);
-size_t	assign_var(t_token *token, t_envlist *env, size_t tword_i, char *var);
 size_t	get_envlen(const char *line);
 
 //utils
