@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 23:10:28 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/12 00:22:20 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	main(int argc, char **argv, char **envp)
 			add_history(command);
 			minishell(command, env_head);
 		}
+		else
+			free(command);
 	}
 	envlist_destructor(env_head);
 	return (env_head->doller_ret);
