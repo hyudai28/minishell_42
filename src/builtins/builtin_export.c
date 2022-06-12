@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 01:32:11 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/13 01:45:50 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool	envpcmp(char *s1, char *s2)
 void	export_output(char *line, t_envlist *head)
 {
 	t_envlist	*node;
+
 	ft_putstr("declare -x ");
 	ft_putstr(line);
 	node = envlist_search(line, head);
@@ -86,7 +87,7 @@ int	export_is_invalid(char *line)
 
 int	export_print(t_envlist *head)
 {
-	char **split;
+	char	**split;
 
 	split = envlist_to_key(head);
 	if (split == NULL)
@@ -99,8 +100,8 @@ int	export_print(t_envlist *head)
 int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 {
 	t_envlist	*env;
-	char	*chr_pt;
-	char	*str_key;
+	char		*chr_pt;
+	char		*str_key;
 
 	(void)prev;
 	chr_pt = ft_strchr(new_line, '=');
@@ -122,7 +123,7 @@ int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 	return (0);
 }
 
-int export_add(char **cmds, int argc, t_envlist *head)
+int	export_add(char **cmds, int argc, t_envlist *head)
 {
 	int		arg_i;
 	int		ret;
@@ -145,18 +146,15 @@ int export_add(char **cmds, int argc, t_envlist *head)
 	return (0);
 }
 
-int builtin_export(char **cmds, int argc, t_envlist *head)
+int	builtin_export(char **cmds, int argc, t_envlist *head)
 {
 	if (argc == 1)
 	{
-		printf("EXPORT print \n");
 		return (export_print(head));
 	}
 	else if (export_is_invalid(cmds[1]))
 	{
-		printf("EXPORT ERR\n");
 		return (export_error(cmds[1], INVALID_OPTION));
 	}
-	printf("EXPORT ADD\n");
 	return (export_add(cmds, argc, head));
 }
