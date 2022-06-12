@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 22:59:54 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/13 01:22:39 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,27 @@ void	cmds_destructor(t_cmds *cmds)
 	int		i;
 	t_cmds	*tmp;
 
-	cmds = cmds->next;
-	while (cmds->head != 1)
+	if (cmds->next == NULL)
+		free(cmds);
+	else
 	{
-		i = 0;
-		while (cmds->cmd[i] != NULL)
-		{
-			free(cmds->cmd[i]);
-			cmds->cmd[i] = NULL;
-			i++;
-		}
-		free(cmds->cmd);
-		cmds->cmd = NULL;
-		tmp = cmds;
 		cmds = cmds->next;
-		free(tmp);
-		tmp = NULL;
+		while (cmds->head != 1)
+		{
+			i = 0;
+			while (cmds->cmd[i] != NULL)
+			{
+				free(cmds->cmd[i]);
+				cmds->cmd[i] = NULL;
+				i++;
+			}
+			free(cmds->cmd);
+			cmds->cmd = NULL;
+			tmp = cmds;
+			cmds = cmds->next;
+			free(tmp);
+			tmp = NULL;
+		}
+		free(cmds);
 	}
-	free(cmds);
-	cmds = NULL;
 }
