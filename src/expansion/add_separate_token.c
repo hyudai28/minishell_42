@@ -23,6 +23,12 @@ static void	skip_single_quot(char *word, size_t *i)
 			while (word[*i] != '\0' && word[*i] != '\'')
 				(*i)++;
 		}
+		else if (word[*i] == '\"')
+		{
+			(*i)++;
+			while (word[*i] != '\0' && word[*i] != '\"')
+				(*i)++;
+		}
 		if (word[*i] == '\0' || word[*i] == ' ')
 			return ;
 		(*i)++;
