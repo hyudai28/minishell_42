@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 01:44:14 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/12 14:29:13 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 	if (!cmds->next->cmd)
 		return (0);
 	pipe_infd = -2;
+	debug_cmds(cmds);
 	cmds = cmds->next;
 	while (!cmds->head)
 	{

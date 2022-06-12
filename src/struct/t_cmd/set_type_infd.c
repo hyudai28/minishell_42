@@ -45,6 +45,8 @@ t_token	*set_type_infd(t_cmds *new, t_token *token)
 		token = r_stdin(new, token);
 	else if (token->type == HEREDOC)
 		token = heredoc(new, token);
+	else if (new->prev->outfd_type == FD_PIPE_OUT)
+		new->infd_type = FD_PIPE_IN;
 	if (new->infd == -1)
 		return (NULL);
 	return (token);

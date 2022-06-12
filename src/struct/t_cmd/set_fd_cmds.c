@@ -26,6 +26,14 @@ static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 	return (token);
 }
 
+static t_token	*pipe_set_outfd(t_cmds *new, t_token *token)
+{
+	if (token->type != PIPE)
+		return (token);
+	new->outfd_type = FD_PIPE_OUT;
+	return (token->next);
+}
+
 t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 {
 	t_token	*token_head;
@@ -51,5 +59,6 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 		if (!token)
 			return (NULL);
 	}
+	token = pipe_set_outfd(new, token);
 	return (token);
 }
