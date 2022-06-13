@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/13 01:45:50 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:10:31 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	export_print(t_envlist *head)
 	if (split == NULL)
 		return (1);
 	envlist_swap(split, head);
-	envsplit_free(split);
+	split_free(split);
 	return (0);
 }
 

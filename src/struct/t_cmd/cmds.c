@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/13 01:22:39 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/14 00:12:50 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,21 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 	return (new);
 }
 
+static void	cmd_free(t_cmds *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd->cmd[i] != NULL)
+	{
+		free(cmd->cmd[i]);
+		cmd->cmd[i] = NULL;
+		i++;
+	}
+}
+
 void	cmds_destructor(t_cmds *cmds)
 {
-	int		i;
 	t_cmds	*tmp;
 
 	if (cmds->next == NULL)
@@ -53,13 +65,7 @@ void	cmds_destructor(t_cmds *cmds)
 		cmds = cmds->next;
 		while (cmds->head != 1)
 		{
-			i = 0;
-			while (cmds->cmd[i] != NULL)
-			{
-				free(cmds->cmd[i]);
-				cmds->cmd[i] = NULL;
-				i++;
-			}
+			cmd_free(cmds);
 			free(cmds->cmd);
 			cmds->cmd = NULL;
 			tmp = cmds;
