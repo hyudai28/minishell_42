@@ -20,8 +20,8 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 	(*word_i)++;
 }
 
-static void	cat_exit_status(
-	char *expand_word, t_envlist *env, size_t exit_status_len)
+static size_t	cat_exit_status(
+	char *expand_word, t_envlist *env, size_t exit_status_len, size_t *word_i)
 {
 	size_t	i;
 	int		exit_status;
@@ -41,6 +41,8 @@ static void	cat_exit_status(
 		exit_status = exit_status / 10;
 		exit_status_len--;
 	}
+	(*word_i)++;
+	return (exit_status_len);
 }
 
 static void	cat_env(\
@@ -71,24 +73,19 @@ char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env)
 	word_i = 0;
 	exit_status_length = get_exit_status_digit(env);
 	while (word[word_i] != '\0')
-	{
 		if (word[word_i] != '$')
 			cat_no_env(expand_word, &expand_word_i, word, &word_i);
+	else
+	{
+		word_i++;
+		if (word[word_i] == '?')
+			expand_word_i += cat_exit_status(\
+				expand_word, env, exit_status_length, &word_i);
 		else
 		{
-			word_i++;
-			if (word[word_i] == '?')
-			{
-				cat_exit_status(expand_word, env, exit_status_length);
-				expand_word_i += exit_status_length;
+			cat_env(expand_word, &expand_word_i, word + word_i, env);
+			while (ft_isalnum(word[word_i]) || word[word_i] == '_')
 				word_i++;
-			}
-			else
-			{
-				cat_env(expand_word, &expand_word_i, word + word_i, env);
-				while (ft_isalnum(word[word_i]) || word[word_i] == '_')
-					word_i++;
-			}
 		}
 	}
 	return (expand_word);
