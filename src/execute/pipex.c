@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	do_parent(void)
+int	do_parent(void)
 {
 	int	status;
 
@@ -30,15 +30,20 @@ static int	do_parent(void)
 	return (1);
 }
 
-int	pipex(char **cmds, t_envlist *env, char *path)
+static	void	close_fd()
 {
-	pid_t	pid;
+	close(0);
+	close(1);
+}
+
+int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
+{
 	char	**envp;
 
-	pid = fork();
-	if (pid < 0)
+	cmd->pid = fork();
+	if (cmd->pid < 0)
 		error("fork error ", 1, env);
-	if (pid == 0)
+	if (cmd->pid == 0)
 	{
 		execute_signal();
 		envp = envlist_to_key(env);
@@ -50,7 +55,9 @@ int	pipex(char **cmds, t_envlist *env, char *path)
 		envsplit_free(envp);
 		exit (0);
 	}
-	else if (0 < pid)
+	//else if (0 < cmd->pid)
+		//close_fd();
+		//return (0);//子プロセスに必要な情報は渡っているので親はfdを閉じる必要がある
 		return (do_parent());
-	return (1);
+	return (0);
 }

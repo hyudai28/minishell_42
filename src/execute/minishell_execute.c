@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 14:29:13 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/13 22:34:23 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	command_not_found_error(char *msg)
 	return (1);
 }
 
-int	command_execute(char **cmds, t_envlist *env)
+int	command_execute(char **cmds, t_envlist *env, t_cmds *cmd)
 {
 	char	*path;
 	int		result;
@@ -51,7 +51,7 @@ int	command_execute(char **cmds, t_envlist *env)
 		return (127);
 	}
 	else
-		result = pipex(cmds, env, path);
+		result = pipex(cmds, env, path, cmd);
 	free(path);
 	path = NULL;
 	return (result);
@@ -82,9 +82,10 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
-			result = command_execute(cmds->cmd, env);
+			command_execute(cmds->cmd, env, cmds);
 		cmds = cmds->next;
 	}
+	result = all_wait(cmds, env, result);
 	cmds_destructor(cmds);
 	clean_fd(backup_default_stdfd[0], 0);
 	clean_fd(backup_default_stdfd[1], 1);

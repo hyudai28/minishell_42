@@ -41,7 +41,6 @@ t_cmds	*token_to_cmds(t_token *token)
 	token = token->next;
 	while (token->type != TAIL)
 	{
-		printf("token->word[%s]\n", token->word);
 		new = cmds_constructor(FALSE, head, now);
 		if (token_to_cmds_error(new, token_head, head) == 1)
 			return (NULL);

@@ -64,8 +64,11 @@ int		doller_ret(int ret, t_envlist *env);
 //execute
 int		minishell_execute(t_cmds *cmds, t_envlist *envp);
 char	*get_command_path(char **cmds, t_envlist *env);
-int		pipex(char **cmds, t_envlist *env, char *path);
+int		pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd);
 void	clean_fd(int close_fd, int backup_fd);
+int		do_parent(void);
+int		all_wait(t_cmds *cmds, t_envlist *env, int result);
+
 // int		set_backup_fd(int dup_fd, int stdfd);
 int		pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env);
 int		pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env);
@@ -94,7 +97,7 @@ int		exit_isspace(int c);
 
 //command_execute
 void	fd_setup(t_cmds *cmds);
-int		command_execute(char **cmds, t_envlist *env);
+int		command_execute(char **cmds, t_envlist *env, t_cmds *cmd);
 
 //minishell_signal
 int		minishell_signal(void);

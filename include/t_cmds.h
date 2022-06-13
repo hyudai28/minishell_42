@@ -33,6 +33,7 @@ typedef struct s_cmds
 	int					infd;
 	int					outfd;
 	char				*heredoc_str;
+	pid_t				pid;
 	//char				*outfd_line;
 	//char				*infd_line;
 	// bool	is_infile;
