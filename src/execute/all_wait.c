@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:13:02 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/14 22:28:20 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/15 00:01:45 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,9 @@ int	all_wait(t_cmds *cmds, t_envlist *env, int result)
 	while (cmds->head != 1)
 	{
 		if (is_builtins(cmds->cmd))
-		{
-			printf("abc\n");
 			ret = result;
-		}
 		else
-		{
-			dprintf(2, "def\n");
-			dprintf(2, "[%s] pid =[%ld] waited\n", cmds->cmd[0], (long) cmds->pid);
 			ret = fork_wait(cmds, env);
-		}
 		cmds = cmds->next;
 	}
 	return (ret);

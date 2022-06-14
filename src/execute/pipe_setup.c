@@ -14,15 +14,17 @@
 
 void	clean_fd(int backup_fd, int close_fd)
 {
-	close(close_fd);
 	dup2(backup_fd, close_fd);
 	close(backup_fd);
 }
 
-int	in_fd(t_cmds *cmds, int *infd, int stdfd[2], int pipe_fd[2])
+int	in_fd(t_cmds *cmds, int stdfd[2], int pipe_fd[2])
 {
 	if (cmds->infd_type == FD_PIPE_IN)
-		clean_fd(*infd, 0);
+	{
+		clean_fd(cmds->infd, 0);
+		cmds->infd = 0;
+	}
 	else if (cmds->infd_type == FD_R_STDIN)
 		clean_fd(cmds->infd, 0);
 	else if (cmds->infd_type == FD_HEREDOC)
@@ -36,7 +38,7 @@ int	in_fd(t_cmds *cmds, int *infd, int stdfd[2], int pipe_fd[2])
 	return (0);
 }
 
-int	out_fd(t_cmds *cmds, int *infd, int stdfd[2], int pipe_fd[2])
+int	out_fd(t_cmds *cmds, int stdfd[2], int pipe_fd[2])
 {
 	if (cmds->outfd_type == FD_STDOUT)
 	{
@@ -50,7 +52,7 @@ int	out_fd(t_cmds *cmds, int *infd, int stdfd[2], int pipe_fd[2])
 		if (pipe(pipe_fd) != 0)
 			return (-1);
 		clean_fd(pipe_fd[1], 1);
-		*infd = pipe_fd[0];
+		cmds->next->infd = pipe_fd[0];
 		return (0);
 	}
 	else if (cmds->outfd_type == FD_REDIRECT)
@@ -64,12 +66,12 @@ int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
 {
 	int	pipe_fd[2];
 
-	if (in_fd(cmds, infd, stdfd, pipe_fd) != 0)
+	if (in_fd(cmds, stdfd, pipe_fd) != 0)
 	{
 		error(strerror(errno), 1, env);
 		return (1);
 	}
-	if (out_fd(cmds, infd, stdfd, pipe_fd) != 0)
+	if (out_fd(cmds, stdfd, pipe_fd) != 0)
 	{
 		error(strerror(errno), 1, env);
 		return (1);

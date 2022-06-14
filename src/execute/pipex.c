@@ -46,6 +46,8 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
 	if (cmd->pid == 0)
 	{
 		execute_signal();
+		if (cmd->next->infd_type == FD_PIPE_IN)
+			close(cmd->next->infd);
 		envp = envlist_to_key(env);
 		if (execve(path, cmds, envp))
 		{
@@ -55,10 +57,7 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
 		envsplit_free(envp);
 		exit (0);
 	}
-	//else if (0 < cmd->pid)
-	dprintf(2, "[%s] pid =[%ld]\n", cmds[0], (long) cmd->pid);
+	else if (0 < cmd->pid)
 		close_fd();
-		//return (0);//子プロセスに必要な情報は渡っているので親はfdを閉じる必要がある
-		//return (do_parent());
 	return (0);
 }
