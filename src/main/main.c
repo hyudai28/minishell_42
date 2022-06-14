@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 14:28:42 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/14 15:59:18 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"	//still reachable 218 blocks
-
-//""
-// のみ
 
 int	minishell(char *command, t_envlist *envp)
 {
@@ -30,7 +27,6 @@ int	minishell(char *command, t_envlist *envp)
 		return (1);
 	if (expansion(head, envp) == 1)
 		return (1);
-	printf("after expansion\n");
 	cmds = token_to_cmds(head);
 	if (cmds == NULL)
 		return (1);

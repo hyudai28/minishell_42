@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:04 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/13 01:46:04 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:42:28 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int	go_homedir(t_envlist *env)
 	int			dir_ret;
 
 	list = envlist_search("PWD", env);
-	oldpwd = ft_strdup(list->value); //malloc
+	oldpwd = ft_strdup(list->value);
 	list = envlist_search("HOME", env);
 	dir_ret = chdir(list->value);
-	if (dir_ret == -1)
+	if (oldpwd == NULL)
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
+	else if (dir_ret == -1)
 		ft_putendl_fd("bash: cd: HOME not set", 2);
 	else
 	{
@@ -31,13 +33,11 @@ int	go_homedir(t_envlist *env)
 			envlist_add(ft_strjoin("OLDPWD=", oldpwd), env->prev, env);
 		else
 		{
-			if (list->value)
-				free(list->value);
+			free(list->value);
 			list->value = ft_strdup(oldpwd);
 		}
 	}
 	free(oldpwd);
-	oldpwd = NULL;
 	return (!!dir_ret);
 }
 
@@ -105,12 +105,16 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 	else if (is_option(cmds[1]))
 		return (cd_errors(cmds, INVALID_OPTION));
 	list = envlist_search("PWD", env);
-	oldpwd = ft_strdup(list->value); //malloc
+	oldpwd = ft_strdup(list->value);
+	if (oldpwd == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
+		return (1);
+	}
 	dir_ret = cd_dir_access(cmds);
 	if (dir_ret == -2)
 	{
 		free(oldpwd);
-		oldpwd = NULL;
 		return (1);
 	}
 	list = envlist_search("OLDPWD", env);
