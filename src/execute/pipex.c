@@ -56,8 +56,9 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
 		exit (0);
 	}
 	//else if (0 < cmd->pid)
-		//close_fd();
+	dprintf(2, "[%s] pid =[%ld]\n", cmds[0], (long) cmd->pid);
+		close_fd();
 		//return (0);//子プロセスに必要な情報は渡っているので親はfdを閉じる必要がある
-		return (do_parent());
+		//return (do_parent());
 	return (0);
 }
