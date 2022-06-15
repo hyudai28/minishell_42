@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 15:20:34 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:41:18 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"	//still reachable 218 blocks
-
-int	minishell(char *command, t_envlist *envp)
-{
-	t_token	*head;
-	t_cmds	*cmds;
-	int		result;
-
-	head = token_constructor();
-	if (lexer(command, head, envp) == 1)
-		return (1);
-	if (parser(head, envp) == 1)
-		return (1);
-	if (heredocument(head, envp) == 1)
-		return (1);
-	if (expansion(head, envp) == 1)
-		return (1);
-	cmds = token_to_cmds(head);
-	if (cmds == NULL)
-		return (1);
-	token_destructor(head);
-	result = minishell_execute(cmds, envp);
-	return (doller_ret(result, envp));
-}
 
 int	event_hook(void)
 {
@@ -56,26 +33,35 @@ static int	all_space(char *command)
 	return (0);
 }
 
+static void	main_constructor(int argc, char **argv, char **command)
+{
+	(void)argv;
+	(void)argc;
+	*command = NULL;
+	g_signal_handled = 0;
+	minishell_signal();
+	rl_signal_event_hook = event_hook;
+}
+
+static void	command_is_null(t_envlist *env)
+{
+	envlist_destructor(env);
+	write(2, "exit", 4);
+	exit(0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*command;
 	t_envlist	*env_head;
 
-	(void)argv;
-	(void)argc;
-	g_signal_handled = 0;
-	command = NULL;
+	main_constructor(argc, argv, &command);
 	env_head = envlist_constructor(envp);
-	minishell_signal();
-	rl_signal_event_hook = event_hook;
 	while (1)
 	{
 		command = readline("minishell > ");
 		if (command == NULL)
-		{
-			envlist_destructor(env_head);
-			return (!write(2, "exit", 4));
-		}
+			command_is_null(env_head);
 		if (g_signal_handled != 0)
 			env_head->doller_ret = g_signal_handled;
 		g_signal_handled = 0;

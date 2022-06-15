@@ -19,6 +19,7 @@ LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -lhistory
 
 MAIN_DIR	=	main/
 MAIN_FILES	=	main.c \
+				minishell.c \
 				doller_ret.c \
 				list_show.c \
 				minishell_utils.c

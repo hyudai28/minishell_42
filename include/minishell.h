@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:19:40 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:42:12 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 volatile sig_atomic_t	g_signal_handled;
 
-// t_envlist *envp_head;
+int		minishell(char *command, t_envlist *envp);
 
 //lexer
 int		lexer(char *argv, t_token *head, t_envlist *env);
