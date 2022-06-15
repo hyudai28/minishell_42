@@ -61,7 +61,7 @@ size_t	get_envlen(const char *line);
 
 //utils
 int		char_count(char **count);
-void	envsplit_free(char **split);
+void	split_free(char **split);
 int		doller_ret(int ret, t_envlist *env);
 
 //execute
@@ -90,6 +90,7 @@ int		builtin_echo(char **cmds, int argc, t_envlist *env);
 int		builtin_cd(char **cmds, int argc, t_envlist *env);
 int		builtin_pwd(char **cmds, int argc, t_envlist *env);
 int		builtin_export(char **cmds, int argc, t_envlist *env);
+int		export_print(t_envlist *head);
 int		builtin_unset(char **cmds, int argc, t_envlist *env);
 int		builtin_env(char **cmds, int argc, t_envlist *env);
 int		builtin_exit(char **exit_num, int argc, t_envlist *env);
