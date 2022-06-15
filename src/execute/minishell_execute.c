@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 00:25:30 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 00:59:59 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ int	command_not_found_error(char *msg)
 	return (1);
 }
 
-int	command_execute(char **cmds, t_envlist *env, t_cmds *cmd, int *backup_fd)
+int	command_execute(t_envlist *env, t_cmds *cmd, int *backup_fd)
 {
 	char	*path;
 	int		result;
 
-	path = get_command_path(cmds, env);
+	path = get_command_path(cmd->cmd, env);
 	if (!path)
 	{
-		command_not_found_error(cmds[0]);
+		command_not_found_error(cmd->cmd[0]);
 		return (127);
 	}
 	else
-		result = pipex(cmds, env, path, cmd, backup_fd);
+		result = pipex(env, path, cmd, backup_fd);
 	free(path);
 	path = NULL;
 	return (result);
@@ -81,7 +81,7 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
-			command_execute(cmds->cmd, env, cmds, backup_stdfd);
+			command_execute(env, cmds, backup_stdfd);
 		cmds = cmds->next;
 	}
 	result = all_wait(cmds, env, result);

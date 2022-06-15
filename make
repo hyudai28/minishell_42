@@ -6,11 +6,11 @@ LIBFT = libft.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -g #-Wall -Wextra -Werror
-OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -g #-Wall -Wextra -Werror
+CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -Wall -Wextra -Werror
+OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -Wall -Wextra -Werror
 #CFLAGS = -L $(shell brew --prefix readline)/lib $(INCLUDE)
 #INCLUDE = -I $(shell brew --prefix readline)/include -I include/ -I $(LIB_DIR)
-DEBUG = -g -fsanitize=address
+# DEBUG = -g -fsanitize=address
 LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -lhistory
 #LIBFLAGS = -L $(LIB_DIR) -lft -lreadline -ltinfo
 
@@ -32,8 +32,7 @@ BUILTIN_FILES	=	builtin_cd.c \
 				builtin_export.c \
 				builtin_pwd.c \
 				builtin_unset.c \
-				builtins.c \
-				builtin_export_utils.c
+				builtins.c
 BUILTIN_SRCS	=	$(addprefix $(BUILTIN_DIR), $(BUILTIN_FILES))
 
 ERROR_DIR	=	error/
@@ -45,18 +44,17 @@ EXECUTE_FILES	=	minishell_execute.c \
 					get_command_path.c \
 					pipe_setup.c \
 					pipex.c \
-					all_wait.c
+					all_wait.c 
+
 EXECUTE_SRCS	=	$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES))
 
 EXPANSION_DIR	=	expansion/
-EXPANSION_FILES	=	expansion_utils.c \
-					minishell_expansion.c \
-					expansion_line.c \
-					remove_quot.c \
+EXPANSION_FILES	=	minishell_expansion.c \
 					add_separate_token.c \
+					expansion_utils.c \
 					expansion_env.c \
-					get_env_value.c \
-					get_next_sq.c
+					expansion_line.c \
+					remove_quot.c
 EXPANSION_SRCS	=	$(addprefix $(EXPANSION_DIR), $(EXPANSION_FILES))
 
 LEXER_DIR	=	lexer/
@@ -69,9 +67,7 @@ PARSER_SRCS	=	$(addprefix $(PARSER_DIR), $(PARSER_FILES))
 
 HEREDOC_DIR =	heredoc/
 HEREDOC_FILES	=	heredoc.c \
-					heredoc_expansion.c \
-					heredoc_expansion_env.c \
-					heredoc_expansion_line.c
+					heredoc_expansion.c
 HEREDOC_SRCS	=	$(addprefix $(HEREDOC_DIR), $(HEREDOC_FILES))
 
 SIGNAL_DIR	=	signal/
@@ -138,7 +134,6 @@ T_CMD_OBJS = $(T_CMD_FILES:%.c=$(OBJ_DIR)t_cmd/%.o)
 T_ENVLIST_OBJS = $(T_ENVLIST_FILES:%.c=$(OBJ_DIR)t_envlist/%.o)
 T_TOKEN_OBJS = $(T_TOKEN_FILES:%.c=$(OBJ_DIR)t_token/%.o)
 
-
 # Recipe
 # ****************************************************************************
 
@@ -165,20 +160,17 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)$(MAIN_DIR)
 	mkdir -p $(OBJ_DIR)$(BUILTIN_DIR)
 	mkdir -p $(OBJ_DIR)$(ERROR_DIR)
-	mkdir -p $(OBJ_DIR)$(EXECUTE_DIR)
+	mkdir -p $(OBJ_DIR)$(EXCUTE_DIR)
 	mkdir -p $(OBJ_DIR)$(EXPANSION_DIR)
 	mkdir -p $(OBJ_DIR)$(LEXER_DIR)
 	mkdir -p $(OBJ_DIR)$(PARSER_DIR)
 	mkdir -p $(OBJ_DIR)$(HEREDOC_DIR)
 	mkdir -p $(OBJ_DIR)$(SIGNAL_DIR)
-	mkdir -p $(OBJ_DIR)$(STRUCT_DIR)
 	mkdir -p $(OBJ_DIR)$(T_CMD_DIR)
 	mkdir -p $(OBJ_DIR)$(T_ENVLIST_DIR)
 	mkdir -p $(OBJ_DIR)$(T_TOKEN_DIR)
 
-#debug: $(LIBFT) $(OBJS)
-debug: $(OBJS)
-	make -C $(LIB_DIR)
+debug: $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(DEBUG) $(LIBFLAGS) $(OBJS) -o $(NAME)
 
 clean:

@@ -41,7 +41,7 @@ static	void	close_fd(int *backup_fd)
 	dup2(std_out, 1);
 }
 
-int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
+int	pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 {
 	char	**envp;
 	static int	pipex_index = 0;
@@ -55,7 +55,7 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 		if (cmd->outfd_type == FD_PIPE_OUT)
 			close(cmd->next->infd);
 		envp = envlist_to_key(env);
-		if (execve(path, cmds, envp))
+		if (execve(path, cmd->cmd, envp))
 		{
 			error(strerror(errno), 1, env);
 			exit (1);

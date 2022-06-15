@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 00:37:31 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 01:00:08 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ int		doller_ret(int ret, t_envlist *env);
 //execute
 int		minishell_execute(t_cmds *cmds, t_envlist *envp);
 char	*get_command_path(char **cmds, t_envlist *env);
-int		pipex(\
-char **cmds, t_envlist *env, char *path, t_cmds *cmd, int *backup_fd);
+int		pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd);
 void	clean_fd(int close_fd, int backup_fd);
 int		do_parent(void);
 int		all_wait(t_cmds *cmds, t_envlist *env, int result);
@@ -114,8 +113,7 @@ int		exit_isspace(int c);
 
 //command_execute
 void	fd_setup(t_cmds *cmds);
-int		command_execute(\
-char **cmds, t_envlist *env, t_cmds *cmd, int *backup_fd);
+int		command_execute(t_envlist *env, t_cmds *cmd, int *backup_fd);
 
 //minishell_signal
 int		minishell_signal(void);
