@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:04 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/14 17:42:28 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 01:35:41 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	cd_errors(char **cmds, int flag)
 	return (1);
 }
 
-int	cd_dir_access(char **cmds)
+int	cd_dir_access(char **cmds, char *oldpwd)
 {
 	int			dir_ret;
 	struct stat	stat_buf;
@@ -77,15 +77,27 @@ int	cd_dir_access(char **cmds)
 	else if (S_ISDIR(stat_buf.st_mode))
 		cd_errors(cmds, NOT_A_DIR);
 	if (dir_ret == -1)
+	{
+		free(oldpwd);
 		return (-2);
+	}
 	return (1);
 }
 
-int	is_option(char *line)
+static char	*get_pwd(t_envlist *list)
 {
-	if (line[0] == '-')
-		return (-1);
-	return (0);
+	char	*oldpwd;
+
+	if (list == NULL || list->value == NULL)
+		oldpwd = getcwd(NULL, 0);
+	else
+		oldpwd = ft_strdup(list->value);
+	if (oldpwd == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
+		return (NULL);
+	}
+	return (1);
 }
 
 /*
@@ -105,18 +117,12 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 	else if (is_option(cmds[1]))
 		return (cd_errors(cmds, INVALID_OPTION));
 	list = envlist_search("PWD", env);
-	oldpwd = ft_strdup(list->value);
+	oldpwd = get_pwd(list);
 	if (oldpwd == NULL)
-	{
-		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
-	}
-	dir_ret = cd_dir_access(cmds);
+	dir_ret = cd_dir_access(cmds, oldpwd);
 	if (dir_ret == -2)
-	{
-		free(oldpwd);
 		return (1);
-	}
 	list = envlist_search("OLDPWD", env);
 	if (list->value)
 		free(list->value);
