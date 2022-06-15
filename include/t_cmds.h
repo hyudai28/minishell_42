@@ -19,6 +19,7 @@ enum	e_cmds_out_fd
 
 enum	e_cmds_in_fd
 {
+	FD_HEAD,
 	FD_PIPE_IN,
 	FD_R_STDIN,
 	FD_HEREDOC,

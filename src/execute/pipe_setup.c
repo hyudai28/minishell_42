@@ -44,8 +44,6 @@ int	out_fd(t_cmds *cmds, int stdfd[2], int pipe_fd[2])
 	{
 		clean_fd(stdfd[1], 1);
 		stdfd[1] = dup(1);
-		close(1);
-		dup2(stdfd[1], 1);
 	}
 	else if (cmds->outfd_type == FD_PIPE_OUT)
 	{

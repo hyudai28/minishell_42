@@ -30,15 +30,21 @@ int	do_parent(void)
 	return (1);
 }
 
-static	void	close_fd()
+static	void	close_fd(int *backup_fd)
 {
-	close(0);
-	close(1);
+	int	std_out;
+	int	std_in;
+
+	std_out = dup(backup_fd[1]);
+	std_in = dup(backup_fd[0]);
+	dup2(std_in, 0);
+	dup2(std_out, 1);
 }
 
-int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
+int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 {
 	char	**envp;
+	static int	pipex_index = 0;
 
 	cmd->pid = fork();
 	if (cmd->pid < 0)
@@ -46,7 +52,7 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
 	if (cmd->pid == 0)
 	{
 		execute_signal();
-		if (cmd->next->infd_type == FD_PIPE_IN)
+		if (cmd->outfd_type == FD_PIPE_OUT)
 			close(cmd->next->infd);
 		envp = envlist_to_key(env);
 		if (execve(path, cmds, envp))
@@ -58,6 +64,6 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd)
 		exit (0);
 	}
 	else if (0 < cmd->pid)
-		close_fd();
+		close_fd(backup_fd);
 	return (0);
 }
