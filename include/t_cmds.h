@@ -1,5 +1,17 @@
-#ifndef T_CMD_H
-# define T_CMD_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_cmds.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 00:37:48 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/16 00:37:48 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef T_CMDS_H
+# define T_CMDS_H
 
 # include <stdlib.h>
 
@@ -35,9 +47,6 @@ typedef struct s_cmds
 	int					outfd;
 	char				*heredoc_str;
 	pid_t				pid;
-	//char				*outfd_line;
-	//char				*infd_line;
-	// bool	is_infile;
 	struct s_cmds		*next;
 	struct s_cmds		*prev;
 	bool				head;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_token.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 00:39:11 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/16 00:40:31 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef T_TOKEN_H
 # define T_TOKEN_H
 
@@ -40,7 +52,7 @@ int			token_check_separate(enum e_token_type type);
 t_token		*add_one(t_token *now, char **str);
 
 //get_token.c
-void	get_token(t_token *new, char *str);
+void		get_token(t_token *new, char *str);
 
 //manage_token.c
 t_token		*new_token(void);
@@ -51,6 +63,6 @@ int			token_delone(t_token *token);
 char		*token_strjoin(char *cmd_line, char *s2);
 
 //token_utils.c
-char	*token_strjoin(char *cmd_line, char *s2);
+char		*token_strjoin(char *cmd_line, char *s2);
 
 #endif
