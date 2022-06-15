@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:20:06 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:52:41 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 	cmds = cmds->next;
 	while (!cmds->head)
 	{
-		pipe_setup(cmds, &pipe_infd, backup_stdfd, env);
+		pipe_setup(cmds, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
 			command_execute(env, cmds, backup_stdfd);
 		cmds = cmds->next;
 	}
-	result = all_wait(cmds, env, result, backup_stdfd);
+	result = all_wait(cmds, result, backup_stdfd);
 	cmds_destructor(cmds);
 	return (result);
 }

@@ -18,7 +18,7 @@ void	clean_fd(int backup_fd, int close_fd)
 	close(backup_fd);
 }
 
-int	in_fd(t_cmds *cmds, int stdfd[2], int pipe_fd[2])
+int	in_fd(t_cmds *cmds, int pipe_fd[2])
 {
 	if (cmds->infd_type == FD_PIPE_IN)
 	{
@@ -60,11 +60,11 @@ int	out_fd(t_cmds *cmds, int stdfd[2], int pipe_fd[2])
 	return (0);
 }
 
-int	pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env)
+int	pipe_setup(t_cmds *cmds, int stdfd[2], t_envlist *env)
 {
 	int	pipe_fd[2];
 
-	if (in_fd(cmds, stdfd, pipe_fd) != 0)
+	if (in_fd(cmds, pipe_fd) != 0)
 	{
 		error(strerror(errno), 1, env);
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:04 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:35:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 01:45:55 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static char	*get_pwd(t_envlist *list)
 		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (NULL);
 	}
-	return (1);
+	return (oldpwd);
 }
 
 /*

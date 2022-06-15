@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:42:12 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:52:18 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ char	*get_command_path(char **cmds, t_envlist *env);
 int		pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd);
 void	clean_fd(int close_fd, int backup_fd);
 int		do_parent(void);
-int		all_wait(t_cmds *cmds, t_envlist *env, int result, int *stdfd);
+int		all_wait(t_cmds *cmds, int result, int *stdfd);
 
 // int		set_backup_fd(int dup_fd, int stdfd);
-int		pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env);
+int		pipe_setup(t_cmds *cmds, int stdfd[2], t_envlist *env);
 int		pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env);
 
 //debug
@@ -103,6 +103,7 @@ int		export_error(char *msg, int flag);
 int		builtins(char **cmds, t_envlist *env);
 int		builtin_echo(char **cmds, int argc, t_envlist *env);
 int		builtin_cd(char **cmds, int argc, t_envlist *env);
+int		is_option(char *line);
 int		builtin_pwd(char **cmds, int argc, t_envlist *env);
 int		builtin_export(char **cmds, int argc, t_envlist *env);
 int		export_print(t_envlist *head);

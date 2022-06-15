@@ -6,8 +6,8 @@ LIBFT = libft.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -g #-Wall -Wextra -Werror
-OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -g #-Wall -Wextra -Werror
+CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -Wall -Wextra -Werror
+OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -Wall -Wextra -Werror
 #CFLAGS = -L $(shell brew --prefix readline)/lib $(INCLUDE)
 #INCLUDE = -I $(shell brew --prefix readline)/include -I include/ -I $(LIB_DIR)
 DEBUG = -g -fsanitize=address
@@ -21,12 +21,12 @@ MAIN_DIR	=	main/
 MAIN_FILES	=	main.c \
 				minishell.c \
 				doller_ret.c \
-				list_show.c \
 				minishell_utils.c
 MAIN_SRCS	=	$(addprefix $(MAIN_DIR), $(MAIN_FILES))
 
 BUILTIN_DIR	=	builtins/
 BUILTIN_FILES	=	builtin_cd.c \
+				builtin_cd_utils.c \
 				builtin_echo.c \
 				builtin_env.c \
 				builtin_exit.c \

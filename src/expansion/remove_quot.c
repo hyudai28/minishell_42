@@ -67,7 +67,6 @@ static void	remove_quot_copy(t_token *token, char *new)
 int	remove_quot(t_token *token, t_envlist *env)
 {
 	char	*new;
-	size_t	i;
 	size_t	len;
 
 	len = get_length(token->word);

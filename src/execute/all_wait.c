@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:13:02 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/16 01:19:01 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:52:05 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	int	is_builtins(char **cmds)
 	return (0);
 }
 
-int	fork_wait(t_cmds *cmds, t_envlist *env)
+int	fork_wait(t_cmds *cmds)
 {
 	int	status;
 
@@ -53,7 +53,7 @@ int	fork_wait(t_cmds *cmds, t_envlist *env)
 	return (1);
 }
 
-int	all_wait(t_cmds *cmds, t_envlist *env, int result, int *stdfd)
+int	all_wait(t_cmds *cmds, int result, int *stdfd)
 {
 	int	ret;
 
@@ -65,7 +65,7 @@ int	all_wait(t_cmds *cmds, t_envlist *env, int result, int *stdfd)
 		if (is_builtins(cmds->cmd))
 			ret = result;
 		else
-			ret = fork_wait(cmds, env);
+			ret = fork_wait(cmds);
 		cmds = cmds->next;
 	}
 	clean_fd(stdfd[0], 0);
