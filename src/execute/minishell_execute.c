@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 00:59:59 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:20:06 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,9 @@ int	command_execute(t_envlist *env, t_cmds *cmd, int *backup_fd)
 int	minishell_execute(t_cmds *cmds, t_envlist *env)
 {
 	int		pipe_infd;
-	int		backup_default_stdfd[2];
 	int		backup_stdfd[2];
 	int		result;
 
-	backup_default_stdfd[0] = dup(0);
-	backup_default_stdfd[1] = dup(1);
 	backup_stdfd[0] = dup(0);
 	backup_stdfd[1] = dup(1);
 	if (!cmds)
@@ -84,9 +81,7 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 			command_execute(env, cmds, backup_stdfd);
 		cmds = cmds->next;
 	}
-	result = all_wait(cmds, env, result);
+	result = all_wait(cmds, env, result, backup_stdfd);
 	cmds_destructor(cmds);
-	clean_fd(backup_default_stdfd[0], 0);
-	clean_fd(backup_default_stdfd[1], 1);
 	return (result);
 }

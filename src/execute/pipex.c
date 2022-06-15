@@ -30,7 +30,7 @@ int	do_parent(void)
 	return (1);
 }
 
-static	void	close_fd(int *backup_fd)
+static void	close_fd(int *backup_fd)
 {
 	int	std_out;
 	int	std_in;
@@ -43,8 +43,7 @@ static	void	close_fd(int *backup_fd)
 
 int	pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 {
-	char	**envp;
-	static int	pipex_index = 0;
+	char		**envp;
 
 	cmd->pid = fork();
 	if (cmd->pid < 0)
@@ -58,10 +57,10 @@ int	pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 		if (execve(path, cmd->cmd, envp))
 		{
 			error(strerror(errno), 1, env);
-			exit (1);
+			exit(1);
 		}
 		split_free(envp);
-		exit (0);
+		exit(0);
 	}
 	else if (0 < cmd->pid)
 		close_fd(backup_fd);

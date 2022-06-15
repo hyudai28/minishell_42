@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:00:08 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 01:19:40 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_command_path(char **cmds, t_envlist *env);
 int		pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd);
 void	clean_fd(int close_fd, int backup_fd);
 int		do_parent(void);
-int		all_wait(t_cmds *cmds, t_envlist *env, int result);
+int		all_wait(t_cmds *cmds, t_envlist *env, int result, int *stdfd);
 
 // int		set_backup_fd(int dup_fd, int stdfd);
 int		pipe_setup(t_cmds *cmds, int *infd, int stdfd[2], t_envlist *env);
