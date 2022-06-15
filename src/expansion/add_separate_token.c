@@ -23,10 +23,65 @@ static void	skip_single_quot(char *word, size_t *i)
 			while (word[*i] != '\0' && word[*i] != '\'')
 				(*i)++;
 		}
+		else if (word[*i] == '\"')
+		{
+			(*i)++;
+			while (word[*i] != '\0' && word[*i] != '\"')
+				(*i)++;
+		}
 		if (word[*i] == '\0' || word[*i] == ' ')
 			return ;
 		(*i)++;
 	}
+}
+
+static char	*get_left(t_token *token, t_envlist *env, size_t i, t_token *new)
+{
+	char	*left;
+
+	left = ft_substr(token->word, 0, i);
+	if (left == NULL)
+	{
+		free(new);
+		error("minishell: Cannot allocate memory", 1, env);
+		return (NULL);
+	}
+	token->word = left;
+	return (left);
+}
+
+static char	*get_right(t_token *new, t_envlist *env, size_t i, char *left)
+{
+	char	*right;
+
+	while (new->word[i] == ' ')
+		i++;
+	right = ft_substr(new->word, i, ft_strlen(new->word + i));
+	if (right == NULL)
+	{
+		free(new);
+		free(left);
+		error("minishell: Cannot allocate memory", 1, env);
+		return (NULL);
+	}
+	free(new->word);
+	new->word = right;
+	new->type = EXPANDABLE;
+	new->word_len = ft_strlen(new->word);
+	return (right);
+}
+
+static t_token	*get_newtoken(t_envlist *env)
+{
+	t_token	*new;
+
+	new = new_token();
+	if (new == NULL)
+	{
+		error("minishell: Cannot allocate memory", 1, env);
+		return (NULL);
+	}
+	return (new);
 }
 
 int	add_separate_token(t_token *token, t_envlist *env)
@@ -39,34 +94,19 @@ int	add_separate_token(t_token *token, t_envlist *env)
 	skip_single_quot(token->word, &i);
 	if (token->word[i] == '\0')
 		return (0);
-	left = ft_substr(token->word, 0, i);
-	if (left == NULL)
-	{
-		error("minishell: Cannot allocate memory", 1, env);
+	new = get_newtoken(env);
+	if (new == NULL)
 		return (1);
-	}
-	while (token->word[i] == ' ')
-		i++;
-	right = ft_substr(token->word, i, ft_strlen(token->word + i));
+	new->word = token->word;
+	left = get_left(token, env, i, new);
+	if (left == NULL)
+		return (1);
+	right = get_right(new, env, i, left);
 	if (right == NULL)
 	{
-		error("minishell: Cannot allocate memory", 1, env);
-		free(left);
+		free(token);
 		return (1);
 	}
-	new = new_token();
-	if (new == NULL)
-	{
-		error("minishell: Cannot allocate memory", 1, env);
-		free(right);
-		free(left);
-		return (1);
-	}
-	new->word = right;
-	new->type = EXPANDABLE;
-	new->word_len = ft_strlen(new->word);
-	free(token->word);
-	token->word = left;
 	add_token_next(token, new, token->next);
 	return (0);
 }

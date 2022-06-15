@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:27:29 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/06 00:17:12 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/13 01:39:15 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	builtin_env(char **cmds, int argc, t_envlist *envp)
 {
 	(void)cmds;
 	(void)argc;
-	if (!envp->next ||envp->next->head)
+	if (!envp->next || envp->next->head)
 		return (0);
 	envp = envp->next;
 	while (envp->head != 1)

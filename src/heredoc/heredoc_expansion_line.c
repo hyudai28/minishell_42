@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_line.c                                   :+:      :+:    :+:   */
+/*   heredoc_expansion_line.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/11 21:06:39 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 21:06:39 by mfujishi         ###   ########.fr       */
+/*   Created: 2022/06/13 21:37:02 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/13 21:37:02 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 static void	cat_no_env(\
 char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 {
-	if (word[*word_i] == '\'')
-	{
-		expand_word[*expand_word_i] = word[*word_i];
-		(*expand_word_i)++;
-		(*word_i)++;
-		while (word[*word_i] != '\0' && word[*word_i] != '\'')
-		{
-			expand_word[*expand_word_i] = word[*word_i];
-			(*expand_word_i)++;
-			(*word_i)++;
-		}
-	}
 	expand_word[*expand_word_i] = word[*word_i];
 	(*expand_word_i)++;
 	(*word_i)++;
@@ -75,7 +63,7 @@ char *expand_word, size_t *expand_word_i, char *word, t_envlist *env)
 	}
 }
 
-char	*expansion_line(char *expand_word, char *word, t_envlist *env)
+char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env)
 {
 	size_t	expand_word_i;
 	size_t	word_i;

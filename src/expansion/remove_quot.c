@@ -36,25 +36,15 @@ static size_t	get_length(const char *word)
 	return (len);
 }
 
-int	remove_quot(t_token *token, t_envlist *env)
+static void	remove_quot_copy(t_token *token, char *new)
 {
-	char	*new;
-	char	quot;
 	size_t	i;
 	size_t	len;
+	char	quot;
 
-	len = get_length(token->word);
-	if (len == 0)
-		return (0);
-	token->word_len = len;
-	new = malloc(sizeof(char) * token->word_len + 1);
-	if (new == NULL)
-	{
-		error("minishell: Cannot allocate memory", 1, env);
-		return (1);
-	}
 	i = 0;
 	len = 0;
+	quot = '\0';
 	while (token->word[i + len] != '\0')
 	{
 		while (token->word[i + len] != '\0' && \
@@ -72,6 +62,25 @@ int	remove_quot(t_token *token, t_envlist *env)
 		}
 		i++;
 	}
+}
+
+int	remove_quot(t_token *token, t_envlist *env)
+{
+	char	*new;
+	size_t	i;
+	size_t	len;
+
+	len = get_length(token->word);
+	if (len == 0)
+		return (0);
+	token->word_len = len;
+	new = malloc(sizeof(char) * token->word_len + 1);
+	if (new == NULL)
+	{
+		error("minishell: Cannot allocate memory", 1, env);
+		return (1);
+	}
+	remove_quot_copy(token, new);
 	new[len] = '\0';
 	free(token->word);
 	token->word = new;

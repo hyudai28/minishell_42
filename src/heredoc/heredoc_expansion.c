@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_expansion.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/13 19:21:40 by mfujishi          #+#    #+#             */
+/*   Updated: 2022/06/13 19:21:40 by mfujishi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static size_t	get_env_length(char *word, t_envlist *env)
@@ -22,26 +34,6 @@ static size_t	get_env_length(char *word, t_envlist *env)
 		env = env->next;
 	}
 	return (0);
-}
-
-static char	*get_env_value(char *word, t_envlist *env)
-{
-	size_t	tr_len;
-
-	if (env->head)
-		env = env->next;
-	tr_len = 0;
-	while (ft_isalnum(word[tr_len]) || word[tr_len] == '_')
-		tr_len++;
-	while (!env->head)
-	{
-		if (!ft_strncmp(word, env->key, tr_len))
-		{
-			return (env->value);
-		}
-		env = env->next;
-	}
-	return (NULL);
 }
 
 static size_t	get_env_less_length(char *word)
@@ -71,12 +63,10 @@ static size_t	get_env_less_length(char *word)
 	return (env_less_len);
 }
 
-static size_t	get_env_only_length(char *word, t_envlist *env)
+static size_t	get_env_only_length(char *word, t_envlist *env, size_t length)
 {
-	size_t	length;
 	size_t	exit_status_digit;
 
-	length = 0;
 	exit_status_digit = get_exit_status_digit(env);
 	while (*word != '\0')
 	{
@@ -101,81 +91,6 @@ static size_t	get_env_only_length(char *word, t_envlist *env)
 	return (length);
 }
 
-static size_t	exit_status_cat(char *expand_word, t_envlist *env, size_t stat_len)
-{
-	size_t	i;
-	int		exit_status;
-	size_t	temp;
-
-	i = ft_strlen(expand_word);
-	temp = stat_len;
-	exit_status = env->doller_ret;
-	if (exit_status == 0)
-	{
-		expand_word[i] = '0';
-		expand_word[i + 1] = '\0';
-		return (1);
-	}
-	expand_word[i + stat_len] = '\0';
-	stat_len--;
-	while (exit_status != 0)
-	{
-		expand_word[i + stat_len] = exit_status % 10 + '0';
-		exit_status = exit_status / 10;
-		stat_len--;
-	}
-	return (temp);
-}
-
-static char	*heredoc_expansion_line(\
-	char *expand_word, char *word, t_envlist *env)
-{
-	char	*env_word;
-	size_t	expand_word_index;
-	size_t	env_word_index;
-	size_t	word_index;
-	size_t	exit_status_length;
-
-	expand_word_index = 0;
-	word_index = 0;
-	exit_status_length = get_exit_status_digit(env);
-	while (word[word_index] != '\0')
-	{
-		if (word[word_index] != '$')
-		{
-			expand_word[expand_word_index] = word[word_index];
-			expand_word_index++;
-			word_index++;
-		}
-		else
-		{
-			expand_word[expand_word_index] = word[word_index];
-			word_index++;
-			if (word[word_index] == '?')
-			{
-				exit_status_cat(expand_word, env, exit_status_length);
-				expand_word_index += exit_status_length;
-				word_index++;
-			}
-			else
-			{
-				env_word = get_env_value(word + word_index, env);
-				env_word_index = 0;
-				while (ft_isalnum(word[word_index]) || word[word_index] == '_')
-					word_index++;
-				if (env_word != NULL)
-					while (env_word[env_word_index] != '\0')
-					{
-						expand_word[expand_word_index] = env_word[env_word_index];
-						expand_word_index++;
-						env_word_index++;
-					}
-			}
-		}
-	}
-	return (expand_word);
-}
-
 int	heredoc_expansion(t_token *token, t_envlist *env)
 {
 	char	*expand_word;
@@ -183,7 +98,7 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	size_t	env_less_length;
 	size_t	total_length;
 
-	env_length = get_env_only_length(token->word, env);
+	env_length = get_env_only_length(token->word, env, 0);
 	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
 	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));

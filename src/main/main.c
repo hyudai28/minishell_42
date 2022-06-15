@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
 /*   Updated: 2022/06/12 15:20:34 by hyudai           ###   ########.fr       */
@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"	//still reachable 218 blocks
-
-//""
-// のみ
 
 int	minishell(char *command, t_envlist *envp)
 {

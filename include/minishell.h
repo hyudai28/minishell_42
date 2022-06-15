@@ -45,20 +45,23 @@ int		parser(t_token *token, t_envlist *env);
 //heredoc
 int		heredocument(t_token *head, t_envlist *env);
 int		heredoc_expansion(t_token *token, t_envlist *env);
+char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env);
 
 //expansion
+size_t	get_next_sq(char *word);
 int		expansion(t_token *token, t_envlist *env);
 int		expansion_env(t_token *token, t_envlist *env);
 char	*expansion_line(char *expand_word, char *word, t_envlist *env);
 int		remove_quot(t_token *token, t_envlist *env);
 int		add_separate_token(t_token *token, t_envlist *env);
 size_t	get_exit_status_digit(t_envlist *env);
+char	*get_env_value(char *word, t_envlist *env);
 char	*ft_strjoin3(char *a, char *b, char *c, int need_free);
 size_t	get_envlen(const char *line);
 
 //utils
 int		char_count(char **count);
-void	envsplit_free(char **split);
+void	split_free(char **split);
 int		doller_ret(int ret, t_envlist *env);
 
 //execute
@@ -90,6 +93,7 @@ int		builtin_echo(char **cmds, int argc, t_envlist *env);
 int		builtin_cd(char **cmds, int argc, t_envlist *env);
 int		builtin_pwd(char **cmds, int argc, t_envlist *env);
 int		builtin_export(char **cmds, int argc, t_envlist *env);
+int		export_print(t_envlist *head);
 int		builtin_unset(char **cmds, int argc, t_envlist *env);
 int		builtin_env(char **cmds, int argc, t_envlist *env);
 int		builtin_exit(char **exit_num, int argc, t_envlist *env);

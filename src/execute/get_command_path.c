@@ -78,7 +78,7 @@ char	*get_command_path(char **cmds, t_envlist *env)
 		return (NULL);
 	}
 	ret_path = set_command(cmds[0], path_split, env);
-	envsplit_free(path_split);
+	split_free(path_split);
 	if (ret_path == NULL)
 		return (NULL);
 	return (ret_path);

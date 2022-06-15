@@ -60,7 +60,7 @@ int	pipex(char **cmds, t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 			error(strerror(errno), 1, env);
 			exit (1);
 		}
-		envsplit_free(envp);
+		split_free(envp);
 		exit (0);
 	}
 	else if (0 < cmd->pid)

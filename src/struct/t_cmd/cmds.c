@@ -42,28 +42,38 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 	return (new);
 }
 
+static void	cmd_free(t_cmds *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd->cmd[i] != NULL)
+	{
+		free(cmd->cmd[i]);
+		cmd->cmd[i] = NULL;
+		i++;
+	}
+}
+
 void	cmds_destructor(t_cmds *cmds)
 {
-	int		i;
 	t_cmds	*tmp;
 
-	cmds = cmds->next;
-	while (cmds->head != 1)
+	if (cmds->next == NULL)
+		free(cmds);
+	else
 	{
-		i = 0;
-		while (cmds->cmd[i] != NULL)
-		{
-			free(cmds->cmd[i]);
-			cmds->cmd[i] = NULL;
-			i++;
-		}
-		free(cmds->cmd);
-		cmds->cmd = NULL;
-		tmp = cmds;
 		cmds = cmds->next;
-		free(tmp);
-		tmp = NULL;
+		while (cmds->head != 1)
+		{
+			cmd_free(cmds);
+			free(cmds->cmd);
+			cmds->cmd = NULL;
+			tmp = cmds;
+			cmds = cmds->next;
+			free(tmp);
+			tmp = NULL;
+		}
+		free(cmds);
 	}
-	free(cmds);
-	cmds = NULL;
 }
