@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/13 22:09:03 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 00:38:05 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,11 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 	if (new == NULL)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_cmds));
-	new->prev = NULL;
 	if (head)
-	{
-		new->next = NULL;
 		new->head = 1;
-	}
 	else
 	{
 		new->next = cmd_head;
-		new->head = 0;
 		new->prev = now;
 		now->next = new;
 		cmd_head->prev = new;
@@ -37,8 +32,6 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 	new->pid = -1;
 	new->infd_type = FD_STDIN;
 	new->outfd_type = FD_STDOUT;
-	new->cmd = NULL;
-	new->heredoc_str = NULL;
 	return (new);
 }
 
