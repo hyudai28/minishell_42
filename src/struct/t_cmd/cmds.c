@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/14 00:12:50 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/13 22:09:03 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 		now->next = new;
 		cmd_head->prev = new;
 	}
+	new->pid = -1;
 	new->infd_type = FD_STDIN;
 	new->outfd_type = FD_STDOUT;
 	new->cmd = NULL;

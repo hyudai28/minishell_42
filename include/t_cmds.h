@@ -19,6 +19,7 @@ enum	e_cmds_out_fd
 
 enum	e_cmds_in_fd
 {
+	FD_HEAD,
 	FD_PIPE_IN,
 	FD_R_STDIN,
 	FD_HEREDOC,
@@ -33,6 +34,7 @@ typedef struct s_cmds
 	int					infd;
 	int					outfd;
 	char				*heredoc_str;
+	pid_t				pid;
 	//char				*outfd_line;
 	//char				*infd_line;
 	// bool	is_infile;

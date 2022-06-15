@@ -44,7 +44,8 @@ EXECUTE_FILES	=	minishell_execute.c \
 					get_command_path.c \
 					pipe_setup.c \
 					pipex.c \
-					all_wait.c
+					all_wait.c 
+
 EXECUTE_SRCS	=	$(addprefix $(EXECUTE_DIR), $(EXECUTE_FILES))
 
 EXPANSION_DIR	=	expansion/
