@@ -6,7 +6,7 @@
 /*   By: tarata <tarata@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 17:26:47 by tarata            #+#    #+#             */
-/*   Updated: 2021/04/24 13:55:42 by tarata           ###   ########.fr       */
+/*   Updated: 2022/06/16 14:26:35 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	word = ft_word_count(s, c);
-	if (!ft_wrap2((void ***)&str, (sizeof(char *) * (word +1))))
+	if (!ft_wrap2((void ***)&str, (sizeof(char *) * (word + 1))))
 		return (NULL);
 	i = 0;
 	while (*s)

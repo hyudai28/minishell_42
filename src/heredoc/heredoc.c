@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/13 19:20:47 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:25:38 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	parse_heredoc(t_token *token, t_envlist *env)
 	expandable = 1;
 	if (ft_strchr(token->next->word, '\'') != NULL || \
 		ft_strchr(token->next->word, '\"') != NULL)
-			expandable = 0;
+		expandable = 0;
 	if (remove_quot(token->next, env) != 0)
 	{
 		return (1);
