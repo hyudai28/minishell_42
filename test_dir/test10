@@ -1,0 +1,96 @@
+echo "builtins"
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+env
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+env
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+export test=mfujishit
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+export test=mfujishit
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+unset $test
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+unset $test
+EOF
+echo
+echo =================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+export
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+export
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+unset $test
+EOF
+echo $?
+echo "----------minishell---------------"
+./minishell << 'EOF'
+unset $test
+EOF
+echo $?
+echo
+echo =================================
+
+echo
+echo "cd"
+echo
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+cd test_dir
+EOF
+echo $?
+echo "----------minishell---------------"
+./minishell << 'EOF'
+cd test_dir
+EOF
+echo $?
+echo
+echo =================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+cd test_dir
+EOF
+echo $?
+echo "----------minishell---------------"
+./minishell << 'EOF'
+cd test_dir
+EOF
+echo $?
+echo
+echo =================================
+
