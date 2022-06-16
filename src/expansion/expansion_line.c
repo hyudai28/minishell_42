@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:06:39 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 19:28:54 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 21:33:07 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char *expand_word, size_t *expand_word_i, char *word, t_envlist *env)
 
 	env_word = get_env_value(word, env);
 	if (env_word == NULL)
+	{
+		expand_word[0] = '\0';
 		return ;
+	}
 	env_word_i = 0;
 	while (env_word[env_word_i] != '\0')
 	{

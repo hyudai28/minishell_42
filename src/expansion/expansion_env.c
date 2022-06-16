@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:59:58 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 19:23:34 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 21:11:48 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 static size_t	get_env_length(char *word, t_envlist *env)
 {
 	size_t	value_len;
+	size_t	tr_len;
 
 	if (env->head)
 		env = env->next;
+	tr_len = 0;
+	while (ft_isalnum(word[tr_len]) || word[tr_len] == '_')
+		tr_len++;
 	while (!env->head)
 	{
-		if (!ft_strncmp(word, env->key, (ft_strlen(env->key) + 1)))
+		if (ft_strlen(env->key) <= tr_len && \
+				!ft_strncmp(word, env->key, tr_len))
 		{
 			if (env->value == NULL)
 				return (0);

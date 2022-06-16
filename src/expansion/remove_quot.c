@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 22:24:32 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 22:24:32 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:01:33 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ static size_t	get_length(const char *word)
 		while (word[i + len] != '\0' && \
 		word[i + len] != '\'' && word[i + len] != '\"')
 			len++;
+		if (word[i + len] == '\0')
+			return (len);
 		quot = word[i + len];
 		i++;
-		while (word[i + len] != quot)
+		while (word[i + len] != '\0' && word[i + len] != quot)
 			len++;
 		i++;
 	}
@@ -44,7 +46,6 @@ static void	remove_quot_copy(t_token *token, char *new)
 
 	i = 0;
 	len = 0;
-	quot = '\0';
 	while (token->word[i + len] != '\0')
 	{
 		while (token->word[i + len] != '\0' && \
@@ -53,6 +54,8 @@ static void	remove_quot_copy(t_token *token, char *new)
 			new[len] = token->word[i + len];
 			len++;
 		}
+		if (token->word[i + len] == '\0')
+			return ;
 		quot = token->word[i + len];
 		i++;
 		while (token->word[i + len] != quot)
@@ -73,7 +76,7 @@ int	remove_quot(t_token *token, t_envlist *env)
 	if (len == 0)
 		return (0);
 	token->word_len = len;
-	new = malloc(sizeof(char) * token->word_len + 1);
+	new = malloc(sizeof(char) * (token->word_len + 1));
 	if (new == NULL)
 	{
 		error("minishell: Cannot allocate memory", 1, env);
