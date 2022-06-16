@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 01:41:26 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/16 19:14:57 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:48:38 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	minishell(char *command, t_envlist *envp)
 		return (1);
 	if (expansion(head, envp) == 1)
 		return (1);
-	if (head->next == NULL || head->next->word[0] == '\0')
+	if (head->next == NULL)
 		return (doller_ret(0, envp));
 	cmds = token_to_cmds(head);
 	if (cmds == NULL)

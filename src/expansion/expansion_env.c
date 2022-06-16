@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:59:58 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 21:11:48 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:56:58 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ int	expansion_env(t_token *token, t_envlist *env)
 	expand_word = (char *)ft_calloc((total_length + 1), sizeof(char));
 	if (expand_word == NULL)
 		return (1);
+	if (total_length == 0)
+	{
+		free(token->word);
+		token->word = NULL;
+		return (0);
+	}
 	expand_word = expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;

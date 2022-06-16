@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:33:36 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 18:33:36 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:06:36 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 	int		access_ret;
 	char	*path;
 
+	if (cmd[0] == '\0')
+		return (NULL);
 	path_i = 0;
 	access_ret = access(cmd, X_OK);
 	if (access_ret == 0 && ft_strchr(cmd, '/') != NULL)

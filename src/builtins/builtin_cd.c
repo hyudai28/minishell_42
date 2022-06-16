@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:04 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:45:55 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 23:33:03 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	go_homedir(t_envlist *env)
 
 int	cd_errors(char **cmds, int flag)
 {
-	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd("minishell :", 2);
+	ft_putstr_fd("cd : ", 2);
 	if (flag == INVALID_OPTION)
 	{
 		ft_putstr_fd(cmds[1], 2);
@@ -51,13 +52,13 @@ int	cd_errors(char **cmds, int flag)
 	}
 	else
 	{
+		ft_putstr_fd(cmds[1], 2);
 		if (flag == NOT_A_DIR)
 			ft_putendl_fd(": Not a directory", 2);
 		else if (flag == NO_SUCH_DIR)
-			ft_putendl_fd(": No such file or directory: ", 2);
+			ft_putendl_fd(": No such file or directory", 2);
 		else if (flag == PERMISSION_ERR)
-			ft_putstr_fd("permission denied: ", 2);
-		ft_putendl_fd(cmds[1], 2);
+			ft_putendl_fd(": permission denied", 2);
 	}
 	return (1);
 }
@@ -124,8 +125,9 @@ int	builtin_cd(char **cmds, int argc, t_envlist *env)
 	if (dir_ret == -2)
 		return (1);
 	list = envlist_search("OLDPWD", env);
-	if (list->value)
-		free(list->value);
+	if (list == NULL)
+		return (0);
+	free(list->value);
 	list->value = ft_strdup(oldpwd);
 	free(oldpwd);
 	oldpwd = NULL;
