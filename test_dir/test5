@@ -1,4 +1,4 @@
-"Return value of a process"
+echo "Return value of a process"
 
 echo ===================================
 echo "----------bash--------------------"
