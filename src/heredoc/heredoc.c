@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/16 16:13:08 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:15:29 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ static int	parse_heredoc(t_token *token, t_envlist *env)
 	}
 	if (get_heredoc(token, token->next->word) != 0)
 	{
+		return (1);
+	}
+	if (token->next->word == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
 	}
 	if (expandable == 1 && heredoc_expansion(token->next, env) == 1)
