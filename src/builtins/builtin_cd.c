@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:04 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 23:33:03 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:48:14 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	cd_errors(char **cmds, int flag)
 	else
 	{
 		ft_putstr_fd(cmds[1], 2);
-		if (flag == NOT_A_DIR)
-			ft_putendl_fd(": Not a directory", 2);
-		else if (flag == NO_SUCH_DIR)
+		if (flag == NO_SUCH_DIR)
 			ft_putendl_fd(": No such file or directory", 2);
+		else if (flag == NOT_A_DIR)
+			ft_putendl_fd(": Not a directory", 2);
 		else if (flag == PERMISSION_ERR)
 			ft_putendl_fd(": permission denied", 2);
 	}
@@ -73,7 +73,7 @@ int	cd_dir_access(char **cmds, char *oldpwd)
 		return (0);
 	if (stat(cmds[1], &stat_buf))
 		cd_errors(cmds, NO_SUCH_DIR);
-	if (!(stat_buf.st_mode & S_IXUSR))
+	else if (!(stat_buf.st_mode & S_IXUSR))
 		cd_errors(cmds, PERMISSION_ERR);
 	else if (S_ISDIR(stat_buf.st_mode))
 		cd_errors(cmds, NOT_A_DIR);
