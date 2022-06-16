@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:06:39 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 17:34:01 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:28:54 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 	}
 	expand_word[*expand_word_i] = word[*word_i];
 	(*expand_word_i)++;
-	(*word_i)++;
+	if (word[*word_i] != '\0')
+		(*word_i)++;
 }
 
 static size_t	cat_exit_status(

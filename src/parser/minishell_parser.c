@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:51:50 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 19:10:35 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:29:23 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	check_head_type(t_token *token, t_envlist *env)
 static int	check_quot(const char *line, t_envlist *env)
 {
 	char	*quot;
+
 	while (*line != '\0')
 	{
 		while (*line != '\0' && *line != '\'' && *line != '\"')
