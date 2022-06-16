@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 01:36:28 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:36:28 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:56:27 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static bool	envpcmp(char *s1, char *s2)
 	}
 	if (!s1[i])
 	{
-		printf("s1 is null\n");
 		return (1);
 	}
 	return (0);

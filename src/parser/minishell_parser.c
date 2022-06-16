@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:51:50 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 23:53:18 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:10:35 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ static int	check_head_type(t_token *token, t_envlist *env)
 	return (0);
 }
 
-static int	check_quot(const char *line)
+static int	check_quot(const char *line, t_envlist *env)
 {
 	char	*quot;
-
 	while (*line != '\0')
 	{
 		while (*line != '\0' && *line != '\'' && *line != '\"')
@@ -98,7 +97,7 @@ static int	check_quot(const char *line)
 		quot = ft_strchr(line + 1, *line);
 		if (quot == NULL)
 		{
-			printf("minishell: quotation no matching.\n");
+			error("minishell: quotation no matching.", 2, env);
 			return (1);
 		}
 		line = quot;
@@ -120,7 +119,7 @@ int	parser(t_token *token, t_envlist *env)
 	}
 	while (token->type != TAIL)
 	{
-		if (check_quot(token->word) == 1 || \
+		if (check_quot(token->word, env) == 1 || \
 			check_pipe(token, env) == 1 || check_redirect(token, env) == 1)
 		{
 			token_destructor(head);

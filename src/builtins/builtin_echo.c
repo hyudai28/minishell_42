@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:24:02 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/01 21:24:02 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:56:14 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	dollar_ret(char **cmds, t_envlist *env)
 {
 	if (!ft_strncmp(cmds[1], "$?", ft_strlen(cmds[1]) + 1))
 	{
-		printf("echo dollar ->%d¥n", env->doller_ret);
 		env->doller_ret = 0;
 		return (1);
 	}
