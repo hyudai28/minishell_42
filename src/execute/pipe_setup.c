@@ -31,7 +31,8 @@ int	in_fd(t_cmds *cmds, int pipe_fd[2])
 	{
 		if (pipe(pipe_fd) != 0)
 			return (-1);
-		ft_putendl_fd(cmds->heredoc_str, pipe_fd[1]);
+		if (cmds->heredoc_str[0] != '\0')
+			ft_putendl_fd(cmds->heredoc_str, pipe_fd[1]);
 		clean_fd(pipe_fd[0], 0);
 		clean_fd(pipe_fd[1], 1);
 	}

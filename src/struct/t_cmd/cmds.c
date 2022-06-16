@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 00:38:05 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 15:49:08 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	cmds_destructor(t_cmds *cmds)
 		{
 			cmd_free(cmds);
 			free(cmds->cmd);
+			free(cmds->heredoc_str);
 			cmds->cmd = NULL;
 			tmp = cmds;
 			cmds = cmds->next;

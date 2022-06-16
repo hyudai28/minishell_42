@@ -101,6 +101,11 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	env_length = get_env_only_length(token->word, env, 0);
 	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
+	if (total_length == env_less_length)
+	{
+		token->word_len = total_length;
+		return (0);
+	}
 	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
 	if (expand_word == NULL)
 		return (1);
