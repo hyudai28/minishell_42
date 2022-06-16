@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 01:45:38 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/05/30 22:38:22 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:16:41 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,16 @@ int	builtin_exit(char **exit_num, int argc, t_envlist *envp)
 
 	(void)envp;
 	if (argc == 1)
+	{
+		ft_putendl_fd("exit", 2);
 		exit (0);
+	}
 	if (argc > 2)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		return (1);
 	}
 	ret = (unsigned int)exit_atoi(exit_num[1]);
-	ft_putendl_fd("exit", 1);
+	ft_putendl_fd("exit", 2);
 	exit (ret % 256);
 }

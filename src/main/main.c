@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 15:51:21 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:56:56 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		command = readline("minishell > ");
 		if (command == NULL)
+		{
+			//system("leaks minishell");
 			command_is_null(env_head);
+		}
 		if (g_signal_handled != 0)
 			env_head->doller_ret = g_signal_handled;
 		g_signal_handled = 0;
@@ -74,5 +77,6 @@ int	main(int argc, char **argv, char **envp)
 			free(command);
 	}
 	envlist_destructor(env_head);
+	//system("leaks minishell");
 	return (env_head->doller_ret);
 }
