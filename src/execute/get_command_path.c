@@ -37,6 +37,16 @@ char	*ft_pathjoin(char *bin_path, char *cmd, t_envlist *env)
 	return (ret_path);
 }
 
+static int	is_accessable(char *path)
+{
+	int access_ret;
+
+	access_ret = access(path, X_OK);
+	if (access_ret)
+		access_ret = access(path, F_OK);
+	return (access_ret);
+}
+
 char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 {
 	int		path_i;
@@ -54,7 +64,7 @@ char	*set_command(char *cmd, char **bin_path, t_envlist *env)
 		path = ft_pathjoin(bin_path[path_i], cmd, env);
 		if (path == NULL)
 			return (NULL);
-		access_ret = access(path, X_OK);
+		access_ret = is_accessable(path);
 		if (access_ret == 0)
 			return (path);
 		free(path);

@@ -86,11 +86,26 @@ bash << 'EOF'
 cd test_dir
 EOF
 echo $?
+bash << 'EOF'
+cd tlaksd
+EOF
+echo $?
+bash << 'EOF'
+cd ..
+EOF
+echo $?
 echo "----------minishell---------------"
 ./minishell << 'EOF'
 cd test_dir
 EOF
 echo $?
+./minishell << 'EOF'
+cd tlaksd
+EOF
+echo $?
+./minishell << 'EOF'
+cd ..
+EOF
+echo $?
 echo
 echo =================================
-

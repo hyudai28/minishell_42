@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 21:49:39 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/17 01:14:25 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int	event_hook(void)
 	{
 		g_signal_handled = 1;
 	}
+	ft_putchar_fd('\n', STDERR_FILENO);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	return (0);
 }
 
@@ -75,6 +79,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free(command);
+		if (g_signal_handled)
+			ft_putchar_fd('\n', 2);
 	}
 	envlist_destructor(env_head);
 	//system("leaks minishell");
