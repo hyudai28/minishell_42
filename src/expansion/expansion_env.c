@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:59:58 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 18:59:58 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:39:20 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	get_env_length(char *word, t_envlist *env)
 		tr_len++;
 	while (!env->head)
 	{
-		if (!ft_strncmp(word, env->key, tr_len))
+		if (!ft_strncmp(word, env->key, (tr_len + 1)))
 		{
 			if (env->value == NULL)
 				return (0);
@@ -44,10 +44,10 @@ static size_t	get_env_less_length(char *word)
 	env_less_len = 0;
 	env_len = 0;
 	while (word[env_less_len + env_len] != '\0')
-	{
 		if (word[env_less_len + env_len] == '\'')
 			env_less_len += get_next_sq(word + env_less_len + env_len + 1);
-		else if (word[env_less_len + env_len] == '$')
+		else if (word[env_less_len + env_len] == '$' && \
+				word[env_less_len + env_len + 1] != '\0')
 		{
 			env_len++;
 			if (word[env_less_len + env_len] == '?')
@@ -61,7 +61,6 @@ static size_t	get_env_less_length(char *word)
 		}
 		else
 			env_less_len++;
-	}
 	return (env_less_len);
 }
 
@@ -91,7 +90,7 @@ static size_t	get_env_only_length(char *word, t_envlist *env, size_t length)
 	{
 		if (*word == '\'')
 			word += get_next_sq(word + 1);
-		else if (*word == '$')
+		else if (*word == '$' && *word + 1 != '\0')
 		{
 			word++;
 			word = env_length(&length, exit_status_digit, word, env);
