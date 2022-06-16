@@ -1,0 +1,43 @@
+"Return value of a process"
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+ls
+echo $?
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+ls
+echo $?
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+nothingcommand
+echo $?
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+nothingcommand
+echo $?
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+ls nothingdirectory
+echo $?
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+ls nothingdirectory
+echo $?
+EOF
+echo
+echo ===================================

@@ -1,0 +1,61 @@
+echo ===================================
+
+echo "----------bash--------------------"
+bash << 'EOF' 
+echo
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+echo
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+echo test test2
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+echo test test2
+EOF
+echo
+echo ===================================
+
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+echo "test  test2"
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+echo "test  test2"
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+echo -n
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+echo -n
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF' 
+echo -n test test2
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF' 
+echo -n test test2
+EOF
+echo
+echo ===================================

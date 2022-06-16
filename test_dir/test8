@@ -1,0 +1,84 @@
+echo "Single Quotes"
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+echo '   '
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+echo '   '
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+'   '
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+'   '
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+echo 'cat lol.c | cat > lol.c'
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+echo 'cat lol.c | cat > lol.c'
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+$
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+$
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+'$USER'
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+'$USER'
+EOF
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+"string$USER"
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+"string$USER"
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+"$USERstring"
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+"$USERstring"
+EOF
+echo
+echo =================================

@@ -1,0 +1,46 @@
+echo "Simple Command & global variables"
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+/bin/ls
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+/bin/ls
+EOF
+echo
+echo ===================================
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+
+EOF
+echo
+echo ===================================
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+ 
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+ 
+EOF
+echo
+echo ===================================
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+	
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+	
+EOF
+echo
+echo ===================================

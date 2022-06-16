@@ -1,0 +1,25 @@
+echo "Arguments & history"
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+/bin/ls -l
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+/bin/ls -l
+EOF
+echo
+echo ===================================
+
+echo ===================================
+echo "----------bash--------------------"
+bash << 'EOF'
+/bin/ls -a
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+/bin/ls -a
+EOF
+echo
+echo ===================================
