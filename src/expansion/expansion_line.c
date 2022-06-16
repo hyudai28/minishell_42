@@ -40,20 +40,21 @@ static size_t	cat_exit_status(
 
 	i = ft_strlen(expand_word);
 	exit_status = env->doller_ret;
+	(*word_i)++;
 	if (exit_status == 0)
 	{
 		expand_word[i] = '0';
 		expand_word[i + 1] = '\0';
+		return (0);
 	}
 	expand_word[i + exit_status_len] = '\0';
-	exit_status--;
+	exit_status_len--;
 	while (exit_status != 0)
 	{
 		expand_word[i + exit_status_len] = exit_status % 10 + '0';
 		exit_status = exit_status / 10;
 		exit_status_len--;
 	}
-	(*word_i)++;
 	return (exit_status_len);
 }
 

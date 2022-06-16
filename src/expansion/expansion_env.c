@@ -112,10 +112,9 @@ int	expansion_env(t_token *token, t_envlist *env)
 	env_length = get_env_only_length(token->word, env, 0);
 	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
-	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
+	expand_word = (char *)ft_calloc((total_length + 1), sizeof(char));
 	if (expand_word == NULL)
 		return (1);
-	expand_word[total_length] = '\0';
 	expand_word = expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;
