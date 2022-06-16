@@ -86,7 +86,7 @@ static size_t	get_env_only_length(char *word, t_envlist *env, size_t length)
 	{
 		if (*word == '\'')
 			word += get_next_sq(word + 1);
-		else if (*word == '$' && word + 1 != '\0')
+		else if (*word == '$' && *word + 1 != '\0')
 		{
 			word++;
 			word = env_length(&length, exit_status_digit, word, env);

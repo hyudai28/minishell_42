@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_signal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:43:10 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 01:32:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 21:50:29 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	signal_ctrl_c(int sig)
 {
 	(void)sig;
 	g_signal_handled = sig;
-	write(1, "\b\b\n", 3);
-	rl_on_new_line();
+	ft_putchar_fd('\n', STDERR_FILENO);
 	rl_replace_line("", 0);
 	rl_redisplay();
+	rl_on_new_line();
 }
 
 void	perr_exit(char *err_msg)
