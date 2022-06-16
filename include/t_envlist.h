@@ -43,6 +43,7 @@ void		envlist_delete(char *delete_line, t_envlist *head);
 //envlist_utils.c
 int			envlist_set_keyvalue(t_envlist *target, char *new_line);
 char		**envlist_to_key(t_envlist *head);
+char		**envlist_to_line(t_envlist *head);
 char		*envlist_get_key(char *line);
 int			envlist_set_value(t_envlist *target, char *value_line);
 

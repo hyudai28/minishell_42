@@ -53,7 +53,7 @@ int	pipex(t_envlist *env, char *path, t_cmds *cmd, int *backup_fd)
 		execute_signal();
 		if (cmd->outfd_type == FD_PIPE_OUT)
 			close(cmd->next->infd);
-		envp = envlist_to_key(env);
+		envp = envlist_to_line(env);
 		if (execve(path, cmd->cmd, envp))
 		{
 			error(strerror(errno), 1, env);
