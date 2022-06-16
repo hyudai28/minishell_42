@@ -3,11 +3,11 @@ echo "Single Quotes"
 echo ===================================
 echo "----------bash--------------------"
 bash << 'EOF'
-echo '   '
+echo "   "
 EOF
 echo "----------minishell---------------"
 ./minishell << 'EOF'
-echo '   '
+echo "   "
 EOF
 echo
 echo =================================
@@ -15,11 +15,11 @@ echo =================================
 echo =================================
 echo "----------bash--------------------"
 bash << 'EOF'
-'   '
+"   "
 EOF
 echo "----------minishell---------------"
 ./minishell << 'EOF'
-'   '
+"   "
 EOF
 echo
 echo =================================
@@ -27,14 +27,15 @@ echo =================================
 echo =================================
 echo "----------bash--------------------"
 bash << 'EOF'
-echo 'cat lol.c | cat > lol.c'
+echo "cat lol.c | cat > lol.c"
 EOF
 echo "----------minishell---------------"
 ./minishell << 'EOF'
-echo 'cat lol.c | cat > lol.c'
+echo "cat lol.c | cat > lol.c"
 EOF
 echo
 echo =================================
+
 
 echo =================================
 echo "----------bash--------------------"
@@ -51,10 +52,34 @@ echo =================================
 echo =================================
 echo "----------bash--------------------"
 bash << 'EOF'
-'$USER'
+"$USER"
 EOF
 echo "----------minishell---------------"
 ./minishell << 'EOF'
-'$USER'
+"$USER"
 EOF
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+"string$USER"
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+"string$USER"
+EOF
+echo
+echo =================================
+
+echo =================================
+echo "----------bash--------------------"
+bash << 'EOF'
+"$USERstring"
+EOF
+echo "----------minishell---------------"
+./minishell << 'EOF'
+"$USERstring"
+EOF
+echo
 echo =================================
