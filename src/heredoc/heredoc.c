@@ -6,11 +6,17 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/16 14:25:38 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 16:13:08 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	heredoc_error_malloc(void)
+{
+	ft_putendl_fd("minishell: Cannot allocate memory", 2);
+	return (1);
+}
 
 static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 {
@@ -23,7 +29,6 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 		new_line = readline("> ");
 		if (new_line == NULL)
 		{
-			write(1, "\b\b", 2);
 			write(2, "minishell: warning: not found delimiter (wanted `", 49);
 			ft_putstr_fd(dlmt, 2);
 			write(2, "')\n", 3);
@@ -35,7 +40,7 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 		free(temp);
 		free(new_line);
 		if (*line == NULL)
-			return (1);
+			return (heredoc_error_malloc());
 	}
 	free(new_line);
 	return (0);
@@ -50,7 +55,6 @@ int	get_heredoc(t_token *token, char *delimiter)
 	line = readline("> ");
 	if (line == NULL)
 	{
-		write(1, "\b\b", 2);
 		write(2, "minishell: warning: not found delimiter (wanted `", 49);
 		ft_putstr_fd(delimiter, 2);
 		write(2, "')\n", 3);
@@ -63,7 +67,8 @@ int	get_heredoc(t_token *token, char *delimiter)
 		token->next->word = ft_strdup("");
 		return (0);
 	}
-	read_heredoc(delimiter, delimiter_length, &line);
+	if (read_heredoc(delimiter, delimiter_length, &line) == 1)
+		return (1);
 	free(token->next->word);
 	token->next->word = line;
 	return (0);
@@ -101,6 +106,7 @@ int	heredocument(t_token *head, t_envlist *env)
 		{
 			if (parse_heredoc(token, env) == 1)
 			{
+				env->doller_ret = 1;
 				token_destructor(head);
 				return (1);
 			}
