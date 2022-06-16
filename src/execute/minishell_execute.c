@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execute.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 15:38:59 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:09:12 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 		pipe_setup(cmds, backup_stdfd, env);
 		result = builtins(cmds->cmd, env);
 		if (result == -1)
-			command_execute(env, cmds, backup_stdfd);
+			result = command_execute(env, cmds, backup_stdfd);
 		cmds = cmds->next;
 	}
-	result = all_wait(cmds, result, backup_stdfd);
+	result = all_wait(cmds, result, backup_stdfd, env);
 	cmds_destructor(cmds);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 23:13:02 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/16 01:52:05 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/16 17:12:31 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,21 @@ int	fork_wait(t_cmds *cmds)
 	return (1);
 }
 
-int	all_wait(t_cmds *cmds, int result, int *stdfd)
+int	command_not_found(t_cmds *cmds, t_envlist *env)
+{
+	char	*path;
+
+	path = get_command_path(cmds->cmd, env);
+	if (!path)
+	{
+		return (127);
+	}
+	free(path);
+	path = NULL;
+	return (0);
+}
+
+int	all_wait(t_cmds *cmds, int result, int *stdfd, t_envlist *env)
 {
 	int	ret;
 
@@ -63,6 +77,8 @@ int	all_wait(t_cmds *cmds, int result, int *stdfd)
 	while (cmds->head != 1)
 	{
 		if (is_builtins(cmds->cmd))
+			ret = result;
+		else if (command_not_found(cmds, env))
 			ret = result;
 		else
 			ret = fork_wait(cmds);
