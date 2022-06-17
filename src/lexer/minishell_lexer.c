@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 22:39:48 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/17 18:06:13 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/17 18:26:01 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	lexer(char *argv, t_token *head, t_envlist *env)
 		str++;
 	while (*str != '\0')
 	{
-		printf("	new[%s]\n", str);
 		cur = new_token();
 		if (lexer_error(cur, argv, head, env) == 1)
 			return (1);
@@ -45,16 +44,10 @@ int	lexer(char *argv, t_token *head, t_envlist *env)
 			return (1);
 		ft_strlcpy(cur->word, str, cur->word_len + 1);
 		str += cur->word_len;
-		//cur->word_lenがオーバーしてそう
-		printf("str=[%s][%zu]\n", cur->word, cur->word_len);
-		//exit(0);
 		if (*str == '\0')
 			break ;
 		while (ft_isspace(*str))
-		{
-			printf("c[%c]\n", *str);
 			str++;
-		}
 	}
 	free(argv);
 	return (0);
