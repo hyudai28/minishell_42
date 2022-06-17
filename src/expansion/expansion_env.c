@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:59:58 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 22:56:58 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:18:33 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static size_t	get_env_less_length(char *word)
 	while (word[env_less_len + env_len] != '\0')
 		if (word[env_less_len + env_len] == '\'')
 			env_less_len += get_next_sq(word + env_less_len + env_len + 1);
-	else if (word[env_less_len + env_len] == '$' && \
-			word[env_less_len + env_len + 1] != '\0')
+	else if (word[env_less_len + env_len] == '$')
 	{
 		env_len++;
 		if (word[env_less_len + env_len] == '?')
@@ -118,6 +117,7 @@ int	expansion_env(t_token *token, t_envlist *env)
 	if (total_length == 0)
 	{
 		free(token->word);
+		free(expand_word);
 		token->word = NULL;
 		return (0);
 	}

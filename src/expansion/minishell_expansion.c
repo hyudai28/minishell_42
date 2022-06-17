@@ -6,15 +6,44 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 22:58:12 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:42:31 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	check_doller(t_token *token)
+{
+	if (!ft_strncmp(token->word, "$", 2) || \
+		!ft_strncmp(token->word, "\"$\"", 4))
+	{
+		return (2);
+	}
+	else if (token->word[0] == '$' && token->word[1] == '$')
+	{
+		free(token->word);
+		token->word = NULL;
+		token->word = ft_strdup("");
+		if (token->word == NULL)
+		{
+			ft_putendl_fd("minishell: Cannot allocate memory", 2);
+			return (1);
+		}
+		return (2);
+	}
+	return (0);
+}
+
 int	expansion_token(t_token *token, t_envlist *env)
 {
-	if (expansion_env(token, env) == 1)
+	int	ret;
+
+	ret = check_doller(token);
+	if (ret == 1)
+		return (1);
+	if (ret == 2)
+		return (0);
+	if (ret == 0 && expansion_env(token, env) == 1)
 	{
 		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);

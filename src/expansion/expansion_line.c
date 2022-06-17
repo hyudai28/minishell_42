@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 21:06:39 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 21:33:07 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:23:17 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 	}
 	expand_word[*expand_word_i] = word[*word_i];
 	(*expand_word_i)++;
+	expand_word[*expand_word_i] = '\0';
 	if (word[*word_i] != '\0')
 		(*word_i)++;
 }
@@ -90,7 +91,7 @@ char	*expansion_line(char *expand_word, char *word, t_envlist *env)
 	word_i = 0;
 	exit_status_length = get_exit_status_digit(env);
 	while (word[word_i] != '\0')
-		if (word[word_i] != '$' || word[word_i + 1] == '\0')
+		if (word[word_i] != '$')
 			cat_no_env(expand_word, &expand_word_i, word, &word_i);
 	else
 	{
