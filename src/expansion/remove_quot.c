@@ -67,6 +67,24 @@ static void	remove_quot_copy(t_token *token, char *new)
 	}
 }
 
+static int	clean_two_quot(t_token *token, t_envlist *env)
+{
+	char	*temp;
+
+	if ((token->word[0] == '\'' && token->word[1] == '\'') || \
+	token->word[0] == '\"' && token->word[1] == '\"')
+	{
+		temp = ft_strdup("");
+		if (temp == NULL)
+		{
+			error("minishell: Cannot allocate memory", 1, env);
+			return (1);
+		}
+		token->word = temp;
+	}
+	return (0);
+}
+
 int	remove_quot(t_token *token, t_envlist *env)
 {
 	char	*new;
@@ -74,7 +92,7 @@ int	remove_quot(t_token *token, t_envlist *env)
 
 	len = get_length(token->word);
 	if (len == 0)
-		return (0);
+		return (clean_two_quot(token, env));
 	token->word_len = len;
 	new = malloc(sizeof(char) * (token->word_len + 1));
 	if (new == NULL)
