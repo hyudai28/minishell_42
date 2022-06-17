@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:50:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 22:42:36 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:13:25 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	get_normal(char *str, t_token *new)
 		while (len < str_len && str[len] != quot)
 			len++;
 		len++;
+		if (len > str_len)
+			len = str_len;
 	}
 	new->word_len = len;
 	new->type = EXPANDABLE;
