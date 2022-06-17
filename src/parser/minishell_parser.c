@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parser.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:51:50 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 19:31:53 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:28:10 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int	check_quot(const char *line, t_envlist *env)
 		quot = ft_strchr(line + 1, *line);
 		if (quot == NULL)
 		{
-			error("minishell: quotation no matching.", 2, env);
+			error("minishell: quotation no matching.", 1, env);
 			return (1);
 		}
 		line = quot;
