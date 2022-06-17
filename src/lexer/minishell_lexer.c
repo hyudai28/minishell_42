@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 22:39:48 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 22:43:16 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:52:33 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	lexer(char *argv, t_token *head, t_envlist *env)
 			return (1);
 		add_token_last(head, cur);
 		get_token(cur, str);
-		cur->word = (char *)malloc(sizeof(char) * cur->word_len + 1);
+		cur->word = (char *)ft_calloc(cur->word_len + 1, sizeof(char));
 		if (lexer_error(cur->word, argv, head, env) == 1)
 			return (1);
 		ft_strlcpy(cur->word, str, cur->word_len + 1);

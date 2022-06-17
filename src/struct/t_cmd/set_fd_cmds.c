@@ -14,7 +14,8 @@
 
 static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 {
-	if (token_check_separate(token->type))
+	new->cmd[*index] = NULL;
+	if (3 <= token_check_separate(token->type))
 		return (token);
 	if (token->type != EXPANDABLE)
 		return (token);

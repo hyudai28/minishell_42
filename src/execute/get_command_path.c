@@ -39,7 +39,7 @@ char	*ft_pathjoin(char *bin_path, char *cmd, t_envlist *env)
 
 static int	is_accessable(char *path)
 {
-	int access_ret;
+	int	access_ret;
 
 	access_ret = access(path, X_OK);
 	if (access_ret)
