@@ -75,6 +75,7 @@ static int	clean_two_quot(t_token *token, t_envlist *env)
 	(token->word[0] == '\"' && token->word[1] == '\"'))
 	{
 		temp = ft_strdup("");
+		free(token->word);
 		if (temp == NULL)
 		{
 			error("minishell: Cannot allocate memory", 1, env);

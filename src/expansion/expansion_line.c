@@ -35,10 +35,11 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 		}
 	}
 	expand_word[*expand_word_i] = word[*word_i];
-	(*expand_word_i)++;
-	expand_word[*expand_word_i] = '\0';
 	if (word[*word_i] != '\0')
+	{
+		(*expand_word_i)++;
 		(*word_i)++;
+	}
 }
 
 static size_t	cat_exit_status(
@@ -119,5 +120,6 @@ char	*expansion_line(char *expand_word, char *word, t_envlist *env)
 				word_i++;
 		}
 	}
+	expand_word[expand_word_i] = '\0';
 	return (expand_word);
 }
