@@ -117,8 +117,8 @@ int	expansion_env(t_token *token, t_envlist *env)
 	if (total_length == 0)
 	{
 		free(token->word);
-		free(expand_word);
-		token->word = NULL;
+		expand_word[0] = '\0';
+		token->word = expand_word;
 		return (0);
 	}
 	expand_word = expansion_line(expand_word, token->word, env);

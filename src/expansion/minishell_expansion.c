@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/18 15:42:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:57:47 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	expansion_token(t_token *token, t_envlist *env)
 		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
 	}
-	if (token->word == NULL)
-		return (1);
 	if (add_separate_token(token, env) == 1)
 	{
 		return (1);

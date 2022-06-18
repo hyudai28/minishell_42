@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/17 12:54:15 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 16:00:06 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	command_execute(t_envlist *env, t_cmds *cmd, int *backup_fd)
 	char	*path;
 	int		result;
 
+	if (cmd->cmd[0][0] == '\0')
+		return (0);
 	path = get_command_path(cmd->cmd, env);
 	if (!path)
 	{

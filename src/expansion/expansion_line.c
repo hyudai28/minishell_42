@@ -26,7 +26,8 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 		(*word_i)++;
 		while (word[*word_i] != '\0' && word[*word_i] != quot)
 		{
-			if (quot == '\"' && word[*word_i] == '$' && word[*word_i + 1] != '\"')
+			if (quot == '\"' && word[*word_i] == '$' && \
+				word[*word_i + 1] != '\"')
 				return ;
 			expand_word[*expand_word_i] = word[*word_i];
 			(*expand_word_i)++;
@@ -102,7 +103,7 @@ char	*expansion_line(char *expand_word, char *word, t_envlist *env)
 	expand_word_i = 0;
 	word_i = 0;
 	exit_status_length = get_exit_status_digit(env);
-	while (word[word_i] != '\0') {
+	while (word[word_i] != '\0')
 		if (word[word_i] != '$')
 			cat_no_env(expand_word, &expand_word_i, word, &word_i);
 	else
@@ -117,7 +118,6 @@ char	*expansion_line(char *expand_word, char *word, t_envlist *env)
 			while (ft_isalnum(word[word_i]) || word[word_i] == '_')
 				word_i++;
 		}
-	}
 	}
 	return (expand_word);
 }
