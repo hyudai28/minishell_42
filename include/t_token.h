@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:39:11 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 00:40:31 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:30:01 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_token		*add_one(t_token *now, char **str);
 
 //get_token.c
 void		get_token(t_token *new, char *str);
+size_t		is_separate_char(char c);
 
 //manage_token.c
 t_token		*new_token(void);
