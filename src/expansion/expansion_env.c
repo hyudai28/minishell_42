@@ -44,7 +44,7 @@ static size_t	get_env_less_length(char *word)
 
 	env_less_len = 0;
 	env_len = 0;
-	while (word[env_less_len + env_len] != '\0') {
+	while (word[env_less_len + env_len] != '\0')
 		if (word[env_less_len + env_len] == '\'')
 			env_less_len += get_next_sq(word + env_less_len + env_len + 1);
 	else if (word[env_less_len + env_len] == '$' && \
@@ -62,7 +62,6 @@ static size_t	get_env_less_length(char *word)
 	}
 	else
 		env_less_len++;
-	}
 	return (env_less_len);
 }
 

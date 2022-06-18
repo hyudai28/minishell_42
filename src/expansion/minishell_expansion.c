@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/18 21:05:26 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 21:21:57 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,19 @@ int	expansion_token(t_token *token, t_envlist *env)
 		if (token->prev->type == HEAD && token->next->type == TAIL)
 			return (1);
 		else
-			return (0);
+			return (2);
 	}
 	if (add_separate_token(token, env) == 1)
-	{
 		return (1);
-	}
 	if (remove_quot(token, env) == 1)
-	{
 		return (1);
-	}
 	return (0);
 }
 
 int	expansion(t_token *token, t_envlist *env)
 {
 	t_token	*head;
+	int		ret;
 
 	head = token;
 	token = token->next;
@@ -76,12 +73,15 @@ int	expansion(t_token *token, t_envlist *env)
 			token = token->next->next;
 			continue ;
 		}
-		if (expansion_token(token, env) == 1)
+		ret = expansion_token(token, env);
+		if (ret == 1)
 		{
 			token_destructor(head);
 			return (1);
 		}
 		token = token->next;
+		if (ret == 2)
+			token_delone(token->prev);
 	}
 	return (0);
 }
