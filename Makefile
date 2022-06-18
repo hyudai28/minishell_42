@@ -6,8 +6,8 @@ LIBFT = libft.a
 # ****************************************************************************
 
 CC = gcc
-CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -Wall -Wextra -Werror -g -fsanitize=address
-OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS := -L $(shell brew --prefix readline)/lib -lreadline -lhistory -Wall -Wextra -Werror #-g -fsanitize=address
+OBJ_FLAG = -I include/ -I $(LIB_DIR) -I $(shell brew --prefix readline)/include -Wall -Wextra -Werror #-g -fsanitize=address
 #CFLAGS = -L $(shell brew --prefix readline)/lib $(INCLUDE)
 #INCLUDE = -I $(shell brew --prefix readline)/include -I include/ -I $(LIB_DIR)
 DEBUG = -g -fsanitize=address

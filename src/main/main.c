@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/18 15:25:54 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 20:02:00 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 			free(command);
 		if (g_signal_handled)
 			ft_putchar_fd('\n', 2);
+		system("leaks minishell");
 	}
 	envlist_destructor(env_head);
 	return (env_head->doller_ret);

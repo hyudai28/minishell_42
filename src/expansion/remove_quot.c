@@ -72,7 +72,7 @@ static int	clean_two_quot(t_token *token, t_envlist *env)
 	char	*temp;
 
 	if ((token->word[0] == '\'' && token->word[1] == '\'') || \
-	token->word[0] == '\"' && token->word[1] == '\"')
+	(token->word[0] == '\"' && token->word[1] == '\"'))
 	{
 		temp = ft_strdup("");
 		if (temp == NULL)

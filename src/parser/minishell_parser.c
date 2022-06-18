@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 23:51:50 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/17 18:28:10 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/18 20:14:07 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	parser(t_token *token, t_envlist *env)
 	token = token->next;
 	if (check_head_type(token, env) == 1)
 	{
-		token_destructor(token);
+		token_destructor(head);
 		return (1);
 	}
 	while (token->type != TAIL)
