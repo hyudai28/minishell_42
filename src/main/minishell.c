@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 01:41:26 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/18 20:13:36 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/18 21:09:29 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ int	minishell(char *command, t_envlist *envp)
 	if (head->next == NULL)
 		return (doller_ret(0, envp));
 	cmds = token_to_cmds(head);
+	token_destructor(head);
 	if (cmds == NULL)
 		return (1);
-	token_destructor(head);
-	if (cmds->next->cmd[0] == NULL)
-		return (0);
 	result = minishell_execute(cmds, envp);
 	return (doller_ret(result, envp));
 }
