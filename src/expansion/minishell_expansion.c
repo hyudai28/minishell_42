@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/18 15:12:32 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:42:41 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static int	check_doller(t_token *token)
 {
 	if (!ft_strncmp(token->word, "$", 2))
 		return (2);
-	else if (!ft_strncmp(token->word, "\"$\"", 3))
-		return (3);
 	else if (token->word[0] == '$' && token->word[1] == '$')
 	{
 		free(token->word);
