@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:50:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/17 18:13:25 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/18 15:29:51 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_token.h"
 
-static size_t	is_separate_char(char c)
+size_t	is_separate_char(char c)
 {
 	if (c == '\'')
 		return (1);

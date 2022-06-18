@@ -26,7 +26,7 @@ char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 		(*word_i)++;
 		while (word[*word_i] != '\0' && word[*word_i] != quot)
 		{
-			if (quot == '\"' && word[*word_i] == '$')
+			if (quot == '\"' && word[*word_i] == '$' && word[*word_i + 1] != '\"')
 				return ;
 			expand_word[*expand_word_i] = word[*word_i];
 			(*expand_word_i)++;
@@ -72,6 +72,12 @@ char *expand_word, size_t *expand_word_i, char *word, t_envlist *env)
 	char	*env_word;
 	size_t	env_word_i;
 
+	if (*word == '\0' || is_separate_char(*word) != 0)
+	{
+		expand_word[*expand_word_i] = '$';
+		expand_word[*expand_word_i + 1] = '\0';
+		return ;
+	}
 	env_word = get_env_value(word, env);
 	if (env_word == NULL)
 	{
