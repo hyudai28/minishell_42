@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 01:45:38 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 17:16:41 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/19 18:08:37 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	exit_numeric(const char *num)
 	ft_putstr_fd("minishell: exit: ", 2);
 	write(2, num, ft_strlen(num));
 	ft_putendl_fd(": numeric argument required", 2);
-	exit (255);
+	exit (2);
 }
 
 static int	exit_atoi_overflow(unsigned long dest, int sign)
