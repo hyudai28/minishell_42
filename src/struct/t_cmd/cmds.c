@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:53 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 15:49:08 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/19 13:50:40 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ t_cmds	*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now)
 
 	new = (t_cmds *)malloc(sizeof(t_cmds));
 	if (new == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (NULL);
+	}
 	ft_memset(new, 0, sizeof(t_cmds));
 	if (head)
 		new->head = 1;

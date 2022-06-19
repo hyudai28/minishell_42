@@ -15,15 +15,16 @@
 static t_token	*separate_token(t_cmds *new, t_token *token, size_t *index)
 {
 	new->cmd[*index] = NULL;
-	if (token->word == NULL)
-		return (token->next);
-	if (3 <= token_check_separate(token->type))
-		return (token);
 	if (token->type != EXPANDABLE)
 		return (token);
+	if (token->word == NULL)
+		return (token->next);
 	new->cmd[*index] = ft_strdup(token->word);
 	if (new->cmd[*index] == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (NULL);
+	}
 	token = token->next;
 	(*index)++;
 	return (token);
@@ -50,6 +51,7 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	new->cmd = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (new->cmd == NULL)
 		return (NULL);
+	int i = 0;
 	while (token->type != PIPE && token->type != TAIL)
 	{
 		token = set_type_infd(new, token);
