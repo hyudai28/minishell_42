@@ -88,7 +88,8 @@ T_CMD_FILES	=	cmds.c \
 				set_fd_cmds.c \
 				set_type_infd.c \
 				set_type_outfd.c \
-				token_to_cmds.c
+				token_to_cmds.c \
+				debug_cmds.c
 T_CMD_SRCS	=	$(addprefix $(T_CMD_DIR), $(T_CMD_FILES))
 
 T_ENVLIST_DIR	=	struct/t_envlist/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execute.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:34:15 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/18 21:00:17 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/19 22:42:32 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	minishell_execute(t_cmds *cmds, t_envlist *env)
 	if (!cmds->next->cmd)
 		return (0);
 	cmds = cmds->next;
+	debug_cmds(cmds);
 	while (!cmds->head)
 	{
 		pipe_setup(cmds, backup_stdfd, env);

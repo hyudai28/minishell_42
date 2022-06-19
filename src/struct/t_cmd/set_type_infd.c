@@ -39,7 +39,9 @@ static t_token	*heredoc(t_cmds *new, t_token *token)
 
 t_token	*set_type_infd(t_cmds *new, t_token *token)
 {
-	if (token->type == TAIL)
+	if (new->prev->close_in == 1)
+		new->infd_type = FD_RE_PIPE;
+	else if (token->type == TAIL)
 		return (token);
 	else if (token->type == R_STDIN)
 		token = r_stdin(new, token);

@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 21:54:44 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/19 22:29:51 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/19 22:55:15 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	print_infd_type(enum e_cmds_in_fd infd)
 		printf("-infd = FD_HEREDOC\n");
 	else if (infd == FD_STDIN)
 		printf("-infd = FD_STDIN\n");
+	else if (infd == FD_RE_PIPE)
+		printf("-infd = FD_RE_PIPE\n");
 }
 
 void debug_cmds(t_cmds *tmp)

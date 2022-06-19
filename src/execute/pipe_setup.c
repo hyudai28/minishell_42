@@ -18,6 +18,17 @@ void	clean_fd(int backup_fd, int close_fd)
 	close(backup_fd);
 }
 
+int	fd_redirect_with_pipe()
+{
+	int	pipe_fd[2];
+
+	if (pipe(pipe_fd) != 0) //fail
+		return (-1);
+	clean_fd(pipe_fd[0], 0);
+	close(pipe_fd[1]);
+	return (0);
+}
+
 int	in_fd(t_cmds *cmds, int pipe_fd[2])
 {
 	if (cmds->infd_type == FD_PIPE_IN)
@@ -35,6 +46,11 @@ int	in_fd(t_cmds *cmds, int pipe_fd[2])
 			ft_putendl_fd(cmds->heredoc_str, pipe_fd[1]);
 		clean_fd(pipe_fd[0], 0);
 		clean_fd(pipe_fd[1], 1);
+	}
+	else if (cmds->infd_type == FD_RE_PIPE)
+	{
+		if (fd_redirect_with_pipe())
+			return (-1);
 	}
 	return (0);
 }

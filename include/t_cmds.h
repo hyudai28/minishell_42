@@ -36,6 +36,7 @@ enum	e_cmds_in_fd
 	FD_R_STDIN,
 	FD_HEREDOC,
 	FD_STDIN,
+	FD_RE_PIPE,
 };
 
 typedef struct s_cmds
@@ -43,6 +44,7 @@ typedef struct s_cmds
 	char				**cmd;
 	enum e_cmds_in_fd	infd_type;
 	enum e_cmds_out_fd	outfd_type;
+	int					close_in;
 	int					infd;
 	int					outfd;
 	char				*heredoc_str;
