@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:24:02 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 18:56:14 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/19 22:39:33 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@ int	echo_putout(char *line, int space)
 	ft_putstr_fd(line, 1);
 	if (space)
 		write(1, " ", 1);
-	return (0);
-}
-
-int	dollar_ret(char **cmds, t_envlist *env)
-{
-	if (!ft_strncmp(cmds[1], "$?", ft_strlen(cmds[1]) + 1))
-	{
-		env->doller_ret = 0;
-		return (1);
-	}
 	return (0);
 }
 
@@ -58,16 +48,18 @@ int	builtin_echo(char **cmds, int argc, t_envlist *env)
 	(void)argc;
 	if (cmds[1])
 	{
-		if (dollar_ret(cmds, env))
-			return (0);
-		if (echo_check_flag(cmds[1]))
+		i = 1;
+		if (echo_check_flag(cmds[i]))
 		{
-			i = 1;
-			while (cmds[++i])
+			while (cmds[i] && echo_check_flag(cmds[i]))
+				i++;
+			while (cmds[i])
+			{
 				echo_putout(cmds[i], !!cmds[i + 1]);
+				i++;
+			}
 			return (0);
 		}
-		i = 1;
 		while (cmds[i])
 		{
 			echo_putout(cmds[i], !!cmds[i + 1]);
