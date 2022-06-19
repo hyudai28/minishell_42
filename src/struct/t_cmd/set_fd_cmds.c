@@ -34,7 +34,8 @@ static t_token	*pipe_set_outfd(t_cmds *new, t_token *token)
 {
 	if (token->type != PIPE)
 		return (token);
-	new->outfd_type = FD_PIPE_OUT;
+	if (new->outfd_type == FD_STDOUT)
+		new->outfd_type = FD_PIPE_OUT;
 	return (token->next);
 }
 
