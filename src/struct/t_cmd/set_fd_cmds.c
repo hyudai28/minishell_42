@@ -51,7 +51,6 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	new->cmd = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (new->cmd == NULL)
 		return (NULL);
-	int i = 0;
 	while (token->type != PIPE && token->type != TAIL)
 	{
 		token = set_type_infd(new, token);
