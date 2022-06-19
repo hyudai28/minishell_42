@@ -62,4 +62,6 @@ t_token		*cmds_set_fd(t_cmds *new, t_token *token);
 t_token		*set_type_infd(t_cmds *new, t_token *token);
 t_token		*set_type_outfd(t_cmds *new, t_token *token);
 
+void		debug_cmds(t_cmds *tmp);
+
 #endif

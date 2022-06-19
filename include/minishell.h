@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 17:09:31 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/19 21:55:12 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int		pipe_setfd(t_cmds *cmds, int *stdfd, int infd, t_envlist *env);
 //debug
 void	debug1(t_token *tmp);
 void	debug_all(t_token *tmp);
-void	debug_cmds(t_cmds *tmp);
 void	debug_read(void);
 void	debug2(t_token *tmp);
 
