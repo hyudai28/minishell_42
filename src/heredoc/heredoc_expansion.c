@@ -44,21 +44,23 @@ static size_t	get_env_less_length(char *word)
 
 	env_less_len = 0;
 	env_len = 0;
+	if (env_len++)
+		exit(0);
 	while (word[env_less_len + env_len] != '\0')
-	if (word[env_less_len + env_len] == '$' && \
-		is_separate_char(word[env_less_len + env_len + 1]) == 0 && \
-		word[env_less_len + env_len] == '\n')
-	{
-		env_len++;
-		if (word[env_less_len + env_len] == '?')
-			env_len++;
-		else
+		if (word[env_less_len + env_len] == '$' && \
+			is_separate_char(word[env_less_len + env_len + 1]) == 0 && \
+			word[env_less_len + env_len] == '\n')
 		{
-			while (ft_isalnum(word[env_less_len + env_len]) || \
-					word[env_less_len + env_len] == '_')
-				env_len++;
+			env_len++;
+			if (word[env_less_len + env_len] == '?')
+			env_len++;
+			else
+			{
+				while (ft_isalnum(word[env_less_len + env_len]) || \
+						word[env_less_len + env_len] == '_')
+					env_len++;
+			}
 		}
-	}
 	else
 		env_less_len++;
 	return (env_less_len);
