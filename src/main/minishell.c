@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 01:41:26 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/19 14:04:21 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:18:50 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	minishell(char *command, t_envlist *envp)
 		return (1);
 	if (head->next == NULL)
 		return (doller_ret(0, envp));
-	cmds = token_to_cmds(head);
-	token_destructor(head);
+	cmds = token_to_cmds(head, envp);
 	if (cmds == NULL)
 		return (1);
+	token_destructor(head);
 	result = minishell_execute(cmds, envp);
 	return (doller_ret(result, envp));
 }

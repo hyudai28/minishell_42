@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static t_token	*r_stdin(t_cmds *new, t_token *token)
+static t_token	*r_stdin(t_cmds *new, t_token *token, t_envlist *env)
 {
 	token = token->next;
 	if (new->infd_type == FD_R_STDIN)
@@ -20,7 +20,13 @@ static t_token	*r_stdin(t_cmds *new, t_token *token)
 	new->infd_type = FD_R_STDIN;
 	new->infd = open(token->word, O_RDONLY);
 	if (new->infd == -1)
-		return (NULL);
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token->word, 2);
+		ft_putstr_fd(": ", 2);
+		error(strerror(errno), 1, env);
+		return (token);
+	}
 	token = token->next;
 	return (token);
 }
@@ -37,14 +43,14 @@ static t_token	*heredoc(t_cmds *new, t_token *token)
 	return (token);
 }
 
-t_token	*set_type_infd(t_cmds *new, t_token *token)
+t_token	*set_type_infd(t_cmds *new, t_token *token, t_envlist *env)
 {
 	if (new->prev->close_in == 1)
 		new->infd_type = FD_RE_PIPE;
 	else if (token->type == TAIL)
 		return (token);
 	else if (token->type == R_STDIN)
-		token = r_stdin(new, token);
+		token = r_stdin(new, token, env);
 	else if (token->type == HEREDOC)
 		token = heredoc(new, token);
 	else if (new->prev->outfd_type == FD_PIPE_OUT)

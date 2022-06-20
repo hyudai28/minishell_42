@@ -23,7 +23,7 @@ static int	token_to_cmds_error(void *p, t_token *token, t_cmds *cmds)
 	return (0);
 }
 
-t_cmds	*token_to_cmds(t_token *token)
+t_cmds	*token_to_cmds(t_token *token, t_envlist *env)
 {
 	t_cmds	*head;
 	t_cmds	*new;
@@ -45,7 +45,7 @@ t_cmds	*token_to_cmds(t_token *token)
 		if (token_to_cmds_error(new, token_head, head) == 1)
 			return (NULL);
 		now = now->next;
-		token = cmds_set_fd(new, token);
+		token = cmds_set_fd(new, token, env);
 		if (token_to_cmds_error(token, token_head, head) == 1)
 			return (NULL);
 	}

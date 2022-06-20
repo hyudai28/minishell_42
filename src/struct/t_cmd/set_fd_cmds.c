@@ -41,7 +41,7 @@ static t_token	*pipe_set_outfd(t_cmds *new, t_token *token)
 	return (token->next);
 }
 
-t_token	*cmds_set_fd(t_cmds *new, t_token *token)
+t_token	*cmds_set_fd(t_cmds *new, t_token *token, t_envlist *env)
 {
 	t_token	*token_head;
 	size_t	index;
@@ -54,12 +54,13 @@ t_token	*cmds_set_fd(t_cmds *new, t_token *token)
 	new->cmd = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (new->cmd == NULL)
 		return (NULL);
+	int i = 0;
 	while (token->type != PIPE && token->type != TAIL)
 	{
-		token = set_type_infd(new, token);
+		token = set_type_infd(new, token, env);
 		if (!token)
 			return (NULL);
-		token = set_type_outfd(new, token);
+		token = set_type_outfd(new, token, env);
 		if (!token)
 			return (NULL);
 		token = separate_token(new, token, &index);
