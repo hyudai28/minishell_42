@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 13:47:05 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:58:17 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_doller(t_token *token)
 {
 	if (!ft_strncmp(token->word, "$", 2))
-		return (2);
+		return (0);
 	else if (token->word[0] == '$' && token->word[1] == '$')
 	{
 		free(token->word);
@@ -26,31 +26,40 @@ static int	check_doller(t_token *token)
 			ft_putendl_fd("minishell: Cannot allocate memory", 2);
 			return (1);
 		}
-		return (2);
+		return (0);
 	}
-	return (0);
+	return (2);
+}
+
+static int	expansion_error(t_token *token)
+{
+	if (token_check_separate(token->prev->type) == 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token->word, 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+		return (1);
+	}
+	else if (token->prev->type == HEAD && token->next->type == TAIL)
+		return (1);
+	else
+		return (2);
 }
 
 int	expansion_token(t_token *token, t_envlist *env)
 {
-	int	ret;
+	int		ret;
+	char	*str;
 
 	ret = check_doller(token);
-	if (ret == 1)
+	if (ret != 2)
 		return (1);
-	if (ret == 2)
-		return (0);
-	if (ret == 0 && expansion_env(token, env) == 1)
+	ret = expansion_env(token, env);
+	if (ret != 0)
 	{
-		ft_putendl_fd("minishell: Cannot allocate memory", 2);
-		return (1);
-	}
-	if (token->word == NULL)
-	{
-		if (token->prev->type == HEAD && token->next->type == TAIL)
+		if (ret == 1)
 			return (1);
-		else
-			return (2);
+		return (expansion_error(token));
 	}
 	if (add_separate_token(token, env) == 1)
 		return (1);

@@ -113,14 +113,13 @@ int	expansion_env(t_token *token, t_envlist *env)
 	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
 	if (total_length == 0)
-	{
-		free(token->word);
-		token->word = NULL;
-		return (0);
-	}
+		return (2);
 	expand_word = (char *)ft_calloc((total_length + 1), sizeof(char));
 	if (expand_word == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
+	}
 	expand_word = expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;
