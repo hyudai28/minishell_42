@@ -6,14 +6,14 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:16:37 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/20 21:38:39 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/20 21:49:19 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_envlist.h"
-t_envlist	*failed_envlist(t_envlist *head);
 
-int	export_change(char *new_line, t_envlist *prev, t_envlist *head);
+t_envlist	*failed_envlist(t_envlist *head);
+int			export_change(char *new_line, t_envlist *prev, t_envlist *head);
 
 t_envlist	*envlist_new(void)
 {
