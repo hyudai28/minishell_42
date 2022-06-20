@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 15:03:35 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:42:34 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_doller(t_token *token)
 
 static int	expansion_error(t_token *token)
 {
-	if (token_check_separate(token->prev->type) == 1 &&
+	if (token_check_separate(token->prev->type) == 1 && \
 		token->prev->type != PIPE)
 	{
 		ft_putstr_fd("minishell: ", 2);
