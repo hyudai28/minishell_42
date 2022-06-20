@@ -33,7 +33,10 @@ static size_t	get_length(const char *word)
 		i++;
 		while (word[i + len] != '\0' && word[i + len] != quot)
 			len++;
-		i++;
+		if (word[i + len] != '\0')
+			i++;
+		else
+			len++;
 	}
 	return (len);
 }
@@ -46,6 +49,7 @@ static void	remove_quot_copy(t_token *token, char *new)
 
 	i = 0;
 	len = 0;
+	quot = '\0';
 	while (token->word[i + len] != '\0')
 	{
 		while (token->word[i + len] != '\0' && \
@@ -56,14 +60,13 @@ static void	remove_quot_copy(t_token *token, char *new)
 		}
 		if (token->word[i + len] == '\0')
 			return ;
-		quot = token->word[i + len];
-		i++;
-		while (token->word[i + len] != quot)
+		while (token->word[i + len] != '\0' && token->word[i + len] != quot)
 		{
 			new[len] = token->word[i + len];
 			len++;
 		}
-		i++;
+		if (token->word[i + len] != '\0')
+			i++;
 	}
 }
 
