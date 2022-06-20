@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 17:49:30 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:46:56 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	command_is_null(t_envlist *env)
 {
 	envlist_destructor(env);
 	write(2, "exit", 4);
-	exit(0);
+	exit(env->doller_ret);
 }
 
 int	main(int argc, char **argv, char **envp)
