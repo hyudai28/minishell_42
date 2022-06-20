@@ -16,8 +16,11 @@ static void	cat_no_env(\
 char *expand_word, size_t *expand_word_i, char *word, size_t *word_i)
 {
 	expand_word[*expand_word_i] = word[*word_i];
-	(*expand_word_i)++;
-	(*word_i)++;
+	if (word[*word_i] != '\0')
+	{
+		(*expand_word_i)++;
+		(*word_i)++;
+	}
 }
 
 static size_t	cat_exit_status(
@@ -25,24 +28,26 @@ static size_t	cat_exit_status(
 {
 	size_t	i;
 	int		exit_status;
+	size_t	temp;
 
 	i = ft_strlen(expand_word);
 	exit_status = env->doller_ret;
+	(*word_i)++;
 	if (exit_status == 0)
 	{
 		expand_word[i] = '0';
 		expand_word[i + 1] = '\0';
+		return (1);
 	}
 	expand_word[i + exit_status_len] = '\0';
-	exit_status--;
-	while (exit_status != 0)
+	temp = exit_status_len;
+	while (exit_status != 0 && exit_status_len != 0)
 	{
+		exit_status_len--;
 		expand_word[i + exit_status_len] = exit_status % 10 + '0';
 		exit_status = exit_status / 10;
-		exit_status_len--;
 	}
-	(*word_i)++;
-	return (exit_status_len);
+	return (temp);
 }
 
 static void	cat_env(\
@@ -51,9 +56,19 @@ char *expand_word, size_t *expand_word_i, char *word, t_envlist *env)
 	char	*env_word;
 	size_t	env_word_i;
 
+	if (*word == '\0' || *word == '\n' || is_separate_char(*word) != 0)
+	{
+		expand_word[*expand_word_i] = '$';
+		(*expand_word_i)++;
+		expand_word[*expand_word_i] = '\0';
+		return ;
+	}
 	env_word = get_env_value(word, env);
 	if (env_word == NULL)
+	{
+		expand_word[*expand_word_i] = '\0';
 		return ;
+	}
 	env_word_i = 0;
 	while (env_word[env_word_i] != '\0')
 	{
@@ -73,7 +88,7 @@ char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env)
 	word_i = 0;
 	exit_status_length = get_exit_status_digit(env);
 	while (word[word_i] != '\0')
-		if (word[word_i] != '$' || word[word_i + 1] == '\0')
+		if (word[word_i] != '$')
 			cat_no_env(expand_word, &expand_word_i, word, &word_i);
 	else
 	{
@@ -88,5 +103,6 @@ char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env)
 				word_i++;
 		}
 	}
+	expand_word[expand_word_i] = '\0';
 	return (expand_word);
 }

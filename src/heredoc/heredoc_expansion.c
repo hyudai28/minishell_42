@@ -15,12 +15,17 @@
 static size_t	get_env_length(char *word, t_envlist *env)
 {
 	size_t	value_len;
+	size_t	tr_len;
 
 	if (env->head)
 		env = env->next;
+	tr_len = 0;
+	while (ft_isalnum(word[tr_len]) || word[tr_len] == '_')
+		tr_len++;
 	while (!env->head)
 	{
-		if (!ft_strncmp(word, env->key, (ft_strlen(env->key) + 1)))
+		if (ft_strlen(env->key) <= tr_len && \
+				!ft_strncmp(word, env->key, tr_len))
 		{
 			if (env->value == NULL)
 				return (0);
@@ -40,24 +45,40 @@ static size_t	get_env_less_length(char *word)
 	env_less_len = 0;
 	env_len = 0;
 	while (word[env_less_len + env_len] != '\0')
+	if (word[env_less_len + env_len] == '$' && \
+		is_separate_char(word[env_less_len + env_len + 1]) == 0 && \
+		word[env_less_len + env_len] == '\n')
 	{
-		if (word[env_less_len + env_len] == '$' && \
-				word[env_less_len + env_len + 1] != '\0')
-		{
+		env_len++;
+		if (word[env_less_len + env_len] == '?')
 			env_len++;
-			if (word[env_less_len + env_len] == '?')
-				env_len++;
-			else
-			{
-				while (ft_isalnum(word[env_less_len + env_len]) || \
-						word[env_less_len + env_len] == '_')
-					env_len++;
-			}
-		}
 		else
-			env_less_len++;
+		{
+			while (ft_isalnum(word[env_less_len + env_len]) || \
+					word[env_less_len + env_len] == '_')
+				env_len++;
+		}
 	}
+	else
+		env_less_len++;
 	return (env_less_len);
+}
+
+static char	*env_length(\
+size_t *length, size_t exit_status_digit, char *word, t_envlist *env)
+{
+	if (*word == '?')
+	{
+		word++;
+		(*length) += exit_status_digit;
+	}
+	else
+	{
+		(*length) += get_env_length(word, env);
+		while (ft_isalnum(*word) || *word == '_')
+			word++;
+	}
+	return (word);
 }
 
 static size_t	get_env_only_length(char *word, t_envlist *env, size_t length)
@@ -67,20 +88,10 @@ static size_t	get_env_only_length(char *word, t_envlist *env, size_t length)
 	exit_status_digit = get_exit_status_digit(env);
 	while (*word != '\0')
 	{
-		if (*word == '$' && *word + 1 != '\0')
+		if (*word == '$' && (*word + 1 != '\0' || *word + 1 != '\n'))
 		{
 			word++;
-			if (*word == '?')
-			{
-				word++;
-				length += exit_status_digit;
-			}
-			else
-			{
-				length += get_env_length(word, env);
-				while (ft_isalnum(*word) || *word == '_')
-					word++;
-			}
+			word = env_length(&length, exit_status_digit, word, env);
 		}
 		else
 			word++;
@@ -98,15 +109,12 @@ int	heredoc_expansion(t_token *token, t_envlist *env)
 	env_length = get_env_only_length(token->word, env, 0);
 	env_less_length = get_env_less_length(token->word);
 	total_length = env_length + env_less_length;
-	if (total_length == env_less_length)
-	{
-		token->word_len = total_length;
-		return (0);
-	}
-	expand_word = (char *)malloc(sizeof(char) * (total_length + 1));
+	expand_word = (char *)ft_calloc((total_length + 1), sizeof(char));
 	if (expand_word == NULL)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
-	expand_word[total_length] = '\0';
+	}
 	expand_word = heredoc_expansion_line(expand_word, token->word, env);
 	free(token->word);
 	token->word = expand_word;

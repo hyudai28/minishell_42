@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 22:24:03 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 23:31:27 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ static void	main_constructor(int argc, char **argv, char **command)
 
 static void	command_is_null(t_envlist *env)
 {
+	int	exit_status;
+
+	exit_status = env->doller_ret;
 	envlist_destructor(env);
 	write(2, "exit", 4);
-	exit(env->doller_ret);
+	exit(exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
