@@ -95,6 +95,7 @@ T_ENVLIST_DIR	=	struct/t_envlist/
 T_ENVLIST_FILES	=	envlist.c \
 					envlist_utils.c \
 					manage_envlist.c \
+					envlist_add.c \
 					envlist_get.c
 T_ENVLIST_SRCS	=	$(addprefix $(T_ENVLIST_DIR), $(T_ENVLIST_FILES))
 

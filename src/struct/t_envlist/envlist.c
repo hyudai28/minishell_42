@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:54 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 17:57:48 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:39:15 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_envlist.h"
+
+int	envlist_add_change(char *new_line, t_envlist *prev, t_envlist *head);
 
 t_envlist	*failed_envlist(t_envlist *head)
 {
@@ -45,11 +47,28 @@ t_envlist	*make_min(t_envlist *head)
 	return (new->next);
 }
 
+void	more_deep_shlvl(t_envlist *env)
+{
+	t_envlist	*shlvl;
+	int			level;
+	char		*level_tmp;
+
+	shlvl = envlist_search("SHLVL", env);
+	level = ft_atoi(shlvl->value);
+	level++;
+	level_tmp = ft_itoa(level);
+	if (!level_tmp)
+		failed_envlist(env);
+	free(shlvl->value);
+	shlvl->value = level_tmp;
+}
+
 t_envlist	*envlist_constructor(char **envp)
 {
 	t_envlist	*new;
 	t_envlist	*head;
 	int			env_i;
+	int			add_ret;
 
 	new = (t_envlist *)malloc(sizeof(t_envlist));
 	if (!new)
@@ -61,14 +80,14 @@ t_envlist	*envlist_constructor(char **envp)
 	new = make_min(head);
 	while (envp[env_i])
 	{
-		if (envlist_add(envp[env_i], new, head))
-		{
-			envlist_destructor(head);
-			return (NULL);
-		}
+		add_ret = envlist_add_change(envp[env_i], new, head);
+		if (add_ret == 1)
+			failed_envlist(head);
+		else if (add_ret == 0)
+			new = new->next;
 		env_i++;
-		new = new->next;
 	}
+	more_deep_shlvl(head);
 	return (head);
 }
 

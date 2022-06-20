@@ -12,42 +12,6 @@
 
 #include "t_envlist.h"
 
-t_envlist	*envlist_new(void)
-{
-	t_envlist	*new;
-
-	new = (t_envlist *)malloc(sizeof(t_envlist));
-	if (new == NULL)
-		return (NULL);
-	ft_memset(new, 0, sizeof(t_envlist));
-	return (new);
-}
-
-int	envlist_link_list(t_envlist *new, t_envlist *prev, t_envlist *head)
-{
-	new->prev = prev;
-	new->next = head;
-	if (prev)
-		prev->next = new;
-	else
-		head->next = new;
-	head->prev = new;
-	return (0);
-}
-
-int	envlist_add(char *new_line, t_envlist *prev, t_envlist *head)
-{
-	t_envlist	*new;
-
-	new = envlist_new();
-	if (!new)
-		return (1);
-	if (envlist_set_keyvalue(new, new_line))
-		return (1);
-	envlist_link_list(new, prev, head);
-	return (0);
-}
-
 t_envlist	*envlist_search(char *tr_line, t_envlist *head)
 {
 	size_t		tr_len;

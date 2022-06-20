@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/12 15:38:36 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/20 20:05:30 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
 	}
 	return (0);
 }
-
 int	export_add(char **cmds, int argc, t_envlist *head)
 {
 	int		arg_i;
