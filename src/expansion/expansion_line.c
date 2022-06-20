@@ -47,6 +47,7 @@ static size_t	cat_exit_status(
 {
 	size_t	i;
 	int		exit_status;
+	size_t	temp;
 
 	i = ft_strlen(expand_word);
 	exit_status = env->doller_ret;
@@ -55,17 +56,17 @@ static size_t	cat_exit_status(
 	{
 		expand_word[i] = '0';
 		expand_word[i + 1] = '\0';
-		return (0);
+		return (1);
 	}
 	expand_word[i + exit_status_len] = '\0';
-	exit_status_len--;
-	while (exit_status != 0)
+	temp = exit_status_len;
+	while (exit_status != 0 && exit_status_len != 0)
 	{
+		exit_status_len--;
 		expand_word[i + exit_status_len] = exit_status % 10 + '0';
 		exit_status = exit_status / 10;
-		exit_status_len--;
 	}
-	return (exit_status_len);
+	return (temp);
 }
 
 static void	cat_env(\
