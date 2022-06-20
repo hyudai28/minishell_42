@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 01:38:44 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 15:42:34 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:47:27 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int	expansion_error(t_token *token)
 int	expansion_token(t_token *token, t_envlist *env)
 {
 	int		ret;
-	char	*str;
 
 	ret = check_doller(token);
 	if (ret != 2)
