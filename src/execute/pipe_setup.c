@@ -18,11 +18,11 @@ void	clean_fd(int backup_fd, int close_fd)
 	close(backup_fd);
 }
 
-int	fd_redirect_with_pipe()
+int	fd_redirect_with_pipe(void)
 {
 	int	pipe_fd[2];
 
-	if (pipe(pipe_fd) != 0) //fail
+	if (pipe(pipe_fd) != 0)
 		return (-1);
 	clean_fd(pipe_fd[0], 0);
 	close(pipe_fd[1]);

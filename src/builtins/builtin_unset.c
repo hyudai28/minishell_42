@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 01:46:00 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/19 18:04:27 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/20 13:29:29 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	builtin_unset(char **cmds, int argc, t_envlist *head)
 	char	*delete;
 	int		unset_index;
 
-//	(void)argc;
 	unset_index = 1;
 	while (unset_index < argc)
 	{

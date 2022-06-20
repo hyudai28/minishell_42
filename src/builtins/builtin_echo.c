@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:24:02 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/19 22:39:33 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 13:45:26 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,30 @@ int	echo_check_flag(char *flag)
 	return (0);
 }
 
+static void	echo_n_putout(char **cmds, int i)
+{
+	while (cmds[i] && echo_check_flag(cmds[i]))
+			i++;
+	while (cmds[i])
+	{
+		echo_putout(cmds[i], !!cmds[i + 1]);
+		i++;
+	}
+	return ;
+}
+
 int	builtin_echo(char **cmds, int argc, t_envlist *env)
 {
 	int	i;
 
 	(void)argc;
+	(void)env;
 	if (cmds[1])
 	{
 		i = 1;
-		if (echo_check_flag(cmds[i]))
+		if (cmds[i] && echo_check_flag(cmds[i]))
 		{
-			while (cmds[i] && echo_check_flag(cmds[i]))
-				i++;
-			while (cmds[i])
-			{
-				echo_putout(cmds[i], !!cmds[i + 1]);
-				i++;
-			}
+			echo_n_putout(cmds, i);
 			return (0);
 		}
 		while (cmds[i])
@@ -67,6 +74,5 @@ int	builtin_echo(char **cmds, int argc, t_envlist *env)
 		}
 	}
 	ft_putendl_fd("", 1);
-	env->doller_ret = 0;
 	return (0);
 }
