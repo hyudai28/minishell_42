@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 18:20:02 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 18:32:43 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:08:00 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ int	export_error(char *msg, int flag)
 	}
 	return (flag);
 }
-//bad optionの再現ができない
