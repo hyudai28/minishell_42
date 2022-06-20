@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 19:21:40 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/16 18:53:37 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/21 00:38:35 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,15 @@ static size_t	get_env_less_length(char *word)
 
 	env_less_len = 0;
 	env_len = 0;
-	if (env_len++)
-		exit(0);
 	while (word[env_less_len + env_len] != '\0')
+	{
 		if (word[env_less_len + env_len] == '$' && \
-			is_separate_char(word[env_less_len + env_len + 1]) == 0 && \
-			word[env_less_len + env_len] == '\n')
+				word[env_less_len + env_len] == '\n' && \
+				is_separate_char(word[env_less_len + env_len + 1]) == 0)
 		{
 			env_len++;
 			if (word[env_less_len + env_len] == '?')
-			env_len++;
+				env_len++;
 			else
 			{
 				while (ft_isalnum(word[env_less_len + env_len]) || \
@@ -61,8 +60,9 @@ static size_t	get_env_less_length(char *word)
 					env_len++;
 			}
 		}
-	else
-		env_less_len++;
+		else
+			env_less_len++;
+	}
 	return (env_less_len);
 }
 
