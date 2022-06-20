@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 21:24:02 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 13:45:26 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:45:58 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	echo_check_flag(char *flag)
 static void	echo_n_putout(char **cmds, int i)
 {
 	while (cmds[i] && echo_check_flag(cmds[i]))
-			i++;
+		i++;
 	while (cmds[i])
 	{
 		echo_putout(cmds[i], !!cmds[i + 1]);
