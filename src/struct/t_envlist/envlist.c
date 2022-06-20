@@ -3,14 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 00:49:54 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/11 23:41:51 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:29:25 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "t_envlist.h"
+
+t_envlist	*failed_envlist(t_envlist *new)
+{
+	envlist_destructor(new);
+	return (NULL);
+}
+
+t_envlist	*envp_is_null(t_envlist *head)
+{
+	t_envlist	*new;
+	char		*pwd;
+	char		*cwd;
+
+	new = head;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (head);
+	pwd = ft_strjoin("pwd=", cwd);
+	if (!pwd)
+		return (failed_envlist(new));
+	if (envlist_add(pwd, new, head))
+		return (failed_envlist(new));
+	new = new->next;
+	if (envlist_add("OLDPWD", new, head))
+		return (failed_envlist(new));
+	new = new->next;
+	if (envlist_add("SHLVL=1", new, head))
+		return (failed_envlist(new));
+	return (head);
+}
 
 t_envlist	*envlist_constructor(char **envp)
 {
@@ -25,6 +55,8 @@ t_envlist	*envlist_constructor(char **envp)
 	new->head = 1;
 	env_i = -1;
 	head = new;
+	if (envp[0] == NULL)
+		return (envp_is_null(head));
 	while (envp[++env_i])
 	{
 		if (envlist_add(envp[env_i], new, head))
