@@ -20,6 +20,7 @@
 # include "libft.h"
 
 # include "t_token.h"
+# include "t_envlist.h"
 
 enum	e_cmds_out_fd
 {
@@ -59,10 +60,10 @@ t_cmds		*cmds_constructor(int head, t_cmds *cmd_head, t_cmds *now);
 void		cmds_destructor(t_cmds *cmds);
 
 //set_fd_cmds.c
-t_cmds		*token_to_cmds(t_token *token);
-t_token		*cmds_set_fd(t_cmds *new, t_token *token);
-t_token		*set_type_infd(t_cmds *new, t_token *token);
-t_token		*set_type_outfd(t_cmds *new, t_token *token);
+t_cmds		*token_to_cmds(t_token *token, t_envlist *env);
+t_token		*cmds_set_fd(t_cmds *new, t_token *token, t_envlist *env);
+t_token		*set_type_infd(t_cmds *new, t_token *token, t_envlist *env);
+t_token		*set_type_outfd(t_cmds *new, t_token *token, t_envlist *env);
 
 void		debug_cmds(t_cmds *tmp);
 
