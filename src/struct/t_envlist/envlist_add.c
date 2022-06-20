@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist_add.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:16:37 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/20 21:49:19 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/20 23:08:05 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	envlist_update(char *new_line, t_envlist *prev, t_envlist *head)
 	(void)prev;
 	chr_pt = ft_strchr(new_line, '=');
 	if (!chr_pt)
-		return (0);
+		return (1);
 	else
 	{
 		str_key = envlist_get_key(new_line);
 		if (!str_key)
-			return (1);
+			return (0);
 		env = envlist_search(str_key, head);
 		free(str_key);
 		str_key = NULL;
@@ -77,7 +77,10 @@ int	envlist_add_change(char *new_line, t_envlist *prev, t_envlist *head)
 	{
 		new = envlist_new();
 		if (!new)
+		{
+			ft_putendl_fd("minishell: Cannot allocate memory", 2);
 			return (1);
+		}
 		if (envlist_set_keyvalue(new, new_line))
 			return (1);
 		envlist_link_list(new, prev, head);

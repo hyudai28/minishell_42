@@ -16,7 +16,10 @@ int	envlist_set_key(t_envlist *target, char *new_line, size_t key_length)
 {
 	target->key = ft_substr(new_line, 0, key_length);
 	if (!target->key)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
+	}
 	return (0);
 }
 
@@ -31,13 +34,19 @@ int	envlist_set_value(t_envlist *target, char *value_line)
 	{
 		target->value = (char *)malloc(1);
 		if (!target->value)
+		{
+			ft_putendl_fd("minishell: Cannot allocate memory", 2);
 			return (1);
+		}
 		target->value[0] = '\0';
 		return (0);
 	}
 	target->value = ft_strdup(value_line);
 	if (!target->value)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (1);
+	}
 	return (0);
 }
 
@@ -50,7 +59,10 @@ int	envlist_set_keyvalue(t_envlist *target, char *new_line)
 	{
 		target->key = ft_strdup(new_line);
 		if (!target->key)
+		{
+			ft_putendl_fd("minishell: Cannot allocate memory", 2);
 			return (1);
+		}
 		target->value = NULL;
 		return (0);
 	}

@@ -106,7 +106,10 @@ char	*envlist_get_key(char *line)
 
 	str_key = ft_strdup(line);
 	if (!str_key)
+	{
+		ft_putendl_fd("minishell: Cannot allocate memory", 2);
 		return (NULL);
+	}
 	tmp = ft_strchr(str_key, '=');
 	*tmp = '\0';
 	return (str_key);
