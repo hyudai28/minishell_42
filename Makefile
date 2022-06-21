@@ -71,7 +71,6 @@ PARSER_SRCS	=	$(addprefix $(PARSER_DIR), $(PARSER_FILES))
 HEREDOC_DIR =	heredoc/
 HEREDOC_FILES	=	heredoc.c \
 					heredoc_expansion.c \
-					heredoc_expansion_env.c \
 					heredoc_expansion_line.c
 HEREDOC_SRCS	=	$(addprefix $(HEREDOC_DIR), $(HEREDOC_FILES))
 

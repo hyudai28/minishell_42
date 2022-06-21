@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/21 00:28:38 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/21 02:10:36 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 	return (0);
 }
 
-int	get_heredoc(t_token *token, char *delimiter)
+int	get_heredoc(t_token *token, char *delimiter, int pipe_write)
 {
 	char	*line;
 	size_t	delimiter_length;
@@ -69,8 +69,84 @@ int	get_heredoc(t_token *token, char *delimiter)
 	}
 	if (read_heredoc(delimiter, delimiter_length, &line) == 1)
 		return (1);
-	free(token->next->word);
-	token->next->word = line;
+	write(pipe_write, line, ft_strlen(line));
+	close(pipe_write);
+	return (0);
+}
+
+static int	read_childline(char *dlmt, size_t dlmt_l, char **line)
+{
+	char	*new_line;
+	char	*temp;
+
+	while (1)
+	{
+		temp = *line;
+		new_line = readline("> ");
+		if (new_line == NULL)
+		{
+			dprintf(2, "nullll\n");
+			break ;
+		}
+		if (ft_strncmp(new_line, dlmt, (dlmt_l + 1)) == 0)
+			break ;
+		*line = ft_strjoin3(*line, "\n", new_line, 0);
+		free(temp);
+		free(new_line);
+		if (*line == NULL)
+			return (heredoc_error_malloc());
+	}
+	free(new_line);
+	return (0);
+}
+
+int	child_heredoc(t_token *token, char *delimiter, t_envlist *env)
+{
+	pid_t	pid;
+	int		pipe_fd[2];
+	int		backup_fd[2];
+
+	backup_fd[0] = dup(0);
+	backup_fd[1] = dup(1);
+	if (pipe(pipe_fd) != 0)
+	{
+		return (1);
+	}
+	pid = fork();
+	if (pid < 0)
+	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		error(strerror(errno), 1, env);
+	}
+	if (pid == 0)
+	{
+		execute_signal();
+		close(pipe_fd[0]);
+		if (get_heredoc(token, delimiter, pipe_fd[1]) != 0)
+		{
+			return (1);
+		}
+		exit(0);
+	}
+	else
+	{
+		close(pipe_fd[1]);
+		wait(NULL);
+		dprintf(2, "sdadadsa\n");
+		clean_fd(pipe_fd[0], 0);
+
+
+		char *line;
+		//lineになんとかして入れる
+		read_childline(delimiter, ft_strlen(delimiter), &line);
+		token->next->word = line;
+	exit(0);	
+		close(0);
+		close(1);
+		dup2(backup_fd[0], 0);
+		dup2(backup_fd[1], 1);
+	}
 	return (0);
 }
 
@@ -86,7 +162,7 @@ static int	parse_heredoc(t_token *token, t_envlist *env)
 	{
 		return (1);
 	}
-	if (get_heredoc(token, token->next->word) != 0)
+	if (child_heredoc(token, token->next->word, env) != 0)
 	{
 		return (1);
 	}
