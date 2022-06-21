@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/21 01:11:12 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/22 00:09:21 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,19 @@ static int	export_is_invalid(char *line)
 	return (0);
 }
 
-static int	export_change(char *new_line, t_envlist *prev, t_envlist *head)
+static int	export_change(char *new_line, t_envlist *head)
 {
 	t_envlist	*env;
 	char		*chr_pt;
 	char		*str_key;
 
-	(void)prev;
 	chr_pt = ft_strchr(new_line, '=');
 	if (!chr_pt)
-		return (0);
+	{
+		env = envlist_search(new_line, head);
+		if (!env)
+			return (2);
+	}
 	else
 	{
 		str_key = envlist_get_key(new_line);
@@ -55,9 +58,9 @@ static int	key_check(char *cmds, t_envlist *head, int output)
 	size_t	i;
 
 	i = 0;
-	while (cmds[i] != '\0')
+	while (cmds[i] != '\0' && cmds[i] != '=')
 	{
-		if (ft_isalnum(cmds[i]) != 1 || cmds[i] != '_')
+		if (ft_isalnum(cmds[i]) != 1 && cmds[i] != '_')
 		{
 			if (output == 1)
 			{
@@ -84,7 +87,7 @@ static int	export_add(char **cmds, int argc, t_envlist *head)
 	{
 		if (ft_strchr(cmds[arg_i], '-') && arg_i != 2)
 			return (export_error(cmds[arg_i], EXPORT_IDENTIFIER));
-		ret = export_change(cmds[arg_i], head->prev, head);
+		ret = export_change(cmds[arg_i], head);
 		if (ret == 1)
 			return (error(strerror(errno), 1, head));
 		if (ret == 2 && key_check(cmds[arg_i], head, 1) == 0)
