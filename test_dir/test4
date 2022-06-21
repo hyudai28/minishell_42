@@ -5,67 +5,68 @@ echo "----------bash--------------------"
 bash << 'EOF'
 exit
 EOF
+echo
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 exit
 EOF
-echo $?
 echo
+echo $?
 echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 exit -1
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 exit -1
 EOF
-echo $?
 echo
+echo $?
 echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 exit 1
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 exit 1
 EOF
-echo $?
 echo
+echo $?
 echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 exit 256
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 exit 256
 EOF
-echo $?
 echo
+echo $?
 echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 exit 257
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 exit 257
 EOF
-echo $?
 echo
+echo $?
 echo ===================================

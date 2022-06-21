@@ -6,7 +6,7 @@ bash << 'EOF'
 echo "   "
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 echo "   "
 EOF
 echo
@@ -18,7 +18,7 @@ bash << 'EOF'
 "   "
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 "   "
 EOF
 echo
@@ -30,7 +30,7 @@ bash << 'EOF'
 echo "cat lol.c | cat > lol.c"
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 echo "cat lol.c | cat > lol.c"
 EOF
 echo
@@ -43,7 +43,7 @@ bash << 'EOF'
 $
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 $
 EOF
 echo
@@ -55,7 +55,7 @@ bash << 'EOF'
 "$USER"
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 "$USER"
 EOF
 echo =================================
@@ -66,7 +66,7 @@ bash << 'EOF'
 "string$USER"
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 "string$USER"
 EOF
 echo
@@ -78,7 +78,7 @@ bash << 'EOF'
 "$USERstring"
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 "$USERstring"
 EOF
 echo

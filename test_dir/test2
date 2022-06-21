@@ -6,7 +6,7 @@ bash << 'EOF'
 /bin/ls -l
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 /bin/ls -l
 EOF
 echo
@@ -18,7 +18,7 @@ bash << 'EOF'
 /bin/ls -a
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 /bin/ls -a
 EOF
 echo

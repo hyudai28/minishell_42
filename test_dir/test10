@@ -6,7 +6,7 @@ bash << 'EOF'
 env
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 env
 EOF
 echo
@@ -18,7 +18,7 @@ bash << 'EOF'
 export test=mfujishit
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 export test=mfujishit
 EOF
 echo
@@ -30,7 +30,7 @@ bash << 'EOF'
 unset $test
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 unset $test
 EOF
 echo
@@ -42,7 +42,7 @@ bash << 'EOF'
 export
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 export
 EOF
 echo
@@ -55,7 +55,7 @@ unset $test
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 unset $test
 EOF
 echo $?
@@ -73,7 +73,7 @@ cd test_dir
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 cd test_dir
 EOF
 echo $?
@@ -95,15 +95,15 @@ cd ..
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 cd test_dir
 EOF
 echo $?
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 cd tlaksd
 EOF
 echo $?
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 cd ..
 EOF
 echo $?
@@ -117,7 +117,7 @@ pwd
 EOF
 echo $?
 echo "----------minishell---------------"
-./minishell << 'EOF'
+valgrind ./minishell << 'EOF'
 pwd
 EOF
 echo $?

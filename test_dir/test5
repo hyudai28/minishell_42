@@ -2,12 +2,12 @@ echo "Return value of a process"
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 ls
 echo $?
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 ls
 echo $?
 EOF
@@ -16,12 +16,12 @@ echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 nothingcommand
 echo $?
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 nothingcommand
 echo $?
 EOF
@@ -30,12 +30,12 @@ echo ===================================
 
 echo ===================================
 echo "----------bash--------------------"
-bash << 'EOF' 
+bash << 'EOF'
 ls nothingdirectory
 echo $?
 EOF
 echo "----------minishell---------------"
-./minishell << 'EOF' 
+valgrind ./minishell << 'EOF'
 ls nothingdirectory
 echo $?
 EOF

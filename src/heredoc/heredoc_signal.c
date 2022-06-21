@@ -16,6 +16,7 @@ int	heredoc_event_hook(void)
 {
 	if (g_signal_handled)
 	{
+		ft_putchar_fd('\n', STDERR_FILENO);
 		g_signal_handled = 1;
 		rl_done = true;
 		rl_event_hook = NULL;
@@ -28,5 +29,6 @@ int	hook_reset(void)
 	rl_signal_event_hook = event_hook;
 	rl_event_hook = NULL;
 	rl_done = false;
+	g_signal_handled = 0;
 	return (1);
 }
