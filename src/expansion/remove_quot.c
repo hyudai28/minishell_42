@@ -72,7 +72,7 @@ static void	remove_quot_copy(t_token *token, char *new)
 			new[len] = token->word[i + len];
 			len++;
 		}
-		if (token->word[i + len] != '\0')
+		if (is_quot(token->word[i + len]))
 			i++;
 	}
 }
