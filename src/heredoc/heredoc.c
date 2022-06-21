@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 22:21:43 by hyudai            #+#    #+#             */
-/*   Updated: 2022/06/21 00:28:38 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/21 23:35:19 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ static int	read_heredoc(char *dlmt, size_t dlmt_l, char **line)
 	while (1)
 	{
 		temp = *line;
+		rl_done = false;
 		new_line = readline("> ");
+		if (g_signal_handled)
+			return (heredoc_ctrl_c(temp, new_line));
 		if (new_line == NULL)
 		{
-			write(2, "minishell: warning: not found delimiter (wanted `", 49);
-			ft_putstr_fd(dlmt, 2);
-			write(2, "')\n", 3);
+			heredoc_error(dlmt);
 			break ;
 		}
 		if (ft_strncmp(new_line, dlmt, (dlmt_l + 1)) == 0)
@@ -53,11 +54,11 @@ int	get_heredoc(t_token *token, char *delimiter)
 
 	delimiter_length = ft_strlen(delimiter);
 	line = readline("> ");
+	if (g_signal_handled)
+		return (heredoc_ctrl_c(line, NULL));
 	if (line == NULL)
 	{
-		write(2, "minishell: warning: not found delimiter (wanted `", 49);
-		ft_putstr_fd(delimiter, 2);
-		write(2, "')\n", 3);
+		heredoc_error(delimiter);
 		return (1);
 	}
 	if (ft_strncmp(line, delimiter, (delimiter_length + 1)) == 0)
@@ -83,13 +84,12 @@ static int	parse_heredoc(t_token *token, t_envlist *env)
 		ft_strchr(token->next->word, '\"') != NULL)
 		expandable = 0;
 	if (remove_quot(token->next, env) != 0)
-	{
 		return (1);
-	}
+	rl_event_hook = heredoc_event_hook;
+	rl_done = false;
 	if (get_heredoc(token, token->next->word) != 0)
-	{
-		return (1);
-	}
+		return (hook_reset());
+	hook_reset();
 	if (token->next->word == NULL)
 	{
 		ft_putendl_fd("minishell: Cannot allocate memory", 2);

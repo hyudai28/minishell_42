@@ -6,7 +6,7 @@
 /*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 13:58:41 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/20 23:31:27 by mfujishi         ###   ########.fr       */
+/*   Updated: 2022/06/21 23:30:46 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	main_constructor(int argc, char **argv, char **command)
 	g_signal_handled = 0;
 	minishell_signal();
 	rl_signal_event_hook = event_hook;
+	rl_event_hook = NULL;
 }
 
 static void	command_is_null(t_envlist *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mfujishi <mfujishi@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:36:30 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/19 21:55:12 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/21 23:34:25 by mfujishi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 
 volatile sig_atomic_t	g_signal_handled;
 
+int		event_hook(void);
+
 int		minishell(char *command, t_envlist *envp);
 
 //lexer
@@ -58,6 +60,10 @@ int		parser(t_token *token, t_envlist *env);
 int		heredocument(t_token *head, t_envlist *env);
 int		heredoc_expansion(t_token *token, t_envlist *env);
 char	*heredoc_expansion_line(char *expand_word, char *word, t_envlist *env);
+int		heredoc_event_hook(void);
+int		hook_reset(void);
+void	heredoc_error(char *word);
+int		heredoc_ctrl_c(char *temp, char *new_line);
 
 //expansion
 size_t	get_next_sq(char *word);
