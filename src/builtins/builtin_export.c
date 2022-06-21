@@ -6,7 +6,7 @@
 /*   By: hyudai <hyudai@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:15:49 by mfujishi          #+#    #+#             */
-/*   Updated: 2022/06/22 00:09:21 by hyudai           ###   ########.fr       */
+/*   Updated: 2022/06/22 00:56:28 by hyudai           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,28 @@ static int	export_add(char **cmds, int argc, t_envlist *head)
 	int		arg_i;
 	int		ret;
 	int		ret_flag;
+	int		err_flag;
 
-	arg_i = 1;
+	arg_i = 0;
 	ret_flag = 0;
-	while (arg_i < argc)
+	err_flag = 0;
+	while (++arg_i < argc)
 	{
 		if (ft_strchr(cmds[arg_i], '-') && arg_i != 2)
-			return (export_error(cmds[arg_i], EXPORT_IDENTIFIER));
+		{
+			export_error(cmds[arg_i], EXPORT_IDENTIFIER);
+			err_flag++;
+		}
 		ret = export_change(cmds[arg_i], head);
 		if (ret == 1)
-			return (error(strerror(errno), 1, head));
+			err_flag += !error(strerror(errno), 1, head);
 		if (ret == 2 && key_check(cmds[arg_i], head, 1) == 0)
-		{
 			if (envlist_add(cmds[arg_i], head->prev, head) == 1)
-				return (error(strerror(errno), 1, head));
-		}
-		else if (ret_flag == 0)
+			err_flag += error(strerror(errno), 1, head);
+		if (ret_flag == 0)
 			ret_flag = key_check(cmds[arg_i], head, 0);
-		arg_i++;
 	}
-	return (ret_flag);
+	return (ret_flag || err_flag);
 }
 
 int	builtin_export(char **cmds, int argc, t_envlist *head)
